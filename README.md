@@ -34,7 +34,7 @@ Then reload the apache: `service httpd reload`.
 
 Alternatively you can run agains a local development environment. In that case you need to edit `manageiq/config/initializers/secure_headers.rb'.
 
-## Fork this app:
+## Run this app:
 
 Download the example [or clone the repo](https://github.com/martinpovolny/miq-starter-app):
 
@@ -47,3 +47,8 @@ npm install
 npm start
 ```
 
+## Screenshots
+
+![Login form](doc/starter-login.png)
+
+![List of VMs](doc/starter-vms.png)

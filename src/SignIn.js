@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import base64js from 'base64-js'                                                                    
+import axios from 'axios';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +16,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import { baseUrl } from './config';
 
 function Copyright() {
   return (
@@ -46,8 +52,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const base64encode = str => base64js.fromByteArray(new window.TextEncoder('utf-8').encode(str));
+
 export default function SignIn() {
   const classes = useStyles();
+
+	const [login, setLogin] = useState('');
+	const [password, setPassword] = useState('');
+	const history = useHistory();
+
+	const handleLoginSubmit = (event) => {
+		axios.get(baseUrl + 'auth?requester_type=ui',
+			{
+				headers: {
+					//'X-Auth-Token': undefined,
+					'Authorization': 'Basic ' + base64encode([login, password].join(':')),
+				}
+			}
+		).then(response => {
+			window.localStorage.setItem('auth-token', response.data.auth_token);
+			history.push('/vms');
+		});
+
+	  event.preventDefault();
+	}
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,8 +87,10 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleLoginSubmit}>
           <TextField
+						onChange={e => setLogin(e.target.value)}
+						value={login}
             variant="outlined"
             margin="normal"
             required
@@ -72,6 +102,8 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
+						onChange={e => setPassword(e.target.value)}
+						value={password}
             variant="outlined"
             margin="normal"
             required

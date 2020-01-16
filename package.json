@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "axios": "latest",
+    "base64-js": "latest",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "clsx": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-router-dom": "latest",
     "react-scripts": "latest"
   },
   "browserslist": {

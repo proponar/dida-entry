@@ -1,4 +1,12 @@
 import React from 'react';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  //Link
+} from "react-router-dom";
+
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -21,11 +29,18 @@ const Copyright = () => {
 }
 
 const App = () => {
-  return <Listing />;
-}
-
-const App3 = () => {
-  return <SignIn />;
+	return (
+		<Router>
+ 			<Switch>
+				<Route path="/vms">
+  				<Listing />;
+				</Route>
+				<Route path="/">
+					 <SignIn />
+				</Route>
+			</Switch>
+		</Router>
+	);
 }
 
 const App2 = () => {

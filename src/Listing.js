@@ -94,12 +94,13 @@ export default function Listing() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-		axios.get(baseUrl + 'vms?expand=resources&attributes=name,vendor,ipaddresses', {
+		axios.get(baseUrl + 'entries', {
 			headers: {
-				'X-Auth-Token': window.localStorage.getItem('auth-token')
+				//'X-Auth-Token': window.localStorage.getItem('auth-token')
+				'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
 			}
 		}).then(response => {
-      setRows(response.data.resources);
+      setRows(response.data.data);
     });
   }, []);
 

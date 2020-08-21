@@ -71,7 +71,7 @@ export default function SignIn() {
 			}
 		).then(response => {
 			window.localStorage.setItem('auth-token', response.data.auth_token);
-			history.push('/vms');
+			history.push('/entries');
 		});
 
 	  event.preventDefault();

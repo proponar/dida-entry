@@ -14,6 +14,7 @@ import Link from '@material-ui/core/Link';
 import ProTip from './ProTip';
 import SignIn from './SignIn.js';
 import Listing from './Listing.js';
+import Entry from './Entry.js';
 
 const Copyright = () => {
   return (
@@ -32,7 +33,10 @@ const App = () => {
 	return (
 		<Router>
  			<Switch>
-				<Route path="/vms">
+				<Route path="/spolecna">
+  				<Entry />;
+				</Route>
+				<Route path="/entries">
   				<Listing />;
 				</Route>
 				<Route path="/">

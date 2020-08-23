@@ -35,37 +35,44 @@ function getModalStyle() {
   };
 }
 
-const TopForm = () => {
+const TopForm = props => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+
+  const [kvModalOpen, setKvModalOpen] = React.useState(false);
+
   const [rod, setRod] = React.useState("");
   const [druh, setDruh] = React.useState("");
+  const [heslo, setHeslo] = React.useState("");
+  const [kvalifikator, setKvalifikator] = React.useState("");
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleKvalifikatorOpen = () => {
+    setKvModalOpen(true);
   };
 
   const handleDruhChange = event => {
     setDruh(event.target.value);
+    console.log(getData());
   };
 
   const handleRodChange = event => {
     setRod(event.target.value);
+    console.log(getData());
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleKvalifikatorClose = () => {
+    setKvModalOpen(false);
   };
 
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
+  const [checkState, setCheckState] = React.useState({
+    checkedVetne: true,
+    // checkedB: true,
     checkedC: true
   });
 
-  const handleChange = event => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handleCheckChange = event => {
+    setCheckState({ ...checkState, [event.target.name]: event.target.checked });
+    console.log(getData());
   };
 
   const modalBody = (
@@ -78,6 +85,16 @@ const TopForm = () => {
     </div>
   );
 
+  const getData = () => {
+    return {
+      rod,
+      druh,
+      heslo,
+      kvalifikator,
+      vetne: checkState.checkedVetne,
+    };
+  }
+
   return (
     <React.Fragment>
       <Grid item xs={3}>
@@ -88,12 +105,12 @@ const TopForm = () => {
       </Grid>
       <Grid item xs={3}>
         <FormControl>
-          <InputLabel htmlFor="kvalofikator-textbox">Kvalifikátor</InputLabel>
-          <BootstrapInput id="kvalofikator-textbox" />
-          <button type="button" onClick={handleOpen}>
+          <InputLabel htmlFor="kvalifikator-textbox">Kvalifikátor</InputLabel>
+          <BootstrapInput id="kvalifikator-textbox" />
+          <button type="button" onClick={handleKvalifikatorOpen}>
             Nastavit
           </button>
-          <Modal open={open} onClose={handleClose}>
+          <Modal open={kvModalOpen} onClose={handleKvalifikatorClose}>
             {modalBody}
           </Modal>
         </FormControl>
@@ -111,9 +128,9 @@ const TopForm = () => {
             <Grid item>
               <Switch
                 color="primary"
-                checked={state.checkedC}
-                onChange={handleChange}
-                name="checkedC"
+                checked={checkState.checkedVetne}
+                onChange={handleCheckChange}
+                name="checkedVetne"
               />
             </Grid>
             <Grid item>Nevětné</Grid>
@@ -129,8 +146,8 @@ const TopForm = () => {
             value={druh}
             onChange={handleDruhChange}
           >
-            <MenuItem value={10}>Substantiva</MenuItem>
-            <MenuItem value={20}>Adjektiva</MenuItem>
+            <MenuItem value='subst'>Substantiva</MenuItem>
+            <MenuItem value='adj'>Adjektiva</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -143,9 +160,9 @@ const TopForm = () => {
             value={rod}
             onChange={handleRodChange}
           >
-            <MenuItem value={10}>m.</MenuItem>
-            <MenuItem value={20}>f.</MenuItem>
-            <MenuItem value={30}>n.</MenuItem>
+            <MenuItem value='m'>m.</MenuItem>
+            <MenuItem value='f'>f.</MenuItem>
+            <MenuItem value='n'>n.</MenuItem>
           </Select>
         </FormControl>
       </Grid>

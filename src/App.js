@@ -34,7 +34,7 @@ const App = () => {
 		<Router>
  			<Switch>
 				<Route path="/spolecna">
-  				<Entry />;
+  				<Entry />
 				</Route>
 				<Route path="/entries">
   				<Listing />;

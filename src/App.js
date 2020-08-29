@@ -30,21 +30,21 @@ const Copyright = () => {
 }
 
 const App = () => {
-	return (
-		<Router>
- 			<Switch>
-				<Route path="/spolecna">
-  				<Entry />
-				</Route>
-				<Route path="/entries">
-  				<Listing />;
-				</Route>
-				<Route path="/">
-					 <SignIn />
-				</Route>
-			</Switch>
-		</Router>
-	);
+  return (
+    <Router>
+      <Switch>
+        <Route path="/spolecna">
+          <Entry />
+        </Route>
+        <Route path="/entries">
+          <Listing />;
+        </Route>
+        <Route path="/">
+           <SignIn />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
 
 const App2 = () => {

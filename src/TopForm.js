@@ -38,41 +38,39 @@ function getModalStyle() {
 const TopForm = props => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-
   const [kvModalOpen, setKvModalOpen] = React.useState(false);
 
-  const [rod, setRod] = React.useState("");
-  const [druh, setDruh] = React.useState("");
-  const [heslo, setHeslo] = React.useState("");
-  const [kvalifikator, setKvalifikator] = React.useState("");
+  const [values, setValues] = React.useState({
+    rod: 'm',
+    druh: 'subst',
+    heslo: 'kleslo',
+    vetne: true,
+    kvalifikator: 'kvlf.',
+    vyznam: 'vyznam...',
+  });
+
+  const handleValuesChange = (event) => {
+    console.log(`Setting ${event.target.name} to ${event.target.value}`);
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleValuesCheckChange = event => {
+    console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
+    setValues({
+      ...values,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   const handleKvalifikatorOpen = () => {
     setKvModalOpen(true);
   };
 
-  const handleDruhChange = event => {
-    setDruh(event.target.value);
-    console.log(getData());
-  };
-
-  const handleRodChange = event => {
-    setRod(event.target.value);
-    console.log(getData());
-  };
-
   const handleKvalifikatorClose = () => {
     setKvModalOpen(false);
-  };
-
-  const [checkState, setCheckState] = React.useState({
-    checkedVetne: true,
-    // checkedB: true,
-    checkedC: true
-  });
-
-  const handleCheckChange = event => {
-    setCheckState({ ...checkState, [event.target.name]: event.target.checked });
-    console.log(getData());
   };
 
   const modalBody = (
@@ -85,28 +83,28 @@ const TopForm = props => {
     </div>
   );
 
-  const getData = () => {
-    return {
-      rod,
-      druh,
-      heslo,
-      kvalifikator,
-      vetne: checkState.checkedVetne,
-    };
-  }
+  // const getData = () => {
+  //   return {
+  //     rod,
+  //     druh,
+  //     heslo,
+  //     kvalifikator,
+  //     vetne: checkState.checkedVetne,
+  //   };
+  // }
 
   return (
     <React.Fragment>
       <Grid item xs={3}>
         <FormControl>
-          <InputLabel htmlFor="heslo-textbox">Heslo</InputLabel>
-          <BootstrapInput id="heslo-textbox" />
+          <InputLabel htmlFor="heslo">Heslo</InputLabel>
+          <BootstrapInput name="heslo" value={values.heslo} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
         <FormControl>
           <InputLabel htmlFor="kvalifikator-textbox">Kvalifikátor</InputLabel>
-          <BootstrapInput id="kvalifikator-textbox" />
+          <BootstrapInput id="kvalifikator-textbox" name='kvalifikator' value={values.kvalifikator} onChange={handleValuesChange} />
           <button type="button" onClick={handleKvalifikatorOpen}>
             Nastavit
           </button>
@@ -118,7 +116,7 @@ const TopForm = props => {
       <Grid item xs={3}>
         <FormControl>
           <InputLabel htmlFor="vyznam-textbox">Význam</InputLabel>
-          <BootstrapInput id="vyznam-textbox" />
+          <BootstrapInput id="vyznam-textbox" name='vyznam' value={values.vyznam} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
@@ -128,9 +126,9 @@ const TopForm = props => {
             <Grid item>
               <Switch
                 color="primary"
-                checked={checkState.checkedVetne}
-                onChange={handleCheckChange}
-                name="checkedVetne"
+                checked={values.vetne}
+                onChange={handleValuesCheckChange}
+                name="vetne"
               />
             </Grid>
             <Grid item>Nevětné</Grid>
@@ -142,9 +140,9 @@ const TopForm = props => {
           <InputLabel id="demo-simple-select-label">Druh</InputLabel>
           <Select
             labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={druh}
-            onChange={handleDruhChange}
+            name="druh"
+            value={values.druh}
+            onChange={handleValuesChange}
           >
             <MenuItem value='subst'>Substantiva</MenuItem>
             <MenuItem value='adj'>Adjektiva</MenuItem>
@@ -153,12 +151,12 @@ const TopForm = props => {
       </Grid>
       <Grid item xs={3}>
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Rod</InputLabel>
+          <InputLabel id="rod-label">Rod</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={rod}
-            onChange={handleRodChange}
+            labelId="rod-label"
+            name="rod"
+            value={values.rod}
+            onChange={handleValuesChange}
           >
             <MenuItem value='m'>m.</MenuItem>
             <MenuItem value='f'>f.</MenuItem>

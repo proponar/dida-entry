@@ -5,9 +5,12 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
 import TopForm from './TopForm.js';
+import ExempForm from './ExempForm.js';
 import { baseUrl } from './config';
 
 export default function Entry() {
+  const [exemps, setExemps] = React.useState([]);
+
   const onSaveClick = () => {
     alert('clicked');
 		axios.post(baseUrl + 'entries', {
@@ -21,6 +24,10 @@ export default function Entry() {
     });
   };
 
+  const onAddClick = () => {
+    setExemps([...exemps, <ExempForm/>]);
+  };
+
   const setTopData = data => {
     console.log('top data: ', data);
   };
@@ -29,8 +36,12 @@ export default function Entry() {
     <React.Fragment>
       <Grid container item xs={12} spacing={3}>
         <TopForm setData={setTopData} />
+        {exemps.map(e =>
+          <ExempForm/>
+        )}
       </Grid>
       <Button onClick={() => { onSaveClick(); }} variant="contained" color="primary">Uložit</Button>
+      <Button onClick={() => { onAddClick(); }} variant="contained" color="secondary">Přidat</Button>
     </React.Fragment>
   );
 }

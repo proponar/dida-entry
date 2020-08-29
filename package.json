@@ -9,13 +9,14 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "axios": "latest",
-    "base64-js": "latest",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
+    "axios": "latest",
+    "base64-js": "latest",
     "clsx": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-number-format": "^4.4.1",
     "react-router-dom": "latest",
     "react-scripts": "latest"
   },

@@ -19,26 +19,11 @@ import Modal from "@material-ui/core/Modal";
 import CheckboxForm from "./CheckboxForm";
 import BootstrapInput from "./BootstrapInput";
 import useStyles from "./useStyles";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
+import KvalifikatorInput from "./KvalifikatorInput";
 
 const TopForm = props => {
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
-  const [kvModalOpen, setKvModalOpen] = React.useState(false);
+  // const [kvModalOpen, setKvModalOpen] = React.useState(false);
 
   const [values, setValues] = React.useState({
     rod: 'm',
@@ -65,24 +50,6 @@ const TopForm = props => {
     });
   };
 
-  const handleKvalifikatorOpen = () => {
-    setKvModalOpen(true);
-  };
-
-  const handleKvalifikatorClose = () => {
-    setKvModalOpen(false);
-  };
-
-  const modalBody = (
-    <div style={modalStyle} className={classes.modalPaper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <CheckboxForm checks={["foo", "bar", "baz", "lorez"]} />
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-    </div>
-  );
-
   // const getData = () => {
   //   return {
   //     rod,
@@ -102,16 +69,7 @@ const TopForm = props => {
         </FormControl>
       </Grid>
       <Grid item xs={3}>
-        <FormControl>
-          <InputLabel htmlFor="kvalifikator-textbox">Kvalifikátor</InputLabel>
-          <BootstrapInput id="kvalifikator-textbox" name='kvalifikator' value={values.kvalifikator} onChange={handleValuesChange} />
-          <button type="button" onClick={handleKvalifikatorOpen}>
-            Nastavit
-          </button>
-          <Modal open={kvModalOpen} onClose={handleKvalifikatorClose}>
-            {modalBody}
-          </Modal>
-        </FormControl>
+				<KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
       </Grid>
       <Grid item xs={3}>
         <FormControl>

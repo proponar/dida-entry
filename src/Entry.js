@@ -24,9 +24,15 @@ export default function Entry() {
     });
   };
 
+  const setExempData = (key, data) => {
+    console.log(`exemp data for ${key}:`, data);
+  }
+
   const onAddClick = () => {
-    setExemps([...exemps, <ExempForm/>]);
+    const key = Math.random();
+    setExemps([...exemps, <ExempForm setData={setExempData} key={key} dataKey={key} />]);
   };
+
 
   const setTopData = data => {
     console.log('top data: ', data);
@@ -36,9 +42,7 @@ export default function Entry() {
     <React.Fragment>
       <Grid container item xs={12} spacing={3}>
         <TopForm setData={setTopData} />
-        {exemps.map(e =>
-          <ExempForm/>
-        )}
+        {exemps.map(e => e)}
       </Grid>
       <Button onClick={() => { onSaveClick(); }} variant="contained" color="primary">Uložit</Button>
       <Button onClick={() => { onAddClick(); }} variant="contained" color="secondary">Přidat</Button>

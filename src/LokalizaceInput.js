@@ -4,6 +4,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import AsyncAutocomplete from "./AsyncAutocomplete";
 //import useStyles from "./useStyles";
 
 const LokalizaceInput = props => {
@@ -12,7 +13,9 @@ const LokalizaceInput = props => {
   return (
     <FormControl>
       <Grid component="label" container alignItems="center" spacing={1}>
-        <Grid item>Lokalizace</Grid>
+        <Grid item>
+					<AsyncAutocomplete />
+				</Grid>
         <Grid item>
           Lokalizace
         </Grid>

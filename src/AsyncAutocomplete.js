@@ -1,10 +1,10 @@
-// *https://www.registers.service.gov.uk/registers/country/use-the-api*
-//import fetch from 'cross-fetch';
 import axios from 'axios';
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { baseUrl } from './config';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -25,14 +25,19 @@ const AsyncAutocomplete = props => {
     }
 
     (async () => {
-      // const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-      const response = await axios.get('https://country.register.gov.uk/records.json?page-size=5000');
-      await sleep(1e3); // For demo purposes.
-      //const countries = await response.json();
-      const countries = await response.data;
+      const response = await axios.get(
+					baseUrl + 'locations/search', {
+					headers: {
+						Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+					}
+				}
+			);
+      const entries = await response.data.data;
 
       if (active) {
-        setOptions(Object.keys(countries).map((key) => countries[key].item[0]));
+        //setOptions(Object.keys(entries).map((key) => entries[key].item[0]));
+        //setOptions(entries.map(entry => entry.naz_obec));
+        setOptions(entries);
       }
     })();
 
@@ -47,6 +52,11 @@ const AsyncAutocomplete = props => {
     }
   }, [open]);
 
+	const handleInputChange = (ev, value) => {
+		// fixme: populate options
+		console.log('val: ', value)
+	};
+
   return (
     <Autocomplete
       id="asynchronous-demo"
@@ -58,14 +68,15 @@ const AsyncAutocomplete = props => {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={(option) => option.name}
+      getOptionSelected={(option, value) => option.naz_obec === value.naz_obec}
+      getOptionLabel={(option) => option.naz_obec}
       options={options}
       loading={loading}
+			onInputChange={handleInputChange}
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Asynchronous"
+          label="Obec"
           variant="outlined"
           InputProps={{
             ...params.InputProps,

@@ -13,6 +13,10 @@ function sleep(delay = 0) {
 }
 
 const AsyncAutocomplete = props => {
+  const {
+    onChange
+  } = props;
+
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -26,12 +30,12 @@ const AsyncAutocomplete = props => {
 
     (async () => {
       const response = await axios.get(
-					baseUrl + 'locations/search', {
-					headers: {
-						Authorization: `Token ${window.localStorage.getItem('auth-token')}`
-					}
-				}
-			);
+          baseUrl + 'locations/search', {
+          headers: {
+            Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+          }
+        }
+      );
       const entries = await response.data.data;
 
       if (active) {
@@ -52,10 +56,15 @@ const AsyncAutocomplete = props => {
     }
   }, [open]);
 
-	const handleInputChange = (ev, value) => {
-		// fixme: populate options
-		console.log('val: ', value)
-	};
+  const handleValueChange = (ev, value) => {
+    console.log('value change: ', value)
+    onChange({target: {name: 'location', value: value.kod_obec}});
+  };
+
+  const handleInputChange = (ev, value) => {
+    // fixme: populate options
+    console.log('val: ', value)
+  };
 
   return (
     <Autocomplete
@@ -72,7 +81,8 @@ const AsyncAutocomplete = props => {
       getOptionLabel={(option) => option.naz_obec}
       options={options}
       loading={loading}
-			onInputChange={handleInputChange}
+      onChange={handleValueChange}
+      onInputChange={handleInputChange}
       renderInput={(params) => (
         <TextField
           {...params}

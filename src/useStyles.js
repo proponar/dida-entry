@@ -4,7 +4,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
       margin: theme.spacing(1)
-    }
+    },
+    borderStyle: "solid",
+    borderWidth: "1px",
+    margin: "4px",
   },
   modalPaper: {
     position: "absolute",
@@ -13,7 +16,15 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
-  }
+  },
+  mainButtons: {
+    paddingLeft: '20px',
+    paddingTop: '20px',
+  },
+  autosizeWrap: {
+    display: 'flex',
+    paddingRight: '10px',
+  },
 }));
 
 export default useStyles;

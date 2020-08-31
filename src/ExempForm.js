@@ -7,14 +7,18 @@ import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
+import Box from "@material-ui/core/Box";
 import BootstrapInput from "./BootstrapInput";
 import RokInput from './RokInput.js';
 import RodSelect from './RodSelect.js';
 import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
+import useStyles from "./useStyles";
 
 const ExempForm = props => {
+  const classes = useStyles();
+
   const {
     dataKey,
     setData,
@@ -53,19 +57,19 @@ const ExempForm = props => {
     <React.Fragment>
       <Grid item container xs={12}>
         <Grid item xs={8}>
-          <FormGroup>
-            <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace</InputLabel>
-            <FormControl>
-              <TextareaAutosize
-                rowsMin={3}
-                id="exemplifikace-textbox"
-                placeholder="..."
-                name="exemplifikace"
-                value={values.exemplifikace}
-                onChange={handleValuesChange}
-              />
-            </FormControl>
-          </FormGroup>
+          <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace</InputLabel>
+          <div className={classes.autosizeWrap}>
+            <TextareaAutosize
+              style={{width: '100%'}}
+              width={500}
+              rowsMin={3}
+              id="exemplifikace-textbox"
+              placeholder="..."
+              name="exemplifikace"
+              value={values.exemplifikace}
+              onChange={handleValuesChange}
+            />
+          </div>
         </Grid>
         <Grid item xs={4}>
           <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />

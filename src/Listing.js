@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableFooter from '@material-ui/core/TableFooter';
+import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
@@ -16,6 +17,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 import { baseUrl } from './config';
 
@@ -118,20 +120,35 @@ export default function Listing() {
     setPage(0);
   };
 
+  const handleCellClick = rowId => {
+    alert(`Clicked row: ${rowId}`);
+  };
+
+  const handleAddButtonClick = () => {
+    alert(`Přidat položku`);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Heslo</TableCell>
+            <TableCell align="right">Kvalifikátor</TableCell>
+            <TableCell align="right">Rod</TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map(row => (
             <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+              <TableCell component="th" scope="row" onClick={() => handleCellClick(row.id)}>
+                {row.heslo}
               </TableCell>
-              <TableCell align="right">{row.vendor}</TableCell>
-              <TableCell align="right">{row.ipaddresses.join(', ')}</TableCell>
+              <TableCell align="right">{row.kvalifikator}</TableCell>
+              <TableCell align="right">{row.druh}</TableCell>
             </TableRow>
           ))}
 
@@ -143,6 +160,13 @@ export default function Listing() {
         </TableBody>
         <TableFooter>
           <TableRow>
+      			<IconButton
+							color="secondary"
+      			  onClick={handleAddButtonClick}
+      			  aria-label="Přidat položku"
+      			>
+							<AddCircleOutline />
+						</IconButton>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
               colSpan={3}

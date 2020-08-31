@@ -33,7 +33,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/spolecna">
+        <Route path="/entry/:id">
+          <Entry />
+        </Route>
+        <Route path="/entry">
           <Entry />
         </Route>
         <Route path="/entries">

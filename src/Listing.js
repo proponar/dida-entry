@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -94,13 +95,14 @@ const useStyles2 = makeStyles({
 
 export default function Listing() {
   const [rows, setRows] = useState([]);
+	const history = useHistory();
 
   useEffect(() => {
-		axios.get(baseUrl + 'entries', {
-			headers: {
-				'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
-			}
-		}).then(response => {
+    axios.get(baseUrl + 'entries', {
+      headers: {
+        'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+      }
+    }).then(response => {
       setRows(response.data.data);
     });
   }, []);
@@ -121,7 +123,7 @@ export default function Listing() {
   };
 
   const handleCellClick = rowId => {
-    alert(`Clicked row: ${rowId}`);
+	  history.push(`/entry/${rowId}`);
   };
 
   const handleAddButtonClick = () => {
@@ -160,13 +162,13 @@ export default function Listing() {
         </TableBody>
         <TableFooter>
           <TableRow>
-      			<IconButton
-							color="secondary"
-      			  onClick={handleAddButtonClick}
-      			  aria-label="Přidat položku"
-      			>
-							<AddCircleOutline />
-						</IconButton>
+            <IconButton
+              color="secondary"
+              onClick={handleAddButtonClick}
+              aria-label="Přidat položku"
+            >
+              <AddCircleOutline />
+            </IconButton>
             <TablePagination
               rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
               colSpan={3}

@@ -9,12 +9,15 @@ import AsyncAutocomplete from "./AsyncAutocomplete";
 
 const LokalizaceInput = props => {
   //const classes = useStyles();
+  const {
+    onChange
+  } = props;
 
   return (
     <FormControl>
       <Grid component="label" container alignItems="center" spacing={1}>
         <Grid item>
-					<AsyncAutocomplete />
+					<AsyncAutocomplete onChange={onChange} />
 				</Grid>
         <Grid item>
           Lokalizace

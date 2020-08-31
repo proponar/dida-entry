@@ -26,6 +26,7 @@ const ExempForm = props => {
     exemplifikace: 'papapapaaaaa....',
     vyznam: '42...',
     vetne: true,
+    location: 'somewhere',
   });
 
   const handleValuesChange = (event) => {
@@ -76,7 +77,7 @@ const ExempForm = props => {
           <Button>Novy zdroj</Button>
         </Grid>
         <Grid item xs={12}>
-          <LokalizaceInput />
+          <LokalizaceInput onChange={handleValuesChange} />
         </Grid>
         <Grid item xs={4}>
           <RokInput value={values.rok} onChange={handleValuesChange} />

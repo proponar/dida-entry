@@ -25,6 +25,10 @@ const TopForm = props => {
   const classes = useStyles();
   // const [kvModalOpen, setKvModalOpen] = React.useState(false);
 
+	const {
+		setData,
+	} = props;
+
   const [values, setValues] = React.useState({
     rod: 'm',
     druh: 'subst',
@@ -36,29 +40,23 @@ const TopForm = props => {
 
   const handleValuesChange = (event) => {
     console.log(`Setting ${event.target.name} to ${event.target.value}`);
-    setValues({
+    const newValues = {
       ...values,
       [event.target.name]: event.target.value,
-    });
+    };
+    setValues(newValues);
+		setData(newValues);
   };
 
   const handleValuesCheckChange = event => {
     console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
-    setValues({
+    const newValues = {
       ...values,
       [event.target.name]: event.target.checked,
-    });
+    };
+    setValues(newValues);
+		setData(newValues);
   };
-
-  // const getData = () => {
-  //   return {
-  //     rod,
-  //     druh,
-  //     heslo,
-  //     kvalifikator,
-  //     vetne: checkState.checkedVetne,
-  //   };
-  // }
 
   return (
     <React.Fragment>

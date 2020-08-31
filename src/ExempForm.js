@@ -15,27 +15,27 @@ import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
 
 const ExempForm = props => {
-	const {
-		dataKey,
-		setData,
-	} = props;
+  const {
+    dataKey,
+    setData,
+  } = props;
 
   const [values, setValues] = React.useState({
     rok: '1984',
     kvalifikator: 'kvlf.',
-		evemplifikace: 'papapapaaaaa....',
+    exemplifikace: 'papapapaaaaa....',
     vyznam: '42...',
     vetne: true,
   });
 
   const handleValuesChange = (event) => {
     console.log(`Setting ${event.target.name} to ${event.target.value}`);
-		const newValues = {
+    const newValues = {
       ...values,
       [event.target.name]: event.target.value,
     };
     setValues(newValues);
-		setData(dataKey, newValues);
+    setData(dataKey, newValues);
   };
 
   const handleValuesCheckChange = event => {
@@ -45,26 +45,26 @@ const ExempForm = props => {
       [event.target.name]: event.target.checked,
     };
     setValues(newValues);
-		setData(dataKey, newValues);
+    setData(dataKey, newValues);
   };
 
   return (
     <React.Fragment>
       <Grid item container xs={12}>
         <Grid item xs={8}>
-      		<FormGroup>
-      			<InputLabel htmlFor="exemplifikace-textbox">Exemplifikace</InputLabel>
-      			<FormControl>
-      			  <TextareaAutosize
-      			    rowsMin={3}
-      			    id="exemplifikace-textbox"
-      			    placeholder="..."
-								name="exemplifikace"
-								value={values.exemplifikace}
-								onChange={handleValuesChange}
-      			  />
-      			</FormControl>
-      		</FormGroup>
+          <FormGroup>
+            <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace</InputLabel>
+            <FormControl>
+              <TextareaAutosize
+                rowsMin={3}
+                id="exemplifikace-textbox"
+                placeholder="..."
+                name="exemplifikace"
+                value={values.exemplifikace}
+                onChange={handleValuesChange}
+              />
+            </FormControl>
+          </FormGroup>
         </Grid>
         <Grid item xs={4}>
           <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
@@ -79,21 +79,21 @@ const ExempForm = props => {
           <LokalizaceInput />
         </Grid>
         <Grid item xs={4}>
-					<RokInput value={values.rok} onChange={handleValuesChange} />
-				</Grid>
+          <RokInput value={values.rok} onChange={handleValuesChange} />
+        </Grid>
         <Grid item xs={4}>
-					<KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
-				</Grid>
+          <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
+        </Grid>
         <Grid item xs={4}>
-        	<FormControl>
-        	  <InputLabel htmlFor="vyznam-textbox">Význam</InputLabel>
-        	  <BootstrapInput
-							id="vyznam-textbox"
-							name='vyznam'
-							value={values.vyznam}
-							onChange={handleValuesChange} />
-        	</FormControl>
-				</Grid>
+          <FormControl>
+            <InputLabel htmlFor="vyznam-textbox">Význam</InputLabel>
+            <BootstrapInput
+              id="vyznam-textbox"
+              name='vyznam'
+              value={values.vyznam}
+              onChange={handleValuesChange} />
+          </FormControl>
+        </Grid>
       </Grid>
     </React.Fragment>
   );

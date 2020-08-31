@@ -96,7 +96,6 @@ export default function Listing() {
   useEffect(() => {
 		axios.get(baseUrl + 'entries', {
 			headers: {
-				//'X-Auth-Token': window.localStorage.getItem('auth-token')
 				'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
 			}
 		}).then(response => {

@@ -15,6 +15,7 @@ import ProTip from './ProTip';
 import SignIn from './SignIn.js';
 import Listing from './Listing.js';
 import Entry from './Entry.js';
+import CsvUpload from './CsvUpload.js';
 
 const Copyright = () => {
   return (
@@ -40,7 +41,10 @@ const App = () => {
           <Entry />
         </Route>
         <Route path="/entries">
-          <Listing />;
+          <Listing />
+        </Route>
+        <Route path="/upload">
+          <CsvUpload />
         </Route>
         <Route path="/">
            <SignIn />

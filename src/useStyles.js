@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     paddingRight: '10px',
   },
+  hiddenInput: {
+      display: 'none'
+  },
 }));
 
 export default useStyles;

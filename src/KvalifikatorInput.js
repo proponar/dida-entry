@@ -41,12 +41,26 @@ const KvalifikatorInput = props => {
     setKvModalOpen(false);
   };
 
+  const checks = ['augm.', 'dem.', 'expr.', 'expr. dem.', 'bižut.', 'bot.',
+    'zool.', 'dět.', 'dopr.', 'horn.', 'hrnč.', 'hud.', 'hut.', 'obuv.',
+    'kart.', 'kovář.', 'krejč.', 'lak.', 'mlyn.', 'mysl.', 'náb.', 'piv.',
+    'ryb.', 'rybn.', 'řem.', 'řezn.', 'sklář.', 'tech.', 'tes.', 'text.',
+    'tkalc.', 'truhl.', 'včel.', 'vinař.', 'voj.', 'vor.', 'stav.', 'zahrad.',
+    'zedn.', 'zeměd.'];
+
+  // FIXME: initiating to false, need to load from form data
+  const [checkState, setCheckState] = React.useState(
+    Object.fromEntries(
+      checks.map(c => [c, false])
+    )
+  );
+
   const modalBody = (
     <div style={modalStyle} className={classes.modalPaper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <CheckboxForm checks={["foo", "bar", "baz", "lorez"]} />
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      <h2 id="modal-title">Výběr kvalifikátorů</h2>
+      <CheckboxForm checks={checks} checkState={checkState} setCheckState={setCheckState} />
+      <p id="modal-description">
+        Vyberte relevantní klasifikátory.
       </p>
     </div>
   );

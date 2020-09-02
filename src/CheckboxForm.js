@@ -1,37 +1,41 @@
 import React from "react";
-// import { withStyles } from "@material-ui/core/styles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+
 import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+
+// import { withStyles } from "@material-ui/core/styles";
 
 const CheckboxForm = props => {
-  const { checks } = props;
-
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true
-  });
+  const {
+    checks,
+    checkState,
+    setCheckState,
+  } = props;
 
   const handleChange = event => {
-    setState({ ...state, [event.target.name.substr(3)]: event.target.checked });
+    setCheckState({ ...checkState, [event.target.name.substr(3)]: event.target.checked });
   };
 
   return (
     <div>
-      {checks.map(c => (
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={state[c]}
-              onChange={handleChange}
-              name={"cb_" + c}
-              color="primary"
+      <Grid container>
+        {checks.map(c => (
+          <Grid key={c} item xs={3}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkState[c]}
+                  onChange={handleChange}
+                  name={"cb_" + c}
+                  color="primary"
+                />
+              }
+              label={c}
             />
-          }
-          label={c}
-        />
-      ))}
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

@@ -16,7 +16,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 //import Paper from "@material-ui/core/Paper";
 import Modal from "@material-ui/core/Modal";
 
-import CheckboxForm from "./CheckboxForm";
 import BootstrapInput from "./BootstrapInput";
 import useStyles from "./useStyles";
 import KvalifikatorInput from "./KvalifikatorInput";
@@ -60,6 +59,12 @@ const TopForm = props => {
 
   return (
     <React.Fragment>
+      <Grid item xs={9}>
+      </Grid>
+      <Grid item xs={3}>
+        Autor: xxx
+        Verze: xxx
+      </Grid>
       <Grid item xs={3}>
         <FormControl>
           <InputLabel htmlFor="heslo">Heslo</InputLabel>

@@ -59,3 +59,7 @@ npm start
  * https://github.com/s-yadav/react-number-format
 
 Take a look: https://github.com/mbrn/material-table
+
+## create-react-app configuration
+
+https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/advanced-configuration.md

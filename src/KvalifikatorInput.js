@@ -23,6 +23,26 @@ const getModalStyle = () => {
   };
 };
 
+const checks = ['augm.', 'dem.', 'expr.', 'expr. dem.', 'bižut.', 'bot.',
+  'zool.', 'dět.', 'dopr.', 'horn.', 'hrnč.', 'hud.', 'hut.', 'obuv.',
+  'kart.', 'kovář.', 'krejč.', 'lak.', 'mlyn.', 'mysl.', 'náb.', 'piv.',
+  'ryb.', 'rybn.', 'řem.', 'řezn.', 'sklář.', 'tech.', 'tes.', 'text.',
+  'tkalc.', 'truhl.', 'včel.', 'vinař.', 'voj.', 'vor.', 'stav.', 'zahrad.',
+  'zedn.', 'zeměd.'];
+
+
+const textToChecks = text => {
+  const checkedValues = text.split(new RegExp(/,\s+/, 'i')).reduce(
+    (acc, key) => {
+      acc[key] = true;
+      return acc;
+    }, {}
+  );
+  return Object.fromEntries(
+    checks.map(c => [c, !!checkedValues[c]])
+  );
+};
+
 const KvalifikatorInput = props => {
   const {
     value,
@@ -30,30 +50,22 @@ const KvalifikatorInput = props => {
   } = props;
 
   const classes = useStyles();
+
+  // split initial value and fill in hash of checks
+  const [checkState, setCheckState] = React.useState(textToChecks(value));
+
   const [modalStyle] = React.useState(getModalStyle);
   const [kvModalOpen, setKvModalOpen] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState(value);
 
   const handleKvalifikatorOpen = () => {
     setKvModalOpen(true);
   };
 
   const handleKvalifikatorClose = () => {
+    setInputValue(Object.keys(checkState).filter(key => checkState[key]).join(', '));
     setKvModalOpen(false);
   };
-
-  const checks = ['augm.', 'dem.', 'expr.', 'expr. dem.', 'bižut.', 'bot.',
-    'zool.', 'dět.', 'dopr.', 'horn.', 'hrnč.', 'hud.', 'hut.', 'obuv.',
-    'kart.', 'kovář.', 'krejč.', 'lak.', 'mlyn.', 'mysl.', 'náb.', 'piv.',
-    'ryb.', 'rybn.', 'řem.', 'řezn.', 'sklář.', 'tech.', 'tes.', 'text.',
-    'tkalc.', 'truhl.', 'včel.', 'vinař.', 'voj.', 'vor.', 'stav.', 'zahrad.',
-    'zedn.', 'zeměd.'];
-
-  // FIXME: initiating to false, need to load from form data
-  const [checkState, setCheckState] = React.useState(
-    Object.fromEntries(
-      checks.map(c => [c, false])
-    )
-  );
 
   const modalBody = (
     <div style={modalStyle} className={classes.modalPaper}>
@@ -68,7 +80,7 @@ const KvalifikatorInput = props => {
   return (
     <FormControl>
       <InputLabel htmlFor="kvalifikator-textbox">Kvalifikátor</InputLabel>
-      <BootstrapInput id="kvalifikator-textbox" name='kvalifikator' value={value} onChange={onChange} />
+      <BootstrapInput id="kvalifikator-textbox" name='kvalifikator' value={inputValue} onChange={onChange} />
       <button type="button" onClick={handleKvalifikatorOpen}>
         Nastavit
       </button>

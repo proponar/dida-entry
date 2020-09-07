@@ -27,11 +27,37 @@ const CastObceInput = props => {
 
 const LokalizaceInput = props => {
   const {
+    valueObec,
+    valueCast,
     onChange
   } = props;
 
+  const onChangeInternal = (event) => {
+    console.log(`Lokalizace setting ${event.target.name} to ${event.target.value}`);
+    onChange(event);
+  };
+
   // FIXME: dynamicky nacist
   const [castiObce, setCastiObce] = React.useState(['tam', 'jinde']);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await axios.get(
+  //         baseUrl + `locations/parts/${id}`, {
+  //         headers: {
+  //           Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+  //         }
+  //       }
+  //     );
+  //     console.log('loaded entry:', response.data);
+  //     //setEntry(response.data);
+  //   }
+  //   if (id) {
+  //     fetchData();
+  //   } else {
+  //     //setEntry({});
+  //   }
+  // }, [id]);
 
   const onChangePart = () => {
     alert('onChangePart');
@@ -41,10 +67,10 @@ const LokalizaceInput = props => {
     <FormControl>
       <Grid component="label" container alignItems="center" spacing={1}>
         <Grid item>
-					<AsyncAutocomplete onChange={onChange} />
+					<AsyncAutocomplete value={valueObec} onChange={onChangeInternal} />
 				</Grid>
         <Grid item>
-					<CastObceInput onChange={onChangePart} options={castiObce} />
+					<CastObceInput value={valueCast} onChange={onChangePart} options={castiObce} />
         </Grid>
         <Grid item>Lokalizace</Grid>
       </Grid>

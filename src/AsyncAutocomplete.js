@@ -41,7 +41,9 @@ const AsyncAutocomplete = props => {
       if (active) {
         //setOptions(Object.keys(entries).map((key) => entries[key].item[0]));
         //setOptions(entries.map(entry => entry.naz_obec));
-        setOptions(entries);
+
+				// FIXME: mamte tu limit :-(
+        setOptions(entries.slice(0, 100));
       }
     })();
 
@@ -50,15 +52,15 @@ const AsyncAutocomplete = props => {
     };
   }, [loading]);
 
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
+  // React.useEffect(() => {
+  //   if (!open) {
+  //     setOptions([]);
+  //   }
+  // }, [open]);
 
   const handleValueChange = (ev, value) => {
     console.log('value change: ', value)
-    onChange({target: {name: 'location', value: value.kod_obec}});
+    onChange({target: {name: 'lokalizaceObec', value: value.kod_obec}});
   };
 
   const handleInputChange = (ev, value) => {

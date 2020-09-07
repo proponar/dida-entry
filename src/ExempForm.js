@@ -1,11 +1,13 @@
 import React from "react";
 
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import TextField from '@material-ui/core/TextField';
 
 import Box from "@material-ui/core/Box";
 import BootstrapInput from "./BootstrapInput";
@@ -15,6 +17,25 @@ import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
 import useStyles from "./useStyles";
+
+const ZdrojInput = props => {
+	const {
+		options,
+    value,
+    onChange,
+	} = props;
+
+  // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
+	return (
+    <Autocomplete
+      name="zdroj"
+      options={options}
+      getOptionLabel={(option) => option}
+      style={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Zdroj" variant="outlined" />}
+    />
+	);
+};
 
 const ExempForm = props => {
   const classes = useStyles();
@@ -30,7 +51,7 @@ const ExempForm = props => {
     exemplifikace: 'papapapaaaaa....',
     vyznam: '42...',
     vetne: true,
-    location: 'somewhere',
+    lokalizaceObec: 'somewhere',
   });
 
   const handleValuesChange = (event) => {
@@ -52,6 +73,9 @@ const ExempForm = props => {
     setValues(newValues);
     setData(dataKey, newValues);
   };
+
+  // FIXME
+  const zdroje = ['foo', 'bar', 'baz'];
 
   return (
     <React.Fragment>
@@ -75,13 +99,14 @@ const ExempForm = props => {
           <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
         </Grid>
         <Grid item xs={8}>
-          Zdroj
-        </Grid>
-        <Grid item xs={4}>
-          <Button>Novy zdroj</Button>
+          <ZdrojInput options={zdroje} value={values.zdroj} onChange={handleValuesChange} />
         </Grid>
         <Grid item xs={12}>
-          <LokalizaceInput onChange={handleValuesChange} />
+          <LokalizaceInput
+            valueObec={values.lokalizaceObec}
+            valueCast={values.lokalizaceCast}
+            onChange={handleValuesChange}
+          />
         </Grid>
         <Grid item xs={4}>
           <RokInput value={values.rok} onChange={handleValuesChange} />

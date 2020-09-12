@@ -127,7 +127,7 @@ export default function Listing() {
   };
 
   const handleAddButtonClick = () => {
-    alert(`Přidat položku`);
+	  history.push(`/entry/`);
   };
 
   return (

@@ -21,6 +21,8 @@ const AsyncAutocomplete = props => {
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
 
+  const [searchStr, setSearchStr] = React.useState('');
+
   React.useEffect(() => {
     let active = true;
 
@@ -30,7 +32,7 @@ const AsyncAutocomplete = props => {
 
     (async () => {
       const response = await axios.get(
-          baseUrl + 'locations/search', {
+          baseUrl + 'locations/search/' + searchStr, {
           headers: {
             Authorization: `Token ${window.localStorage.getItem('auth-token')}`
           }
@@ -50,7 +52,7 @@ const AsyncAutocomplete = props => {
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [loading, searchStr]);
 
   // React.useEffect(() => {
   //   if (!open) {
@@ -60,12 +62,15 @@ const AsyncAutocomplete = props => {
 
   const handleValueChange = (ev, value) => {
     console.log('value change: ', value)
-    onChange({target: {name: 'lokalizaceObec', value: value.kod_obec}});
+    if (value)
+      onChange({target: {name: 'lokalizaceObec', value: value.kod_obec}});
   };
 
   const handleInputChange = (ev, value) => {
     // fixme: populate options
     console.log('val: ', value)
+    setSearchStr(value);
+    setOptions([]);
   };
 
   return (

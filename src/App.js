@@ -46,6 +46,9 @@ const App = () => {
         <Route path="/upload">
           <CsvUpload />
         </Route>
+        <Route path="/test">
+          <CsvUpload />
+        </Route>
         <Route path="/">
            <SignIn />
         </Route>

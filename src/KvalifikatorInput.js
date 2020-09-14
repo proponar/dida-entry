@@ -51,12 +51,17 @@ const KvalifikatorInput = props => {
 
   const classes = useStyles();
 
-  // split initial value and fill in hash of checks
-  const [checkState, setCheckState] = React.useState(textToChecks(value));
-
   const [modalStyle] = React.useState(getModalStyle);
   const [kvModalOpen, setKvModalOpen] = React.useState(false);
+
   const [inputValue, setInputValue] = React.useState(value);
+  const [checkState, setCheckState] = React.useState(textToChecks(value));
+
+  // need this because value changes from outside (parent)
+  // https://medium.com/@digruby/do-not-use-props-as-default-value-of-react-usestate-directly-818ee192f454
+  React.useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   const handleKvalifikatorOpen = () => {
     setKvModalOpen(true);

@@ -6,12 +6,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { baseUrl } from './config';
 
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
-
 const AsyncAutocomplete = props => {
   const {
     onChange

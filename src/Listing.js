@@ -145,7 +145,7 @@ export default function Listing() {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map(row => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row" onClick={() => handleCellClick(row.id)}>
                 {row.heslo}
               </TableCell>
@@ -162,13 +162,15 @@ export default function Listing() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <IconButton
-              color="secondary"
-              onClick={handleAddButtonClick}
-              aria-label="Přidat položku"
-            >
-              <AddCircleOutline />
-            </IconButton>
+            <TableCell>
+              <IconButton
+                color="secondary"
+                onClick={handleAddButtonClick}
+                aria-label="Přidat položku"
+              >
+                <AddCircleOutline />
+              </IconButton>
+            </TableCell>
             <TablePagination
               labelRowsPerPage="Řádků na stránce"
               rowsPerPageOptions={[10, 25, 50, { label: 'Všechny', value: -1 }]}

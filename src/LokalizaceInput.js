@@ -3,7 +3,6 @@ import React from "react";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from '@material-ui/core/TextField';
 
 import AsyncAutocomplete from "./AsyncAutocomplete";

@@ -6,7 +6,7 @@ import Switch from "@material-ui/core/Switch";
 
 const VetneSwitch = props => {
   const {
-    value,
+    checked,
     onChange
   } = props;
 
@@ -17,7 +17,7 @@ const VetneSwitch = props => {
         <Grid item>
           <Switch
             color="primary"
-            checked={value}
+            checked={checked}
             onChange={onChange}
             name="vetne"
           />

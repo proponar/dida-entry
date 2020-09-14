@@ -170,7 +170,8 @@ export default function Listing() {
               <AddCircleOutline />
             </IconButton>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
+              labelRowsPerPage="Řádků na stránce"
+              rowsPerPageOptions={[10, 25, 50, { label: 'Všechny', value: -1 }]}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}

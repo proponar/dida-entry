@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from 'react';
+import uniqueId from 'lodash/uniqueId'
 
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -84,10 +85,12 @@ const KvalifikatorInput = props => {
     </div>
   );
 
+  const [ inputId ] = useState(() => uniqueId('kvalifikator-textbox'))
+
   return (
     <FormControl>
-      <InputLabel htmlFor="kvalifikator-textbox">Kvalifikátor</InputLabel>
-      <BootstrapInput id="kvalifikator-textbox" name='kvalifikator' value={inputValue} onChange={onChange} />
+      <InputLabel htmlFor={inputId}>Kvalifikátor</InputLabel>
+      <BootstrapInput id={inputId} name='kvalifikator' value={inputValue} onChange={onChange} />
       <button type="button" onClick={handleKvalifikatorOpen}>
         Nastavit
       </button>

@@ -20,7 +20,7 @@ const VetneSwitch = props => {
   return (
     <FormControl>
       <Grid component="label" container alignItems="center" spacing={1}>
-        <Grid item>Větné</Grid>
+        <Grid item>Nevětné</Grid>
         <Grid item>
           <Switch
             color="primary"
@@ -29,7 +29,7 @@ const VetneSwitch = props => {
             name="vetne"
           />
         </Grid>
-        <Grid item>Nevětné</Grid>
+        <Grid item>Větné</Grid>
       </Grid>
     </FormControl>
   );

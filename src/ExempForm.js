@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from 'react';
+import uniqueId from 'lodash/uniqueId'
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from "@material-ui/core/Button";
@@ -41,9 +42,15 @@ const ExempForm = props => {
   const classes = useStyles();
 
   const {
+    data,
     dataKey,
     setData,
   } = props;
+
+  // react on prop change
+  React.useEffect(() => {
+    setValues(data);
+  }, [data]);
 
   const [values, setValues] = React.useState({
     rok: '1984',
@@ -76,6 +83,8 @@ const ExempForm = props => {
 
   // FIXME
   const zdroje = ['foo', 'bar', 'baz'];
+
+  const [ inputId ] = useState(() => uniqueId('vyznam-textbox'))
 
   return (
     <React.Fragment>
@@ -116,9 +125,9 @@ const ExempForm = props => {
         </Grid>
         <Grid item xs={4}>
           <FormControl>
-            <InputLabel htmlFor="vyznam-textbox">Význam</InputLabel>
+            <InputLabel htmlFor={inputId}>Význam</InputLabel>
             <BootstrapInput
-              id="vyznam-textbox"
+              id={inputId}
               name='vyznam'
               value={values.vyznam}
               onChange={handleValuesChange} />

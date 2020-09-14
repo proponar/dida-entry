@@ -63,8 +63,10 @@ const KvalifikatorInput = props => {
   };
 
   const handleKvalifikatorClose = () => {
-    setInputValue(Object.keys(checkState).filter(key => checkState[key]).join(', '));
+    const newValue = Object.keys(checkState).filter(key => checkState[key]).join(', ');
+    setInputValue(newValue);
     setKvModalOpen(false);
+    onChange({target: {name: 'kvalifikator', value: newValue}});
   };
 
   const modalBody = (

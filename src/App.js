@@ -7,13 +7,14 @@ import {
   //Link
 } from "react-router-dom";
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import ProTip from './ProTip';
-import SignIn from './SignIn.js';
-import Listing from './Listing.js';
-import Entry from './Entry.js';
+// import Typography from '@material-ui/core/Typography';
+// import Link from '@material-ui/core/Link';
+// import ProTip from './ProTip';
 import CsvUpload from './CsvUpload.js';
+import Entry from './Entry.js';
+import Listing from './Listing.js';
+import MapView from './MapView.js';
+import SignIn from './SignIn.js';
 
 const App = () => {
   return (
@@ -33,6 +34,9 @@ const App = () => {
         </Route>
         <Route path="/test">
           <CsvUpload />
+        </Route>
+        <Route path="/map">
+          <MapView />
         </Route>
         <Route path="/">
            <SignIn />

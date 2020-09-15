@@ -63,3 +63,7 @@ Take a look: https://github.com/mbrn/material-table
 ## create-react-app configuration
 
 https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/advanced-configuration.md
+
+## Mapy.cz Integration
+
+ * https://github.com/flsy/react-mapycz

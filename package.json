@@ -15,8 +15,10 @@
     "axios": "latest",
     "base64-js": "latest",
     "clsx": "latest",
+    "lodash": "^4.17.20",
     "react": "latest",
     "react-dom": "latest",
+    "react-mapycz": "^1.0.3",
     "react-number-format": "^4.4.1",
     "react-router-dom": "latest",
     "react-scripts": "latest"

@@ -137,7 +137,7 @@ export default function Listing() {
           <TableRow>
             <TableCell>Heslo</TableCell>
             <TableCell align="right">Kvalifikátor</TableCell>
-            <TableCell align="right">Rod</TableCell>
+            <TableCell align="right">Druh</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

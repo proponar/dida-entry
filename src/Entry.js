@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import Button from "@material-ui/core/Button";
@@ -14,12 +14,26 @@ import useStyles from "./useStyles";
 
 export default function Entry() {
   const classes = useStyles();
+	const history = useHistory();
   let { id } = useParams();
-  console.log(`Have id: ${id}`);
+
+  if (id) {
+    console.log(`Have id: ${id}`);
+  } else {
+    console.log('No id.');
+  }
 
   const [formData, setFormData] = React.useState({
-    entry: {}, // "TopForm" data
-    data: {},  // repeated "Exemp" data
+    entry: {
+      id: null,
+      rod: 'm',
+      druh: 'subst',
+      heslo: 'kleslo',
+      vetne: true,
+      kvalifikator: 'ex. kvlf.',
+      vyznam: 'vyznam...',
+    },
+    exemps: {},  // repeated "Exemp" data
   });
 
   // number of "Exemp" subforms
@@ -35,7 +49,23 @@ export default function Entry() {
         }
       );
       console.log('loaded entry:', response.data);
-      //setEntry(response.data);
+      console.log('entry part:', response.data.entry);
+      console.log('exemps part:', response.data.exemps);
+
+      const nExemps = response.data.exemps.length;
+      console.log('nExemps: ', nExemps);
+
+      const exempData = {};
+      for (let i = 0; i < nExemps; i++) {
+        exempData[i] = response.data.exemps[i];
+      }
+
+      setFormData({
+        entry: response.data.entry,
+        exemps: exempData,
+      });
+
+      setExempCounter(response.data.exemps.length);
     }
     if (id) {
       fetchData();
@@ -44,14 +74,40 @@ export default function Entry() {
     }
   }, [id]);
 
-  const onSaveClick = () => {
-    console.log('saving form', formData);
+  const saveNew = () => {
+    console.log('Ukládám nové heslo', formData);
 
     axios.post(
       baseUrl + 'entries',
       {
-        ...formData.entry,
-        exemps: formData.data,
+        entry: formData.entry,
+        exemps: formData.exemps,
+      },
+      {
+        headers: {
+          'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+        },
+      }
+    ).then(response => {
+      console.log(response.data);
+      const entryId = response.data.data.id;
+      console.log(entryId);
+      history.push(`/entry/${entryId}`);
+    }, error => {
+      console.log(error);
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    });
+  };
+
+  const saveExisting = () => {
+    console.log(`Aktualizuji heslo #{formData.entry}`, formData);
+
+    axios.put(
+      `${baseUrl}entries/${formData.entry.id}`,
+      {
+        entry: formData.entry,
+        exemps: formData.exemps,
       },
       {
         headers: {
@@ -60,26 +116,37 @@ export default function Entry() {
       }
     ).then(response => {
       alert('Heslo uloženo.');
+    }, error => {
+      console.log(error);
+      console.log(error.response.data);
+      alert(error.response.data.message);
     });
   };
 
+  const onSaveClick = () => {
+    console.log('saving form', formData);
+
+    if (formData.entry.id) {
+      saveExisting();
+    } else {
+      alert('NEW');
+      saveNew();
+    }
+  };
+
+  // ExempForm events
   const setExempData = (key, data) => {
     console.log(`exemp data for ${key}:`, data);
-    setFormData({
+    const newData = {
       entry: formData.entry,
-      data: {
+      exemps: {
+        ...formData.exemps,
         [key]: data,
-        ...formData.data,
       },
-    })
-  };
+    };
+    console.log('setExempData: ', newData);
 
-  const setEntryData = (entryData) => {
-    console.log(`entry data:`, entryData);
-    setFormData({
-      entry: entryData,
-      data: formData.data,
-    });
+    setFormData(newData);
   };
 
   const onAddClick = () => {
@@ -87,15 +154,50 @@ export default function Entry() {
   };
 
   const exempComponents = [];
-  for (let i =0; i <= exempCounter; i++) {
-    exempComponents.push(<ExempForm setData={setExempData} key={i} dataKey={i} />);
+  for (let i = 0; i < exempCounter; i++) {
+    exempComponents.push(
+      <ExempForm data={formData.exemps[i] || {}} setData={setExempData} key={i} dataKey={i} />
+    );
   }
+
+  // TopForm events
+  const handleValuesChange = (event) => {
+    console.log(`Setting ${event.target.name} to ${event.target.value}`);
+
+    const newEntry = {
+      ...formData.entry,
+      [event.target.name]: event.target.value,
+    };
+
+    setFormData({
+      entry: newEntry,
+      exemps: formData.exemps,
+    });
+  };
+
+  const handleValuesCheckChange = event => {
+    console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
+
+    const newEntry = {
+      ...formData.entry,
+      [event.target.name]: event.target.checked,
+    };
+
+    setFormData({
+      entry: newEntry,
+      exemps: formData.exemps,
+    });
+  };
 
   return (
     <React.Fragment>
       <Box className={classes.root}>
         <Grid container item xs={12} spacing={3}>
-          <TopForm setData={setEntryData} />
+          <TopForm
+            data={formData.entry}
+            valuesChange={handleValuesChange}
+            valuesCheckChange={handleValuesCheckChange}
+          />
         </Grid>
       </Box>
       <Box className={classes.root}>

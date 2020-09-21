@@ -13,21 +13,39 @@ import TextField from '@material-ui/core/TextField';
 import Box from "@material-ui/core/Box";
 import BootstrapInput from "./BootstrapInput";
 import RokInput from './RokInput.js';
-import RodSelect from './RodSelect.js';
 import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
 import useStyles from "./useStyles";
 
 const ZdrojInput = props => {
-	const {
-		options,
+  const {
+    options: optionsIn,
     value,
     onChange,
-	} = props;
+  } = props;
+
+  const [options, setOptions] = useState(optionsIn);
+
+  // https://www.robinwieruch.de/local-storage-react
+  // useEffect(() => {
+  // const getOptions = () => {
+  //   const cachedSources = localStorage.getItem('sources');
+  //   if (cachedSources) {
+  //     setOptions(sources);
+  //   } else {
+  //     response = await axios.get(
+  //       baseUrl + 'sources',
+  //       headers: {
+  //         Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+  //       }
+  //     );
+  //     setOptions(response.data);
+  //   }
+  // }
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
-	return (
+  return (
     <Autocomplete
       name="zdroj"
       options={options}
@@ -35,7 +53,7 @@ const ZdrojInput = props => {
       style={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Zdroj" variant="outlined" />}
     />
-	);
+  );
 };
 
 const ExempForm = props => {

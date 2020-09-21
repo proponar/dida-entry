@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from 'react';
+import uniqueId from 'lodash/uniqueId'
 
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,21 +12,20 @@ const RodSelect = props => {
   const classes = useStyles();
 
   const {
-    id,
     rod,
-    handleRodChange,
+    onChange,
   } = props;
 
-  const labelId = `${id}-label` ;
+  const [ labelId ] = useState(() => uniqueId('rod-label'))
 
   return (
     <FormControl className={classes.formControl}>
       <InputLabel id={labelId}>Rod</InputLabel>
       <Select
         labelId={labelId}
-        id={id}
         value={rod}
-        onChange={handleRodChange}
+        name="rod"
+        onChange={onChange}
       >
         <MenuItem value='m'>m.</MenuItem>
         <MenuItem value='f'>f.</MenuItem>

@@ -46,7 +46,7 @@ const textToChecks = text => {
 
 const KvalifikatorInput = props => {
   const {
-    value,
+    value = '',
     onChange,
   } = props;
 

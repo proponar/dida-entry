@@ -6,7 +6,7 @@ import Switch from "@material-ui/core/Switch";
 
 const VetneSwitch = props => {
   const {
-    checked,
+    checked = false,
     onChange
   } = props;
 

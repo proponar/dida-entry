@@ -21,7 +21,8 @@
     "react-mapycz": "^1.0.3",
     "react-number-format": "^4.4.1",
     "react-router-dom": "latest",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "react-toastify": "^6.0.8"
   },
   "browserslist": {
     "production": [

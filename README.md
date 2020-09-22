@@ -67,3 +67,7 @@ https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/advance
 ## Mapy.cz Integration
 
  * https://github.com/flsy/react-mapycz
+
+## Toasts
+ 
+ * https://fkhadra.github.io/react-toastify/autoClose

@@ -12,6 +12,7 @@ import {
 // import ProTip from './ProTip';
 import ApplicationBar from './ApplicationBar.js';
 import CsvUpload from './CsvUpload.js';
+import CsvDownload from './CsvDownload.js';
 import Entry from './Entry.js';
 import Listing from './Listing.js';
 import MapView from './MapView.js';
@@ -48,6 +49,7 @@ const App = () => {
             <ApplicationBar />
             <SourcesTable />
             <CsvUpload />
+            <CsvDownload />
           </React.Fragment>
         </Route>
         <Route path="/test">

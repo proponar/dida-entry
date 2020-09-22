@@ -15,6 +15,7 @@
     "axios": "latest",
     "base64-js": "latest",
     "clsx": "latest",
+    "file-saver": "^2.0.2",
     "lodash": "^4.17.20",
     "material-ui-popup-state": "^1.6.1",
     "react": "latest",

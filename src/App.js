@@ -10,27 +10,45 @@ import {
 // import Typography from '@material-ui/core/Typography';
 // import Link from '@material-ui/core/Link';
 // import ProTip from './ProTip';
+import ApplicationBar from './ApplicationBar.js';
 import CsvUpload from './CsvUpload.js';
 import Entry from './Entry.js';
 import Listing from './Listing.js';
 import MapView from './MapView.js';
 import SignIn from './SignIn.js';
+import SourcesTable from './SourcesTable.js';
 
 const App = () => {
   return (
     <Router>
       <Switch>
         <Route path="/entry/:id">
-          <Entry />
+          <React.Fragment>
+            <ApplicationBar />
+            <Entry />
+          </React.Fragment>
         </Route>
         <Route path="/entry">
-          <Entry />
+          <React.Fragment>
+            <ApplicationBar />
+            <Entry />
+          </React.Fragment>
         </Route>
         <Route path="/entries">
-          <Listing />
+          <React.Fragment>
+            <ApplicationBar />
+            <Listing />
+          </React.Fragment>
         </Route>
         <Route path="/upload">
           <CsvUpload />
+        </Route>
+        <Route path="/sources">
+          <React.Fragment>
+            <ApplicationBar />
+            <SourcesTable />
+            <CsvUpload />
+          </React.Fragment>
         </Route>
         <Route path="/test">
           <CsvUpload />

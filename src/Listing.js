@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,17 +20,11 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
+import useStyles from "./useStyles";
 import { baseUrl } from './config';
 
-const useStyles1 = makeStyles(theme => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
-
-function TablePaginationActions(props) {
-  const classes = useStyles1();
+const TablePaginationActions = props => {
+  const classes = useStyles();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
@@ -51,7 +45,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.listingRoot}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -87,13 +81,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-const useStyles2 = makeStyles({
-  table: {
-    minWidth: 500,
-  },
-});
-
-export default function Listing() {
+const Listing = () => {
   const [rows, setRows] = useState([]);
 	const history = useHistory();
 
@@ -107,7 +95,7 @@ export default function Listing() {
     });
   }, []);
 
-  const classes = useStyles2();
+  const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -132,7 +120,7 @@ export default function Listing() {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="custom pagination table">
+      <Table className={classes.listingTable} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             <TableCell>Heslo</TableCell>
@@ -192,3 +180,4 @@ export default function Listing() {
     </TableContainer>
   );
 }
+export default Listing;

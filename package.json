@@ -16,6 +16,7 @@
     "base64-js": "latest",
     "clsx": "latest",
     "lodash": "^4.17.20",
+    "material-ui-popup-state": "^1.6.1",
     "react": "latest",
     "react-dom": "latest",
     "react-mapycz": "^1.0.3",

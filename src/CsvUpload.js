@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 
 import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Publish from '@material-ui/icons/Publish';
 
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
@@ -52,7 +52,7 @@ const CsvUpload = props => {
       />
       <label htmlFor="icon-button-photo">
           <IconButton color="primary" component="span">
-              <PhotoCamera />
+              <Publish />
           </IconButton>
       </label>
     </React.Fragment>

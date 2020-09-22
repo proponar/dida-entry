@@ -28,6 +28,16 @@ const useStyles = makeStyles(theme => ({
   hiddenInput: {
       display: 'none'
   },
+  listingTable: {
+    minWidth: 500,
+  },
+  listingRoot: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
+  },
+  denseTable: {
+    minWidth: 650,
+  },
 }));
 
 export default useStyles;

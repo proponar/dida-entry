@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,30 +24,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ApplicationBar() {
+  const history = useHistory();
   const classes = useStyles();
+
+  const goTo = (popupState, url) => {
+    popupState.close();
+    history.push(url);
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-					<PopupState variant="popover" popupId="demo-popup-menu">
-						{(popupState) => (
-							<React.Fragment>
-          			<IconButton
-									{...bindTrigger(popupState)}
-									edge="start"
-									className={classes.menuButton}
-									color="inherit"
-									aria-label="menu">
-            			<MenuIcon />
-          			</IconButton>
-								<Menu {...bindMenu(popupState)}>
-      					  <MenuItem onClick={popupState.close}>Hesla</MenuItem>
-      					  <MenuItem onClick={popupState.close}>Zdroje</MenuItem>
-      					</Menu>
-							</React.Fragment>
-						)}
-					</PopupState>
+          <PopupState variant="popover" popupId="demo-popup-menu">
+            {(popupState) => (
+              <React.Fragment>
+                <IconButton
+                  {...bindTrigger(popupState)}
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu">
+                  <MenuIcon />
+                </IconButton>
+                <Menu {...bindMenu(popupState)}>
+                  <MenuItem onClick={() => {goTo(popupState, '/entries/')}}>Hesla</MenuItem>
+                  <MenuItem onClick={() => {goTo(popupState, '/sources/')}}>Zdroje</MenuItem>
+                </Menu>
+              </React.Fragment>
+            )}
+          </PopupState>
           <Typography variant="h6" className={classes.title}>
             DIDA
           </Typography>

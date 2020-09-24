@@ -5,6 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
+import GenericSwitch from './GenericSwitch.js';
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -16,6 +17,7 @@ import RokInput from './RokInput.js';
 import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
+import TvarForm from "./TvarForm";
 import useStyles from "./useStyles";
 
 const ZdrojInput = props => {
@@ -77,10 +79,29 @@ const ExempForm = props => {
     vyznam: '42...',
     vetne: true,
     lokalizaceObec: 'somewhere',
+    aktivni: true,
   });
 
+  //const countTvar = 2;
+  const [tvarCount, setTvarCount] = React.useState(2);
+
+  const parseExemplifikaceValue = value => {
+    // "test/abcd {foo} test{bar} lorem ..." --> ['foo', 'bar']
+    const matched = value.match(/[^{}]+(?=\})/g) || [];
+    console.log('tvary: ', matched);
+    setTvarCount(matched.length);
+  };
+
   const handleValuesChange = (event) => {
-    console.log(`Setting ${event.target.name} to ${event.target.value}`);
+    const field = event.target.name;
+    const value = event.target.value;
+
+    console.log(`Setting ${field} to ${value}`);
+    
+    if (field == 'exemplifikace') {
+      parseExemplifikaceValue(value);
+    }
+
     const newValues = {
       ...values,
       [event.target.name]: event.target.value,
@@ -107,49 +128,66 @@ const ExempForm = props => {
   return (
     <React.Fragment>
       <Grid item container xs={12}>
-        <Grid item xs={8}>
-          <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace</InputLabel>
-          <div className={classes.autosizeWrap}>
-            <TextareaAutosize
-              style={{width: '100%'}}
-              width={500}
-              rowsMin={3}
-              id="exemplifikace-textbox"
-              placeholder="..."
-              name="exemplifikace"
-              value={values.exemplifikace}
+        <Grid item container xs={8}>
+          <Grid item xs={8}>
+            <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace</InputLabel>
+            <div className={classes.autosizeWrap}>
+              <TextareaAutosize
+                style={{width: '100%'}}
+                width={500}
+                rowsMin={3}
+                id="exemplifikace-textbox"
+                placeholder="..."
+                name="exemplifikace"
+                value={values.exemplifikace}
+                onChange={handleValuesChange}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
+          </Grid>
+          <Grid item xs={8}>
+            <ZdrojInput options={zdroje} value={values.zdroj} onChange={handleValuesChange} />
+          </Grid>
+          <Grid item xs={12}>
+            <LokalizaceInput
+              valueObec={values.lokalizaceObec}
+              valueCast={values.lokalizaceCast}
               onChange={handleValuesChange}
             />
-          </div>
+          </Grid>
+          <Grid item xs={4}>
+            <RokInput value={values.rok} onChange={handleValuesChange} />
+          </Grid>
+          <Grid item xs={4}>
+            <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControl>
+              <InputLabel htmlFor={inputId}>Význam</InputLabel>
+              <BootstrapInput
+                id={inputId}
+                name='vyznam'
+                value={values.vyznam}
+                onChange={handleValuesChange} />
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <GenericSwitch
+              name='aktivni'
+              labelOn='Aktivní'
+              labelOff='Neaktivní'
+              checked={values.aktivni}
+              onChange={handleValuesCheckChange}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
-        </Grid>
-        <Grid item xs={8}>
-          <ZdrojInput options={zdroje} value={values.zdroj} onChange={handleValuesChange} />
-        </Grid>
-        <Grid item xs={12}>
-          <LokalizaceInput
-            valueObec={values.lokalizaceObec}
-            valueCast={values.lokalizaceCast}
-            onChange={handleValuesChange}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <RokInput value={values.rok} onChange={handleValuesChange} />
-        </Grid>
-        <Grid item xs={4}>
-          <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
-        </Grid>
-        <Grid item xs={4}>
-          <FormControl>
-            <InputLabel htmlFor={inputId}>Význam</InputLabel>
-            <BootstrapInput
-              id={inputId}
-              name='vyznam'
-              value={values.vyznam}
-              onChange={handleValuesChange} />
-          </FormControl>
+        <Grid item container xs={4}>
+          <Grid item xs={12}>
+            {[...Array(tvarCount)].map(x => <TvarForm />)
+            }
+          </Grid>
         </Grid>
       </Grid>
     </React.Fragment>

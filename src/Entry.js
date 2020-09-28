@@ -101,7 +101,7 @@ export default function Entry() {
   };
 
   const saveExisting = () => {
-    console.log(`Aktualizuji heslo #{formData.entry}`, formData);
+    console.log(`Aktualizuji heslo ${formData.entry}`, formData);
 
     axios.put(
       `${baseUrl}entries/${formData.entry.id}`,

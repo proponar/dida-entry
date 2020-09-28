@@ -1,20 +1,21 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
+import uniqueId from 'lodash/uniqueId'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { baseUrl } from './config';
 
-const AsyncAutocomplete = props => {
+const LokalizaceObec = props => {
   const {
+    value,
     onChange
   } = props;
 
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
-
   const [searchStr, setSearchStr] = React.useState('');
 
   React.useEffect(() => {
@@ -35,9 +36,6 @@ const AsyncAutocomplete = props => {
       const entries = await response.data.data;
 
       if (active) {
-        //setOptions(Object.keys(entries).map((key) => entries[key].item[0]));
-        //setOptions(entries.map(entry => entry.naz_obec));
-
 				// FIXME: mamte tu limit :-(
         setOptions(entries.slice(0, 100));
       }
@@ -57,7 +55,7 @@ const AsyncAutocomplete = props => {
   const handleValueChange = (ev, value) => {
     console.log('value change: ', value)
     if (value)
-      onChange({target: {name: 'lokalizaceObec', value: value.kod_obec}});
+      onChange({target: {name: 'lokalizace_obec_id', value: value.kod_obec}});
   };
 
   const handleInputChange = (ev, value) => {
@@ -67,17 +65,15 @@ const AsyncAutocomplete = props => {
     setOptions([]);
   };
 
+  const [ elementId ] = useState(() => uniqueId('lokalizace-obec'))
+
   return (
     <Autocomplete
-      id="asynchronous-demo"
+      id={elementId}
       style={{ width: 300 }}
       open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
+      onOpen={() => { setOpen(true); }}
+      onClose={() => { setOpen(false); }}
       getOptionSelected={(option, value) => option.naz_obec === value.naz_obec}
       getOptionLabel={(option) => option.naz_obec}
       options={options}
@@ -87,7 +83,7 @@ const AsyncAutocomplete = props => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Obec"
+          label={value && value.naz_obec || 'Obec...'}
           variant="outlined"
           InputProps={{
             ...params.InputProps,
@@ -104,4 +100,4 @@ const AsyncAutocomplete = props => {
   );
 };
 
-export default AsyncAutocomplete;
+export default LokalizaceObec;

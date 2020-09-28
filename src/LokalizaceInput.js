@@ -5,7 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
 
-import AsyncAutocomplete from "./AsyncAutocomplete";
+import LokalizaceObec from "./LokalizaceObec";
 //import useStyles from "./useStyles";
 
 const CastObceInput = props => {
@@ -66,14 +66,16 @@ const LokalizaceInput = props => {
     <FormControl>
       <Grid component="label" container alignItems="center" spacing={1}>
         <Grid item>
-					<AsyncAutocomplete value={valueObec} onChange={onChangeInternal} />
+					<LokalizaceObec value={valueObec} onChange={onChangeInternal} />
 				</Grid>
-        <Grid item>
-					<CastObceInput value={valueCast} onChange={onChangePart} options={castiObce} />
-        </Grid>
-        <Grid item>Lokalizace</Grid>
       </Grid>
     </FormControl>
   );
 }
+/*
+        <Grid item>
+					<CastObceInput value={valueCast} onChange={onChangePart} options={castiObce} />
+        </Grid>
+        <Grid item>Lokalizace</Grid>
+*/
 export default LokalizaceInput;

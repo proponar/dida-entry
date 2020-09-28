@@ -84,7 +84,7 @@ const ExempForm = props => {
     exemplifikace: 'papapapaaaaa....',
     vyznam: '42...',
     vetne: true,
-    lokalizaceObec: 'somewhere',
+    //lokalizaceObec: 'somewhere',
     aktivni: true,
   });
 
@@ -146,6 +146,11 @@ const ExempForm = props => {
 
   const [ inputId ] = useState(() => uniqueId('vyznam-textbox'))
 
+  const valueObec = values.lokalizace_obec_id && {
+    naz_obec: values.lokalizace_obec_text,
+    kod_obec: values.lokalizace_obec_id
+  } || undefined;
+
   return (
     <React.Fragment>
       <Grid item container xs={12}>
@@ -173,7 +178,7 @@ const ExempForm = props => {
           </Grid>
           <Grid item xs={12}>
             <LokalizaceInput
-              valueObec={values.lokalizaceObec}
+              valueObec={valueObec}
               valueCast={values.lokalizaceCast}
               onChange={handleValuesChange}
             />

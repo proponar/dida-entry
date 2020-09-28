@@ -7,6 +7,7 @@ import {
   //Link
 } from "react-router-dom";
 
+import Button from '@material-ui/core/Button';
 // import Typography from '@material-ui/core/Typography';
 // import Link from '@material-ui/core/Link';
 // import ProTip from './ProTip';
@@ -50,6 +51,9 @@ const App = () => {
             <SourcesTable />
             <CsvUpload />
             <CsvDownload />
+            <Button onClick={localStorage.removeItem('sources')} color="primary">
+              Obnovit Zdroje
+            </Button>
           </React.Fragment>
         </Route>
         <Route path="/test">

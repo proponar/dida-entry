@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import uniqueId from 'lodash/uniqueId'
+import axios from 'axios';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormControl from "@material-ui/core/FormControl";
@@ -15,6 +16,7 @@ import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
 import TvarForm from "./TvarForm";
+import { baseUrl } from './config';
 import useStyles from "./useStyles";
 
 const ZdrojInput = props => {
@@ -27,28 +29,34 @@ const ZdrojInput = props => {
   const [options, setOptions] = useState(optionsIn);
 
   // https://www.robinwieruch.de/local-storage-react
-  // useEffect(() => {
-  // const getOptions = () => {
-  //   const cachedSources = localStorage.getItem('sources');
-  //   if (cachedSources) {
-  //     setOptions(sources);
-  //   } else {
-  //     response = await axios.get(
-  //       baseUrl + 'sources',
-  //       headers: {
-  //         Authorization: `Token ${window.localStorage.getItem('auth-token')}`
-  //       }
-  //     );
-  //     setOptions(response.data);
-  //   }
-  // }
+  useEffect(() => {
+    async function getOptions() {
+      const cachedSources = localStorage.getItem('sources');
+      if (cachedSources) {
+        setOptions(JSON.parse(cachedSources));
+      } else {
+        const response = await axios.get(
+            baseUrl + 'sources', {
+            headers: {
+              Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+            }
+          }
+        );
+        const sources = response.data.data;
+        console.log('sources: ', sources);
+        localStorage.setItem('sources', JSON.stringify(sources));
+        setOptions(sources);
+      }
+    }
+    getOptions();
+  }, []);
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
   return (
     <Autocomplete
       name="zdroj"
       options={options}
-      getOptionLabel={(option) => option}
+      getOptionLabel={(option) => option.name}
       style={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Zdroj" variant="outlined" />}
     />
@@ -81,7 +89,7 @@ const ExempForm = props => {
   });
 
   const parseExemplifikaceValue = value => {
-    const matched = value.match(/[^{}]+(?=\})/g) || [];
+    const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
     console.log('tvary: ', matched);
 
     return matched.map((t, i) => {
@@ -110,7 +118,7 @@ const ExempForm = props => {
     const value = event.target.value;
 
     console.log(`Setting ${field} to ${value}`);
-    
+
     if (field == 'exemplifikace') {
       setTvary(parseExemplifikaceValue(value));
     }

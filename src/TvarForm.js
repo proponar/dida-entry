@@ -9,12 +9,15 @@ import PadSelect from "./PadSelect";
 import RodSelect from "./RodSelect";
 
 const TvarForm = props => {
-  const values = {
-  };
+  const {
+    index,
+    tvar,
+    rod,
+    pad,
+    onChange
+  } = props;
 
-  const [ inputId ] = useState(() => uniqueId('vyznam-textbox'))
-
-  const handleValuesChange = () => {};
+  const [ inputId ] = useState(() => uniqueId('tvar-textbox'))
 
   return (
     <Grid item container xs={12}>
@@ -24,15 +27,15 @@ const TvarForm = props => {
           <BootstrapInput
             id={inputId}
             name='tvar'
-            value={values.tvar}
-            onChange={handleValuesChange} />
+            value={tvar}
+            onChange={ev => onChange(ev, index)} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
-        <RodSelect rod={values.rod} onChange={handleValuesChange} />
+        <RodSelect rod={rod} onChange={ev => onChange(ev, index)} />
       </Grid>
       <Grid item xs={3}>
-        <PadSelect pad={values.pad} onChange={handleValuesChange} />
+        <PadSelect pad={pad} onChange={ev => onChange(ev, index)} />
       </Grid>
     </Grid>
   );

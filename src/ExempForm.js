@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import uniqueId from 'lodash/uniqueId'
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
 import GenericSwitch from './GenericSwitch.js';
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TextField from '@material-ui/core/TextField';
 
-import Box from "@material-ui/core/Box";
 import BootstrapInput from "./BootstrapInput";
 import RokInput from './RokInput.js';
 import VetneSwitch from './VetneSwitch.js';
@@ -70,6 +67,7 @@ const ExempForm = props => {
   // react on prop change
   React.useEffect(() => {
     setValues(data);
+    setTvary(parseExemplifikaceValue(data.exemplifikace));
   }, [data]);
 
   const [values, setValues] = React.useState({
@@ -82,14 +80,29 @@ const ExempForm = props => {
     aktivni: true,
   });
 
-  //const countTvar = 2;
-  const [tvarCount, setTvarCount] = React.useState(2);
-
   const parseExemplifikaceValue = value => {
-    // "test/abcd {foo} test{bar} lorem ..." --> ['foo', 'bar']
     const matched = value.match(/[^{}]+(?=\})/g) || [];
     console.log('tvary: ', matched);
-    setTvarCount(matched.length);
+
+    return matched.map((t, i) => {
+      return {
+        index: i,
+        key: i,
+        tvar: t,
+        rod: 'm',
+        pad: '1s',
+      }
+    });
+  };
+  //const [tvary, setTvary] = React.useState(parseExemplifikaceValue(values.exemplifikace));
+  const [tvary, setTvary] = React.useState([]);
+
+  const handleTvarValuesChange = (ev, index) => {
+    const {
+      name,
+      value
+    } = ev.target;
+    setTvary(tvary.map((t, i) => index === i ? {...t, [name]: value} : t));
   };
 
   const handleValuesChange = (event) => {
@@ -99,7 +112,7 @@ const ExempForm = props => {
     console.log(`Setting ${field} to ${value}`);
     
     if (field == 'exemplifikace') {
-      parseExemplifikaceValue(value);
+      setTvary(parseExemplifikaceValue(value));
     }
 
     const newValues = {
@@ -185,7 +198,7 @@ const ExempForm = props => {
         </Grid>
         <Grid item container xs={4}>
           <Grid item xs={12}>
-            {[...Array(tvarCount)].map(x => <TvarForm />)
+            {tvary.map(t => <TvarForm onChange={handleTvarValuesChange} {...t} />)
             }
           </Grid>
         </Grid>

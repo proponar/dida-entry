@@ -59,6 +59,7 @@ const ZdrojInput = props => {
       getOptionLabel={(option) => option.name}
       style={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Zdroj" variant="outlined" />}
+      onChange={onChange}
     />
   );
 };
@@ -114,21 +115,33 @@ const ExempForm = props => {
   };
 
   const handleValuesChange = (event) => {
-    const field = event.target.name;
-    const value = event.target.value;
+    console.log('target: ', event.target);
+    const {
+      name,
+      value
+    } = event.target;
 
-    console.log(`Setting ${field} to ${value}`);
+    console.log(`Setting ${name} to ${value}`);
 
-    if (field == 'exemplifikace') {
+    if (name === 'exemplifikace') {
       setTvary(parseExemplifikaceValue(value));
+    }
+
+    if (name === 'zdroj') {
+      console.log('zmena zdroje --> predvyplnit');
     }
 
     const newValues = {
       ...values,
-      [event.target.name]: event.target.value,
+      [name]: value,
     };
     setValues(newValues);
     setData(dataKey, newValues);
+  };
+
+  const handleZdrojChange = (ev, zdroj) => {
+    console.log('handleZdrojChange: ', zdroj);
+    // typ, rok, lokalizace
   };
 
   const handleValuesCheckChange = event => {
@@ -174,7 +187,7 @@ const ExempForm = props => {
             <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
           </Grid>
           <Grid item xs={8}>
-            <ZdrojInput options={zdroje} value={values.zdroj} onChange={handleValuesChange} />
+            <ZdrojInput options={zdroje} value={values.zdroj} onChange={handleZdrojChange} />
           </Grid>
           <Grid item xs={12}>
             <LokalizaceInput

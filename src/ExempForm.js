@@ -52,6 +52,7 @@ const ZdrojInput = props => {
   }, []);
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
+	// FIXME: inicialni hodnota!
   return (
     <Autocomplete
       name="zdroj"
@@ -64,6 +65,21 @@ const ZdrojInput = props => {
   );
 };
 
+const parseExemplifikaceValue = value => {
+  const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
+  console.log('tvary: ', matched);
+
+  return matched.map((t, i) => {
+    return {
+      index: i,
+      key: i,
+      tvar: t,
+      rod: 'm',
+      pad: '1s',
+    }
+  });
+};
+
 const ExempForm = props => {
   const classes = useStyles();
 
@@ -73,10 +89,12 @@ const ExempForm = props => {
     setData,
   } = props;
 
-  // react on prop change
+	const exemplifikaceNotNull = (data && data.exemplifikace) || '';
+
+  // handle prop change
   React.useEffect(() => {
     setValues(data);
-    setTvary(parseExemplifikaceValue(data.exemplifikace));
+    setTvary(parseExemplifikaceValue(exemplifikaceNotNull));
   }, [data]);
 
   const [values, setValues] = React.useState({
@@ -89,37 +107,16 @@ const ExempForm = props => {
     aktivni: true,
   });
 
-  const parseExemplifikaceValue = value => {
-    const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
-    console.log('tvary: ', matched);
-
-    return matched.map((t, i) => {
-      return {
-        index: i,
-        key: i,
-        tvar: t,
-        rod: 'm',
-        pad: '1s',
-      }
-    });
-  };
   //const [tvary, setTvary] = React.useState(parseExemplifikaceValue(values.exemplifikace));
   const [tvary, setTvary] = React.useState([]);
 
   const handleTvarValuesChange = (ev, index) => {
-    const {
-      name,
-      value
-    } = ev.target;
+    const {name, value} = ev.target;
     setTvary(tvary.map((t, i) => index === i ? {...t, [name]: value} : t));
   };
 
   const handleValuesChange = (event) => {
-    console.log('target: ', event.target);
-    const {
-      name,
-      value
-    } = event.target;
+    const {name, value} = event.target;
 
     console.log(`Setting ${name} to ${value}`);
 
@@ -141,6 +138,7 @@ const ExempForm = props => {
 
   const handleZdrojChange = (ev, zdroj) => {
     console.log('handleZdrojChange: ', zdroj);
+		// FIXME
     // typ, rok, lokalizace
   };
 
@@ -154,15 +152,12 @@ const ExempForm = props => {
     setData(dataKey, newValues);
   };
 
-  // FIXME
-  const zdroje = ['foo', 'bar', 'baz'];
-
   const [ inputId ] = useState(() => uniqueId('vyznam-textbox'))
 
-  const valueObec = values.lokalizace_obec_id && {
+  const valueObec = (values && values.lokalizace_obec_id && {
     naz_obec: values.lokalizace_obec_text,
     kod_obec: values.lokalizace_obec_id
-  } || undefined;
+  }) || undefined;
 
   return (
     <React.Fragment>
@@ -178,7 +173,7 @@ const ExempForm = props => {
                 id="exemplifikace-textbox"
                 placeholder="..."
                 name="exemplifikace"
-                value={values.exemplifikace}
+                value={exemplifikaceNotNull}
                 onChange={handleValuesChange}
               />
             </div>
@@ -187,7 +182,7 @@ const ExempForm = props => {
             <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
           </Grid>
           <Grid item xs={8}>
-            <ZdrojInput options={zdroje} value={values.zdroj} onChange={handleZdrojChange} />
+            <ZdrojInput options={[]} value={values.zdroj} onChange={handleZdrojChange} />
           </Grid>
           <Grid item xs={12}>
             <LokalizaceInput

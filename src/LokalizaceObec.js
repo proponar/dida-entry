@@ -83,7 +83,7 @@ const LokalizaceObec = props => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label={value && value.naz_obec || 'Obec...'}
+          label={(value && value.naz_obec) || 'Obec...'}
           variant="outlined"
           InputProps={{
             ...params.InputProps,

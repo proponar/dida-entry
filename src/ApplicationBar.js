@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ApplicationBar() {
+const ApplicationBar = ({title}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -49,6 +49,7 @@ export default function ApplicationBar() {
                 </IconButton>
                 <Menu {...bindMenu(popupState)}>
                   <MenuItem onClick={() => {goTo(popupState, '/entries/')}}>Hesla</MenuItem>
+                  <MenuItem onClick={() => {goTo(popupState, '/exemps/')}}>Exemplifikace</MenuItem>
                   <MenuItem onClick={() => {goTo(popupState, '/sources/')}}>Zdroje</MenuItem>
                 </Menu>
               </React.Fragment>
@@ -57,9 +58,13 @@ export default function ApplicationBar() {
           <Typography variant="h6" className={classes.title}>
             DIDA
           </Typography>
+          <Typography variant="h6" className={classes.title}>
+            {title}
+          </Typography>
           <Button color="inherit">Odhlasit</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+export default ApplicationBar;

@@ -15,6 +15,7 @@ import ApplicationBar from './ApplicationBar.js';
 import CsvUpload from './CsvUpload.js';
 import CsvDownload from './CsvDownload.js';
 import Entry from './Entry.js';
+import ExempListing from './ExempListing.js';
 import Listing from './Listing.js';
 import MapView from './MapView.js';
 import SignIn from './SignIn.js';
@@ -36,9 +37,15 @@ const App = () => {
             <Entry />
           </React.Fragment>
         </Route>
+        <Route path="/exemps">
+          <React.Fragment>
+            <ApplicationBar title="Exemplifikace" />
+            <ExempListing />
+          </React.Fragment>
+        </Route>
         <Route path="/entries">
           <React.Fragment>
-            <ApplicationBar />
+            <ApplicationBar title="Hesla" />
             <Listing />
           </React.Fragment>
         </Route>
@@ -47,7 +54,7 @@ const App = () => {
         </Route>
         <Route path="/sources">
           <React.Fragment>
-            <ApplicationBar />
+            <ApplicationBar title="Zdroje" />
             <SourcesTable />
             <CsvUpload />
             <CsvDownload />

@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
   denseTable: {
     minWidth: 650,
   },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 export default useStyles;

@@ -12,14 +12,14 @@ import TopForm from "./TopForm";
 const DialogEntry = ({open, onClose, onSave, data}) => {
   const title = (data && data.id && "Editace hesla") || "Nové heslo";
 
-  React.useEffect(() => { setFormData(data); }, [data]); // handle prop change
-  const [formData, setFormData] = React.useState({});
+  useEffect(() => { setFormData(data); }, [data]); // handle prop change
+  const [formData, setFormData] = useState({});
   const handleSave = () => onSave(formData);
 
   const handleFormDataChange = (event) => {
     console.log(`Setting ${event.target.name} to ${event.target.value}`);
     setFormData({
-      ...formData.entry,
+      ...formData,
       [event.target.name]: event.target.value,
     });
   };
@@ -27,7 +27,7 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
   const handleFormDataCheckChange = event => {
     console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
     setFormData({
-      ...formData.entry,
+      ...formData,
       [event.target.name]: event.target.checked,
     });
   };
@@ -40,18 +40,19 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <TopForm
-            data={data}
-            valuesChange={handleFormDataChange}
-            valuesCheckChange={handleFormDataCheckChange}
-          />
+          Přidání/editace hesla...
         </DialogContentText>
+        <TopForm
+          data={formData}
+          valuesChange={handleFormDataChange}
+          valuesCheckChange={handleFormDataCheckChange}
+        />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} color="secondary" variant="outlined">
           Zrušit
         </Button>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={handleSave} color="primary" variant="outlined">
           Uložit
         </Button>
       </DialogActions>

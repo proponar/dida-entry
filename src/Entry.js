@@ -23,7 +23,7 @@ export default function Entry() {
     console.log('No id.');
   }
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     entry: {
       id: null,
       rod: 'm',
@@ -37,7 +37,7 @@ export default function Entry() {
   });
 
   // number of "Exemp" subforms
-  const [exempCounter, setExempCounter] = React.useState(0);
+  const [exempCounter, setExempCounter] = useState(0);
 
   useEffect(() => {
     async function fetchData() {

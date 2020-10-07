@@ -12,8 +12,8 @@ import ExempForm from "./ExempForm";
 const DialogExemp = ({entry, open, onSave, onClose, data}) => {
   const title = (entry && entry.id && "Editace exemplifikace") || "Nová exemplifikace";
 
-  React.useEffect(() => { setFormData(data); }, [data]); // handle prop change
-  const [formData, setFormData] = React.useState({});
+  useEffect(() => { setFormData(data); }, [data]); // handle prop change
+  const [formData, setFormData] = useState({});
   const handleSetData = (_key, newData) => setFormData({...formData, ...newData});
   const handleSave = () => onSave(formData);
 
@@ -25,14 +25,15 @@ const DialogExemp = ({entry, open, onSave, onClose, data}) => {
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <ExempForm data={formData} setData={handleSetData} />
+          Přidání/editace exemplifikace k heslu...
         </DialogContentText>
+        <ExempForm data={formData} setData={handleSetData} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} color="secondary" variant="outlined">
           Zrušit
         </Button>
-        <Button onClick={handleSave} color="primary">
+        <Button onClick={handleSave} color="primary" variant="outlined">
           Uložit
         </Button>
       </DialogActions>

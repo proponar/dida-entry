@@ -8,12 +8,11 @@ import { baseUrl } from './config';
 
 const EntryCombo = props => {
   const {
-    options: optionsIn,
-    value,
+    reload,
     onChange,
   } = props;
 
-  const [options, setOptions] = useState(optionsIn);
+  const [options, setOptions] = useState([]);
 
   useEffect(() => {
     async function getOptions() {
@@ -29,7 +28,7 @@ const EntryCombo = props => {
       setOptions(sources);
     }
     getOptions();
-  }, []);
+  }, [reload]); // reload on signal
 
   return (
     <Autocomplete

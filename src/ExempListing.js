@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -94,7 +94,10 @@ TablePaginationActions.propTypes = {
 
 const prepareEntryData = (entry, edit) => {
 	console.log('prepareEntryData: ', entry, edit);
-	return (edit && entry) || {};
+	return (edit && entry) || {
+		rod: 'm',
+		druh: 'subst',
+	};
 };
 
 const prepareExempData = (entry, exemp) => {
@@ -124,10 +127,11 @@ const prepareExempData = (entry, exemp) => {
 
 const ExempListing = () => {
   const [rows, setRows] = useState([]);
-	const history = useHistory();
+	// const history = useHistory();
 
 	const [entry, setEntry] = useState(null);
-	const [reload, setReload] = useState(null);
+	const [reloadEx, setReloadEx] = useState(null);
+	const [reloadEn, setReloadEn] = useState(null);
 
   const [selectedRow, setSelectedRow] = React.useState();
   const [editEntry, setEditEntry] = React.useState(false);
@@ -171,7 +175,7 @@ const ExempListing = () => {
 
 		const successF = () => {
       console.log('Exemplifikace uložena.');
-			setReload(Math.random());
+			setReloadEx(Math.random());
 		};
 
 		if (exemp.id) {
@@ -218,7 +222,8 @@ const ExempListing = () => {
 
 		const successF = () => {
       console.log('Heslo uloženo.');
-			setReload(Math.random());
+			setReloadEn(Math.random());
+			setReloadEx(Math.random());
 		};
 
 		if (entry.id) {
@@ -230,6 +235,7 @@ const ExempListing = () => {
 		setHesloOpen(false);
 	}
 
+	// load exemps for selected entry, when entry changes or reload is requested
   useEffect(() => {
 		if (entry) {
     	axios.get(baseUrl + `entries/${entry.id}/exemps`, {
@@ -240,14 +246,14 @@ const ExempListing = () => {
     	  setRows(response.data.data);
     	});
 		}
-  }, [entry, reload]);
+  }, [entry, reloadEx]);
 
   const classes = useStyles();
+
+	// paginator
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
   const handleChangePage = (_e, newPage) => setPage(newPage);
 
   const handleChangeRowsPerPage = ev => {
@@ -262,12 +268,13 @@ const ExempListing = () => {
 	  // history.push(`/entry/${rowId}`);
   };
 
+	// selected row/entry/heslo
 	const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
 
   return (
     <Paper className={classes.paper}>
 			<Toolbar>
-				<EntryCombo onChange={handleEntryChange} />
+				<EntryCombo reload={reloadEn} onChange={handleEntryChange} />
         <Tooltip title="Filtrovat hesla">
           <IconButton aria-label="Filtrovat hesla">
             <FilterListIcon />

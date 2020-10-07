@@ -19,6 +19,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import AddCircle from '@material-ui/icons/AddCircle';
+import Edit from '@material-ui/icons/Edit';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Publish from '@material-ui/icons/Publish';
 
@@ -91,6 +92,11 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
+const prepareEntryData = (entry, edit) => {
+	console.log('prepareEntryData: ', entry, edit);
+	return (edit && entry) || {};
+};
+
 const prepareExempData = (entry, exemp) => {
 	console.log('prepareExempData: ', entry, exemp);
 	if (exemp) {
@@ -123,47 +129,104 @@ const ExempListing = () => {
 	const [entry, setEntry] = useState(null);
 	const [reload, setReload] = useState(null);
 
+  const [selectedRow, setSelectedRow] = React.useState();
+  const [editEntry, setEditEntry] = React.useState(false);
+
 	// modal Exemp dialog
   const [exempOpen, setExempOpen] = React.useState(false);
 
-  const handleClickExempOpen = () => { setExempOpen(true); };
+  const handleClickExempOpen = () => { 
+		setSelectedRow(null);
+		setExempOpen(true);
+	};
+
   const handleExempClose = () => setExempOpen(false);
+
+	const storeNewExemp = (exemp, successFunc) => {
+    axios.post(`${baseUrl}entries/${exemp.entryId}/exemps`,
+      {...exemp},
+      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+    ).then(response => {
+			successFunc();
+    }, error => {
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    });
+	};
+
+	const storeExistingExemp = (exemp, successFunc) => {
+    axios.put(`${baseUrl}entries/${exemp.entryId}/exemps/${exemp.id}`,
+      {...exemp},
+      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+    ).then(response => {
+			successFunc();
+    }, error => {
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    });
+	};
 
 	const handleExempSave = (exemp) => {
 		console.log('handleExempSave', exemp);
 
-    axios.post(
-      `${baseUrl}entries/${exemp.entryId}/exemps`,
-      {
-        ...exemp
-      },
-      {
-        headers: {
-          'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
-        },
-      }
-    ).then(response => {
+		const successF = () => {
       console.log('Exemplifikace uložena.');
 			setReload(Math.random());
-    }, error => {
-      console.log(error);
-      console.log(error.response.data);
-      alert(error.response.data.message);
-    });
+		};
 
+		if (exemp.id) {
+			storeExistingExemp(exemp, successF);
+		} else {
+			storeNewExemp(exemp, successF);
+		}
 		setExempOpen(false);
-	}
+	};
 
 	// modal Heslo dialog
   const [hesloOpen, setHesloOpen] = React.useState(false);
 
-  const [selectedRow, setSelectedRow] = React.useState();
-
-  const handleClickHesloOpen = () => { setHesloOpen(true); };
+  const handleClickHesloEdit = () => { setEditEntry(true); setHesloOpen(true); };
+  const handleClickHesloNew = () => { setEditEntry(false); setHesloOpen(true); };
   const handleHesloClose = () => setHesloOpen(false);
 
-	const handleHesloSave = () => {
-		console.log('handleHesloSave');
+	const storeNewHeslo = (entry, successFunc) => {
+    axios.post(`${baseUrl}entries`,
+      {...entry},
+      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+    ).then(response => {
+			successFunc();
+    }, error => {
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    });
+	};
+
+	const storeExistingHeslo = (entry, successFunc) => {
+    axios.put(`${baseUrl}entries/${entry.id}`, // FIXME: kde je ID?
+      {...entry},
+      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+    ).then(response => {
+			successFunc();
+    }, error => {
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    });
+	};
+
+	const handleHesloSave = (entry) => {
+		console.log('handleHesloSave: ', entry);
+
+		const successF = () => {
+      console.log('Heslo uloženo.');
+			setReload(Math.random());
+		};
+
+		if (entry.id) {
+			storeExistingHeslo(entry, successF);
+		} else {
+			storeNewHeslo(entry, successF);
+		} 
+	
 		setHesloOpen(false);
 	}
 
@@ -185,12 +248,10 @@ const ExempListing = () => {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const handleChangePage = (_e, newPage) => setPage(newPage);
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleChangeRowsPerPage = ev => {
+    setRowsPerPage(parseInt(ev.target.value, 10));
     setPage(0);
   };
 
@@ -207,11 +268,21 @@ const ExempListing = () => {
     <Paper className={classes.paper}>
 			<Toolbar>
 				<EntryCombo onChange={handleEntryChange} />
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
+        <Tooltip title="Filtrovat hesla">
+          <IconButton aria-label="Filtrovat hesla">
             <FilterListIcon />
           </IconButton>
         </Tooltip>
+        <IconButton color="secondary" onClick={handleClickHesloEdit} aria-label="Editovat heslo" >
+				  <Tooltip title="Editovat heslo">
+						<Edit />
+				  </Tooltip>
+        </IconButton>
+        <IconButton color="secondary" onClick={handleClickHesloNew} aria-label="Přidat heslo" >
+				  <Tooltip title="Přidat heslo">
+						<AddCircle />
+				  </Tooltip>
+        </IconButton>
 			</Toolbar>
       <DialogExemp
 				open={exempOpen}
@@ -222,7 +293,7 @@ const ExempListing = () => {
 				open={hesloOpen}
 				onSave={handleHesloSave}
 				onClose={handleHesloClose}
-				data={{}} />
+				data={prepareEntryData(entry, editEntry)} />
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="custom pagination table">
           <TableHead>
@@ -263,11 +334,6 @@ const ExempListing = () => {
                 <IconButton color="secondary" aria-label="Importovat exemplifikace" >
 								  <Tooltip title="Importovat exemplifikace">
 										<Publish />
-								  </Tooltip>
-                </IconButton>
-                <IconButton color="secondary" onClick={handleClickHesloOpen} aria-label="Přidat heslo" >
-								  <Tooltip title="Přidat heslo">
-										<AddCircle />
 								  </Tooltip>
                 </IconButton>
               </TableCell>

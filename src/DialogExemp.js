@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 import ExempForm from "./ExempForm";
 
-const DialogExemp = ({entry, open, onSave, onClose, data, setData}) => {
+const DialogExemp = ({entry, open, onSave, onClose, data}) => {
   const title = (entry && entry.id && "Editace exemplifikace") || "Nová exemplifikace";
 
   React.useEffect(() => { setFormData(data); }, [data]); // handle prop change

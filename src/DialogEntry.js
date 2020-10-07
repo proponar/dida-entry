@@ -9,8 +9,28 @@ import Button from '@material-ui/core/Button';
 
 import TopForm from "./TopForm";
 
-const DialogEntry = ({entry, open, onClose, data, setData}) => {
-  const title = (entry && entry.id && "Editace hesla") || "Nová heslo";
+const DialogEntry = ({open, onClose, onSave, data}) => {
+  const title = (data && data.id && "Editace hesla") || "Nové heslo";
+
+  React.useEffect(() => { setFormData(data); }, [data]); // handle prop change
+  const [formData, setFormData] = React.useState({});
+  const handleSave = () => onSave(formData);
+
+  const handleFormDataChange = (event) => {
+    console.log(`Setting ${event.target.name} to ${event.target.value}`);
+    setFormData({
+      ...formData.entry,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleFormDataCheckChange = event => {
+    console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
+    setFormData({
+      ...formData.entry,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   return (
     <Dialog
@@ -20,7 +40,11 @@ const DialogEntry = ({entry, open, onClose, data, setData}) => {
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <TopForm data={{}} setData={() => {}} />
+          <TopForm
+            data={data}
+            valuesChange={handleFormDataChange}
+            valuesCheckChange={handleFormDataCheckChange}
+          />
         </DialogContentText>
       </DialogContent>
       <DialogActions>

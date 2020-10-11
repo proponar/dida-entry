@@ -39,9 +39,6 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Přidání/editace hesla...
-        </DialogContentText>
         <TopForm
           data={formData}
           valuesChange={handleFormDataChange}

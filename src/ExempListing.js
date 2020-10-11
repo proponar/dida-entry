@@ -30,6 +30,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
 import DialogEntry from "./DialogEntry";
+import DialogImport from "./DialogImport";
 
 import useStyles from "./useStyles";
 import { baseUrl } from './config';
@@ -93,164 +94,173 @@ TablePaginationActions.propTypes = {
 };
 
 const prepareEntryData = (entry, edit) => {
-	console.log('prepareEntryData: ', entry, edit);
-	return (edit && entry) || {
-		rod: 'm',
-		druh: 'subst',
-	};
+  console.log('prepareEntryData: ', entry, edit);
+  return (edit && entry) || {
+    rod: 'm',
+    druh: 'subst',
+  };
 };
 
 const prepareExempData = (entry, exemp) => {
-	console.log('prepareExempData: ', entry, exemp);
-	if (exemp) {
-		return {
-			...exemp
-		};
-	}
+  console.log('prepareExempData: ', entry, exemp);
+  if (exemp) {
+    return {
+      ...exemp
+    };
+  }
 
-	return {
-		entryId: (entry && entry.id) || null, 
-		// text: null
-		// author_id: 1
-		// author_name: "martin"
-		// created_at: "2020-09-14T15:35:53.865Z"
-		// updated_at: "2020-09-14T15:35:53.865Z"
-		//heslo: "koleso"
-		exemplifikace: '',
-		kvalifikator: (entry && entry.kvalifikator) || null,
-		// vyznam: "koleso augm. vetne adj. n."
-		vetne: (entry && entry.vetne) || null,
-		// druh: "adj"
-		// rod: "n"
-	};
+  return {
+    entryId: (entry && entry.id) || null,
+    // text: null
+    // author_id: 1
+    // author_name: "martin"
+    // created_at: "2020-09-14T15:35:53.865Z"
+    // updated_at: "2020-09-14T15:35:53.865Z"
+    //heslo: "koleso"
+    exemplifikace: '',
+    kvalifikator: (entry && entry.kvalifikator) || null,
+    // vyznam: "koleso augm. vetne adj. n."
+    vetne: (entry && entry.vetne) || null,
+    // druh: "adj"
+    // rod: "n"
+  };
 };
 
 const ExempListing = () => {
   const [rows, setRows] = useState([]);
-	// const history = useHistory();
+  // const history = useHistory();
 
-	const [entry, setEntry] = useState(null);
-	const [reloadEx, setReloadEx] = useState(null);
-	const [reloadEn, setReloadEn] = useState(null);
+  const [entry, setEntry] = useState(null);
+  const [reloadEx, setReloadEx] = useState(null);
+  const [reloadEn, setReloadEn] = useState(null);
 
   const [selectedRow, setSelectedRow] = React.useState();
   const [editEntry, setEditEntry] = React.useState(false);
 
-	// modal Exemp dialog
+  // modal Exemp dialog
   const [exempOpen, setExempOpen] = React.useState(false);
 
   const handleClickExempOpen = () => { 
-		setSelectedRow(null);
-		setExempOpen(true);
-	};
+    setSelectedRow(null);
+    setExempOpen(true);
+  };
 
   const handleExempClose = () => setExempOpen(false);
 
-	const storeNewExemp = (exemp, successFunc) => {
+  const storeNewExemp = (exemp, successFunc) => {
     axios.post(`${baseUrl}entries/${exemp.entryId}/exemps`,
       {...exemp},
       {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
     ).then(response => {
-			successFunc();
+      successFunc();
     }, error => {
       console.log(error.response.data);
       alert(error.response.data.message);
     });
-	};
+  };
 
-	const storeExistingExemp = (exemp, successFunc) => {
+  const storeExistingExemp = (exemp, successFunc) => {
     axios.put(`${baseUrl}entries/${exemp.entryId}/exemps/${exemp.id}`,
       {...exemp},
       {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
     ).then(response => {
-			successFunc();
+      successFunc();
     }, error => {
       console.log(error.response.data);
       alert(error.response.data.message);
     });
-	};
+  };
 
-	const handleExempSave = (exemp) => {
-		console.log('handleExempSave', exemp);
+  const handleExempSave = (exemp) => {
+    console.log('handleExempSave', exemp);
 
-		const successF = () => {
+    const successF = () => {
       console.log('Exemplifikace uložena.');
-			setReloadEx(Math.random());
-		};
+      setReloadEx(Math.random());
+    };
 
-		if (exemp.id) {
-			storeExistingExemp(exemp, successF);
-		} else {
-			storeNewExemp(exemp, successF);
-		}
-		setExempOpen(false);
-	};
+    if (exemp.id) {
+      storeExistingExemp(exemp, successF);
+    } else {
+      storeNewExemp(exemp, successF);
+    }
+    setExempOpen(false);
+  };
 
-	// modal Heslo dialog
+  // modal Heslo dialog
   const [hesloOpen, setHesloOpen] = React.useState(false);
 
   const handleClickHesloEdit = () => { setEditEntry(true); setHesloOpen(true); };
   const handleClickHesloNew = () => { setEditEntry(false); setHesloOpen(true); };
   const handleHesloClose = () => setHesloOpen(false);
 
-	const storeNewHeslo = (entry, successFunc) => {
+  const handleClickImport = () => {
+    setImportOpen(true);
+  };
+
+
+  const storeNewHeslo = (entry, successFunc) => {
     axios.post(`${baseUrl}entries`,
       {...entry},
       {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
     ).then(response => {
-			successFunc();
+      successFunc();
     }, error => {
       console.log(error.response.data);
       alert(error.response.data.message);
     });
-	};
+  };
 
-	const storeExistingHeslo = (entry, successFunc) => {
+  const storeExistingHeslo = (entry, successFunc) => {
     axios.put(`${baseUrl}entries/${entry.id}`, // FIXME: kde je ID?
       {...entry},
       {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
     ).then(response => {
-			successFunc();
+      successFunc();
     }, error => {
       console.log(error.response.data);
       alert(error.response.data.message);
     });
-	};
+  };
 
-	const handleHesloSave = (entry) => {
-		console.log('handleHesloSave: ', entry);
+  const handleHesloSave = (entry) => {
+    console.log('handleHesloSave: ', entry);
 
-		const successF = () => {
+    const successF = () => {
       console.log('Heslo uloženo.');
-			setReloadEn(Math.random());
-			setReloadEx(Math.random());
-		};
+      setReloadEn(Math.random());
+      setReloadEx(Math.random());
+    };
 
-		if (entry.id) {
-			storeExistingHeslo(entry, successF);
-		} else {
-			storeNewHeslo(entry, successF);
-		} 
-	
-		setHesloOpen(false);
-	}
+    if (entry.id) {
+      storeExistingHeslo(entry, successF);
+    } else {
+      storeNewHeslo(entry, successF);
+    }
 
-	// load exemps for selected entry, when entry changes or reload is requested
+    setHesloOpen(false);
+  }
+
+  // Import wizard
+  const [importOpen, setImportOpen] = React.useState(false);
+  const handleImportClose = () => setImportOpen(false);
+
+  // load exemps for selected entry, when entry changes or reload is requested
   useEffect(() => {
-		if (entry) {
-    	axios.get(baseUrl + `entries/${entry.id}/exemps`, {
-    	  headers: {
-    	    'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
-    	  }
-    	}).then(response => {
-    	  setRows(response.data.data);
-    	});
-		}
+    if (entry) {
+      axios.get(baseUrl + `entries/${entry.id}/exemps`, {
+        headers: {
+          'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+        }
+      }).then(response => {
+        setRows(response.data.data);
+      });
+    }
   }, [entry, reloadEx]);
 
   const classes = useStyles();
 
-	// paginator
+  // paginator
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -262,47 +272,51 @@ const ExempListing = () => {
   };
 
   const handleCellClick = row => {
-		console.log('handleCellClick: ', row);
-		setSelectedRow(row);
-  	setExempOpen(true);
-	  // history.push(`/entry/${rowId}`);
+    console.log('handleCellClick: ', row);
+    setSelectedRow(row);
+    setExempOpen(true);
+    // history.push(`/entry/${rowId}`);
   };
 
-	// selected row/entry/heslo
-	const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
+  // selected row/entry/heslo
+  const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
 
   return (
     <Paper className={classes.paper}>
-			<Toolbar>
-				<EntryCombo reload={reloadEn} onChange={handleEntryChange} />
+      <Toolbar>
+        <EntryCombo reload={reloadEn} onChange={handleEntryChange} />
         <Tooltip title="Filtrovat hesla">
           <IconButton aria-label="Filtrovat hesla">
             <FilterListIcon />
           </IconButton>
         </Tooltip>
         <IconButton color="secondary" onClick={handleClickHesloEdit} aria-label="Editovat heslo" >
-				  <Tooltip title="Editovat heslo">
-						<Edit />
-				  </Tooltip>
+          <Tooltip title="Editovat heslo">
+            <Edit />
+          </Tooltip>
         </IconButton>
         <IconButton color="secondary" onClick={handleClickHesloNew} aria-label="Přidat heslo" >
-				  <Tooltip title="Přidat heslo">
-						<AddCircle />
-				  </Tooltip>
+          <Tooltip title="Přidat heslo">
+            <AddCircle />
+          </Tooltip>
         </IconButton>
-			</Toolbar>
+      </Toolbar>
       <DialogExemp
-				open={exempOpen}
-				onSave={handleExempSave}
-				onClose={handleExempClose}
-				data={prepareExempData(entry, selectedRow)} />
+        open={exempOpen}
+        onSave={handleExempSave}
+        onClose={handleExempClose}
+        data={prepareExempData(entry, selectedRow)} />
       <DialogEntry
-				open={hesloOpen}
-				onSave={handleHesloSave}
-				onClose={handleHesloClose}
-				data={prepareEntryData(entry, editEntry)} />
+        open={hesloOpen}
+        onSave={handleHesloSave}
+        onClose={handleHesloClose}
+        data={prepareEntryData(entry, editEntry)} />
+      <DialogImport
+        open={importOpen}
+        onClose={handleImportClose}
+        entryId={entry && entry.id || null} />
       <TableContainer component={Paper}>
-        <Table className={classes.listingTable} aria-label="custom pagination table">
+        <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>
             <TableRow>
               <TableCell>Exemplifikace</TableCell>
@@ -334,14 +348,14 @@ const ExempListing = () => {
             <TableRow>
               <TableCell>
                 <IconButton color="secondary" onClick={handleClickExempOpen} aria-label="Přidat exemplifikaci" >
-								  <Tooltip title="Přidat exemplifikaci">
-                	  <AddCircleOutline />
-								  </Tooltip>
+                  <Tooltip title="Přidat exemplifikaci">
+                    <AddCircleOutline />
+                  </Tooltip>
                 </IconButton>
-                <IconButton color="secondary" aria-label="Importovat exemplifikace" >
-								  <Tooltip title="Importovat exemplifikace">
-										<Publish />
-								  </Tooltip>
+                <IconButton color="secondary" onClick={handleClickImport} aria-label="Importovat exemplifikace" >
+                  <Tooltip title="Importovat exemplifikace">
+                    <Publish />
+                  </Tooltip>
                 </IconButton>
               </TableCell>
               <TablePagination
@@ -362,7 +376,7 @@ const ExempListing = () => {
             </TableRow>
           </TableFooter>
         </Table>
-    	</TableContainer>
+      </TableContainer>
     </Paper>
   );
 }

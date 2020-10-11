@@ -44,7 +44,7 @@ const CsvUpload = props => {
   return (
     <React.Fragment>
       <input
-          accept="text/*"
+          accept="text/csv"
           className={classes.hiddenInput}
           id="icon-button-photo"
           onChange={handleUpload}

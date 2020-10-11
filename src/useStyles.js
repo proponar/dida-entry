@@ -5,16 +5,16 @@ const useStyles = makeStyles(theme => ({
     "& > *": {
       margin: theme.spacing(1)
     },
-    borderStyle: "solid",
-    borderWidth: "1px",
-    margin: "4px",
+    // borderStyle: "solid",
+    // borderWidth: "1px",
+    // margin: "4px",
   },
   modalPaper: {
     position: "absolute",
     width: 400,
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
+    // border: "2px solid #000",
+    // boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
   },
   mainButtons: {
@@ -41,6 +41,13 @@ const useStyles = makeStyles(theme => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
+  },
+  button: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));
 

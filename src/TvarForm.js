@@ -5,6 +5,8 @@ import BootstrapInput from "./BootstrapInput";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField";
+
 import PadSelect from "./PadSelect";
 import RodSelect from "./RodSelect";
 
@@ -23,8 +25,10 @@ const TvarForm = props => {
     <Grid item container xs={12}>
       <Grid item xs={6}>
         <FormControl>
-          <InputLabel htmlFor={inputId}>Tvar</InputLabel>
-          <BootstrapInput
+          <TextField
+            variant="outlined"
+            margin="normal"
+            label="Tvar"
             id={inputId}
             name='tvar'
             value={tvar}

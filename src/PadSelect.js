@@ -19,13 +19,14 @@ const PadSelect = props => {
   const [ labelId ] = useState(() => uniqueId('pad-label'))
 
   return (
-    <FormControl className={classes.formControl}>
-      <InputLabel id={labelId}>Pad</InputLabel>
+    <FormControl margin="normal" variant="outlined" className={classes.formControl}>
+      <InputLabel id={labelId}>Pád</InputLabel>
       <Select
         labelId={labelId}
         value={pad}
         name="pad"
         onChange={onChange}
+        label="Pád"
       >
         <MenuItem value='1s'>1.s.</MenuItem>
         <MenuItem value='2s'>2.s.</MenuItem>

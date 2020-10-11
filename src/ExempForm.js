@@ -15,6 +15,7 @@ import RokInput from './RokInput.js';
 import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
+import RodSelect from "./RodSelect";
 import TvarForm from "./TvarForm";
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
@@ -52,6 +53,8 @@ const ZdrojInput = props => {
   }, []);
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
+  //        ^^ nebude. Jen, pokud bude prazdny, v zobrazeni (v gridu?) se ukaze
+  //        hodnota ze zdroje
 	// FIXME: inicialni hodnota!
   return (
     <Autocomplete
@@ -59,7 +62,7 @@ const ZdrojInput = props => {
       options={options}
       getOptionLabel={(option) => option.name}
       style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Zdroj" variant="outlined" />}
+      renderInput={(params) => <TextField margin="normal" {...params} label="Zdroj" variant="outlined" />}
       onChange={onChange}
     />
   );
@@ -98,10 +101,11 @@ const ExempForm = props => {
   }, [data]);
 
   const [values, setValues] = React.useState({
-    rok: '1984',
-    kvalifikator: 'kvlf.',
-    exemplifikace: 'papapapaaaaa....',
-    vyznam: '42...',
+    rod: 'm',
+    rok: '',
+    kvalifikator: '',
+    exemplifikace: '',
+    vyznam: '',
     vetne: true,
     //lokalizaceObec: 'somewhere',
     aktivni: true,
@@ -184,6 +188,9 @@ const ExempForm = props => {
           <Grid item xs={8}>
             <ZdrojInput options={[]} value={values.zdroj} onChange={handleZdrojChange} />
           </Grid>
+          <Grid item xs={4}>
+            <RokInput value={values.rok} onChange={handleValuesChange} />
+          </Grid>
           <Grid item xs={12}>
             <LokalizaceInput
               valueObec={valueObec}
@@ -192,19 +199,14 @@ const ExempForm = props => {
             />
           </Grid>
           <Grid item xs={4}>
-            <RokInput value={values.rok} onChange={handleValuesChange} />
+            <RodSelect rod={values.rod} onChange={handleValuesChange} />
           </Grid>
           <Grid item xs={4}>
             <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
           </Grid>
           <Grid item xs={4}>
             <FormControl>
-              <InputLabel htmlFor={inputId}>Význam</InputLabel>
-              <BootstrapInput
-                id={inputId}
-                name='vyznam'
-                value={values.vyznam}
-                onChange={handleValuesChange} />
+              <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam} onChange={handleValuesChange} />
             </FormControl>
           </Grid>
           <Grid item xs={4}>

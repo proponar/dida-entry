@@ -19,13 +19,14 @@ const RodSelect = props => {
   const [ labelId ] = useState(() => uniqueId('rod-label'))
 
   return (
-    <FormControl className={classes.formControl}>
+    <FormControl margin="normal" variant="outlined" className={classes.formControl}>
       <InputLabel id={labelId}>Rod</InputLabel>
       <Select
         labelId={labelId}
         value={rod}
         name="rod"
         onChange={onChange}
+        label="Rod"
       >
         <MenuItem value='m'>m.</MenuItem>
         <MenuItem value='f'>f.</MenuItem>

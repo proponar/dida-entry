@@ -8,6 +8,7 @@ import Modal from "@material-ui/core/Modal";
 import useStyles from "./useStyles";
 import BootstrapInput from "./BootstrapInput";
 import CheckboxForm from "./CheckboxForm";
+import TextField from "@material-ui/core/TextField";
 
 const rand = () => {
   return Math.round(Math.random() * 20) - 10;
@@ -89,8 +90,13 @@ const KvalifikatorInput = props => {
 
   return (
     <FormControl>
-      <InputLabel htmlFor={inputId}>Kvalifikátor</InputLabel>
-      <BootstrapInput id={inputId} name='kvalifikator' value={inputValue} onChange={onChange} />
+      <TextField
+        name="kvalifikator"
+        variant="outlined"
+        margin="normal"
+        label="Kvalifikátor"
+        value={inputValue}
+        onChange={onChange} />
       <button type="button" onClick={handleKvalifikatorOpen}>
         Nastavit
       </button>

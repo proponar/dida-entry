@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 //import Paper from "@material-ui/core/Paper";
 
 import BootstrapInput from "./BootstrapInput";
@@ -33,7 +34,7 @@ const TopForm = props => {
   };
 
   return (
-    <React.Fragment>
+    <Grid container xs={12}>
       <Grid item xs={9}>
       </Grid>
       <Grid item xs={3}>
@@ -41,10 +42,14 @@ const TopForm = props => {
         Verze: xxx,
         Číslo: {formatId(values.id)}
       </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <TextField name="tvary" variant="outlined" margin="normal" fullWidth label="Tvary" value={values.tvary} onChange={handleValuesChange} />
+        </FormControl>
+      </Grid>
       <Grid item xs={3}>
         <FormControl>
-          <InputLabel htmlFor="heslo">Heslo</InputLabel>
-          <BootstrapInput name="heslo" value={values.heslo} onChange={handleValuesChange} />
+          <TextField required name="heslo" variant="outlined" margin="normal" label="Heslo" value={values.heslo} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
@@ -52,21 +57,22 @@ const TopForm = props => {
       </Grid>
       <Grid item xs={3}>
         <FormControl>
-          <InputLabel htmlFor="vyznam-textbox">Význam</InputLabel>
-          <BootstrapInput id="vyznam-textbox" name='vyznam' value={values.vyznam} onChange={handleValuesChange} />
+          <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
         <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
       </Grid>
       <Grid item xs={3}>
-        <FormControl className={classes.formControl}>
+        <FormControl variant="outlined" margin="normal" className={classes.formControl}>
           <InputLabel id="druh-label">Druh</InputLabel>
           <Select
+            margin="normal"
             labelId="druh-label"
             name="druh"
             value={values.druh}
             onChange={handleValuesChange}
+            label="Druh"
           >
             <MenuItem value='subst'>Substantiva</MenuItem>
             <MenuItem value='adj'>Adjektiva</MenuItem>
@@ -76,7 +82,7 @@ const TopForm = props => {
       <Grid item xs={3}>
         <RodSelect rod={values.rod} onChange={handleValuesChange} />
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 

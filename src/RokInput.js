@@ -40,6 +40,8 @@ const RokInput = props => {
 
   return (
     <TextField
+      variant="outlined"
+      margin="normal"
       label="Rok"
       value={value}
       onChange={onChange}

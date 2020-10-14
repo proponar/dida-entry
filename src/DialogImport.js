@@ -16,11 +16,12 @@ const DialogImport = ({open, onClose, entryId}) => {
     <Dialog
       fullWidth={true}
       maxWidth='xl'
-      open={open} onClose={onClose} entryId={entryId}
+      open={open}
+      onClose={onClose}
       aria-labelledby="Import Dialog">
       <DialogTitle id="Import Dialog">Import exemplifikací</DialogTitle>
       <DialogContent>
-        <ImportStepper />
+        <ImportStepper onClose={onClose} entryId={entryId} />
       </DialogContent>
     </Dialog>
   );

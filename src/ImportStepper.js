@@ -13,62 +13,79 @@ import { baseUrl } from './config';
 import useStyles from "./useStyles";
 
 function getSteps() {
-  return ['Vožení dat', 'Kontrola', 'Import'];
+  return ['Vožení dat', 'Kontrola'];
 }
 
-const getStepContent = (step, classes, rows) => {
-  switch (step) {
-    case 0:
-      return (
-        <React.Fragment>
-          <div className={classes.autosizeWrap}>
-            <TextareaAutosize
-              style={{width: '100%'}}
-              width={500}
-              aria-label="Exemplifikace"
-              rowsMin={3} placeholder=""
-            />
-          </div>
-          <Typography className={classes.instructions}>Vložte exemplifikace...</Typography>
-        </React.Fragment>
-      );
-    case 1:
-      return (
-        <React.Fragment>
-          <ExempSimpleTable rows={rows} />
-          <Typography className={classes.instructions}>Je vše v pořádku?</Typography>
-        </React.Fragment>
-      );
-    case 2:
-      return (
-         <Typography className={classes.instructions}>Importujeme...</Typography>
-      );
-    default:
-      return 'Unknown step';
-  }
-}
-
-const ImportStepper = ({entryId}) => {
+const ImportStepper = ({entryId, onClose}) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [rows, setRows] = React.useState([]);
+  const [text, setText] = React.useState('');
   const steps = getSteps();
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <React.Fragment>
+            <div className={classes.autosizeWrap}>
+              <TextareaAutosize
+                style={{width: '100%'}}
+                width={500}
+                aria-label="Exemplifikace"
+                rowsMin={3} placeholder=""
+                value={text}
+                onChange={e => setText(e.target.value)}
+              />
+            </div>
+            <Typography className={classes.instructions}>Vložte exemplifikace...</Typography>
+          </React.Fragment>
+        );
+      case 1:
+        return (
+          <React.Fragment>
+            <ExempSimpleTable rows={rows} />
+            <Typography className={classes.instructions}>Je vše v pořádku?</Typography>
+          </React.Fragment>
+        );
+      case 2:
+        return (
+           <Typography className={classes.instructions}>Importujeme...</Typography>
+        );
+      default:
+        return 'Unknown step';
+    }
+  }
+
+  const callImport = dryRun => axios.post(
+    baseUrl + `entries/${entryId}/import?dry_run=${dryRun}`,
+    text,
+    {
+      headers: {
+        Authorization: `Token ${window.localStorage.getItem('auth-token')}`,
+        "Content-Type": "application/octet-stream; charset=binary",
+      }
+    }
+  );
 
   const handleNext = () => {
     if (activeStep === 0) { // test import
-      axios.post(
-        baseUrl + `entries/${entryId}/import`,
-        {
-          headers: {
-            Authorization: `Token ${window.localStorage.getItem('auth-token')}`,
-            "Content-Type": "application/octet-stream; charset=binary",
-          }
-        }
-      ).then(response => {
-        console.log(response);
-        alert(response.data.message);
+      // try import
+      callImport(true).then(response => {
+        console.log(response.data.message);
+        // display preview
         setRows(response.data.data);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }, error => {
+        console.log(error);
+        console.log(error.response);
+        alert(error.response.data.message);
+      });
+    } else if (activeStep === 1) {
+      // do import
+      callImport(false).then(response => {
+        // close the wizard
+        onClose();
       }, error => {
         console.log(error);
         console.log(error.response);
@@ -112,7 +129,7 @@ const ImportStepper = ({entryId}) => {
           </div>
         ) : (
           <div>
-            {getStepContent(activeStep, classes, rows)}
+            {getStepContent(activeStep)}
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Zpět

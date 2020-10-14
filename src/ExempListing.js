@@ -150,7 +150,8 @@ const ExempListing = () => {
   const storeNewExemp = (exemp, successFunc) => {
     axios.post(`${baseUrl}entries/${exemp.entryId}/exemps`,
       {...exemp},
-      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+      //{headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+      {headers: {Authorization: `Token ${window.localStorage.getItem('auth-token')}`}}
     ).then(response => {
       successFunc();
     }, error => {
@@ -243,7 +244,10 @@ const ExempListing = () => {
 
   // Import wizard
   const [importOpen, setImportOpen] = React.useState(false);
-  const handleImportClose = () => setImportOpen(false);
+  const handleImportClose = () => {
+    setReloadEx(Math.random());
+    setImportOpen(false);
+  }
 
   // load exemps for selected entry, when entry changes or reload is requested
   useEffect(() => {
@@ -281,6 +285,7 @@ const ExempListing = () => {
   // selected row/entry/heslo
   const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
 
+  console.log('entryId=', (entry && entry.id) || null);
   return (
     <Paper className={classes.paper}>
       <Toolbar>
@@ -314,7 +319,7 @@ const ExempListing = () => {
       <DialogImport
         open={importOpen}
         onClose={handleImportClose}
-        entryId={entry && entry.id || null} />
+        entryId={(entry && entry.id) || null} />
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>

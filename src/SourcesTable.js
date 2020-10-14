@@ -28,10 +28,11 @@ export default function SourcesTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.denseTable} size="small" aria-label="a dense table">
+      <Table className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
         <TableHead>
         <TableRow>
           <TableCell>Název</TableCell>
+          <TableCell align="right">Autor</TableCell>
           <TableCell align="right">Typ</TableCell>
           <TableCell align="right">Rok</TableCell>
           <TableCell align="right">Lokalizace</TableCell>
@@ -43,6 +44,7 @@ export default function SourcesTable() {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
+                <TableCell align="right">{row.autor}</TableCell>
                 <TableCell align="right">{row.typ}</TableCell>
                 <TableCell align="right">{row.rok}</TableCell>
                 <TableCell align="right">{row.lokalizace}</TableCell>

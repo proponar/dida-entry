@@ -1,2 +1,9 @@
-// export const baseUrl = 'https://192.168.122.68/api/';
-export const baseUrl = 'http://localhost:3000/api/';
+let baseUrl;
+
+if (process.env.REACT_APP_ENV === 'development') {
+  baseUrl = 'https://dida.ujc.cas.cz/api/';
+} else if (process.env.REACT_APP_ENV === 'production') {
+  baseUrl = 'https://dida.ujc.cas.cz/api/';
+}
+
+export { baseUrl };

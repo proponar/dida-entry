@@ -20,11 +20,11 @@ import VetneSwitch from "./VetneSwitch";
 const TopForm = props => {
   const classes = useStyles();
 
-	const {
+  const {
     data: values,
     valuesChange: handleValuesChange,
     valuesCheckChange: handleValuesCheckChange,
-	} = props;
+  } = props;
 
   const formatId = id => {
     if (id)
@@ -35,28 +35,31 @@ const TopForm = props => {
 
   return (
     <Grid container xs={12}>
-      <Grid item xs={9}>
-      </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         Autor: {values.author_name},
         Verze: xxx,
         Číslo: {formatId(values.id)}
+      </Grid>
+      <Grid item xs={5}>
+        <FormControl fullWidth>
+          <TextField required name="heslo" variant="outlined" margin="normal" label="Heslo" value={values.heslo} onChange={handleValuesChange} />
+        </FormControl>
+      </Grid>
+      <Grid item xs={5}>
+        <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
           <TextField name="tvary" variant="outlined" margin="normal" fullWidth label="Tvary" value={values.tvary} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={3}>
-        <FormControl>
-          <TextField required name="heslo" variant="outlined" margin="normal" label="Heslo" value={values.heslo} onChange={handleValuesChange} />
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <TextField name="urceni" variant="outlined" margin="normal" fullWidth label="Určení" value={values.urceni} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={3}>
-				<KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
-      </Grid>
-      <Grid item xs={3}>
-        <FormControl>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
           <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam} onChange={handleValuesChange} />
         </FormControl>
       </Grid>

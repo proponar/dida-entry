@@ -70,7 +70,7 @@ export default function SignIn() {
 			}
 		).then(response => {
 			window.localStorage.setItem('auth-token', response.data.auth_token);
-			history.push('/entries');
+			history.push('/exemps');
 		});
 
 	  event.preventDefault();

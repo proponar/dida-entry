@@ -24,6 +24,7 @@ const ExempSimpleTable = ({rows}) => {
             <TableCell>Exemplifikace</TableCell>
             <TableCell align="right">Kvalifikátor</TableCell>
             <TableCell align="right">Lokalizace</TableCell>
+            <TableCell align="right">Lok. textová</TableCell>
             <TableCell align="right">Zdroj</TableCell>
           </TableRow>
         </TableHead>
@@ -35,6 +36,7 @@ const ExempSimpleTable = ({rows}) => {
               </TableCell>
               <TableCell align="right">{row.kvalifikator}</TableCell>
               <TableCell align="right">{row.lokalizace_obec_text}</TableCell>
+              <TableCell align="right">{row.lokalizace_text}</TableCell>
               <TableCell align="right">{row.zdroj_name}</TableCell>
             </TableRow>
           ))}

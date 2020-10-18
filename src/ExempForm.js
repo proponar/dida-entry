@@ -17,56 +17,9 @@ import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
 import RodSelect from "./RodSelect";
 import TvarForm from "./TvarForm";
+import ZdrojInput from "./ZdrojInput";
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
-
-const ZdrojInput = props => {
-  const {
-    options: optionsIn,
-    value,
-    onChange,
-  } = props;
-
-  const [options, setOptions] = useState(optionsIn);
-
-  // https://www.robinwieruch.de/local-storage-react
-  useEffect(() => {
-    async function getOptions() {
-      const cachedSources = localStorage.getItem('sources');
-      if (cachedSources) {
-        setOptions(JSON.parse(cachedSources));
-      } else {
-        const response = await axios.get(
-            baseUrl + 'sources', {
-            headers: {
-              Authorization: `Token ${window.localStorage.getItem('auth-token')}`
-            }
-          }
-        );
-        const sources = response.data.data;
-        console.log('sources: ', sources);
-        localStorage.setItem('sources', JSON.stringify(sources));
-        setOptions(sources);
-      }
-    }
-    getOptions();
-  }, []);
-
-  // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
-  //        ^^ nebude. Jen, pokud bude prazdny, v zobrazeni (v gridu?) se ukaze
-  //        hodnota ze zdroje
-	// FIXME: inicialni hodnota!
-  return (
-    <Autocomplete
-      name="zdroj"
-      options={options}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField margin="normal" {...params} label="Zdroj" variant="outlined" />}
-      onChange={onChange}
-    />
-  );
-};
 
 const parseExemplifikaceValue = value => {
   const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
@@ -140,10 +93,16 @@ const ExempForm = props => {
     setData(dataKey, newValues);
   };
 
-  const handleZdrojChange = (ev, zdroj) => {
+  const handleZdrojChange = zdroj => {
     console.log('handleZdrojChange: ', zdroj);
-		// FIXME
-    // typ, rok, lokalizace
+    console.log(zdroj && zdroj.cislo);
+
+    const newValues = {
+      ...values,
+      zdroj_id: zdroj.cislo,
+    };
+    setValues(newValues);
+    setData(dataKey, newValues);
   };
 
   const handleValuesCheckChange = event => {
@@ -186,7 +145,7 @@ const ExempForm = props => {
             <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
           </Grid>
           <Grid item xs={8}>
-            <ZdrojInput options={[]} value={values.zdroj} onChange={handleZdrojChange} />
+            <ZdrojInput options={[]} value={values.zdroj_id} onChange={handleZdrojChange} />
           </Grid>
           <Grid item xs={4}>
             <RokInput value={values.rok} onChange={handleValuesChange} />

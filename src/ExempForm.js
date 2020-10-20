@@ -26,13 +26,26 @@ const parseExemplifikaceValue = value => {
   console.log('tvary: ', matched);
 
   return matched.map((t, i) => {
-    return {
-      index: i,
-      key: i,
-      tvar: t,
-      rod: 'm',
-      pad: '1s',
-    }
+    // 'huse, 1 pl.'
+    // const mt = t.match(/^(\w+),\s*(\d)\s+(pl|sg)\.$/);
+    const mt = t.match(/^(\p{L}+),\s*(\d)\s+(pl|sg)\.$/u);
+    if (mt) {
+      return {
+        index: i,
+        key: i,
+        tvar: mt[1],
+        rod: 'm', // FIXME: chceme ho?
+        pad: mt[2] + ((mt[3] == 'pl' && 'p') || 's'),
+      };
+    } else {
+      return {
+        index: i,
+        key: i,
+        tvar: t,
+        rod: 'm',
+        pad: '1s',
+      }
+    };
   });
 };
 

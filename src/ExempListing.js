@@ -121,6 +121,7 @@ const prepareExempData = (entry, exemp) => {
     kvalifikator: (entry && entry.kvalifikator) || null,
     // vyznam: "koleso augm. vetne adj. n."
     vetne: (entry && entry.vetne) || null,
+    vyznam: (entry && entry.vyznam) || '',
     // druh: "adj"
     // rod: "n"
   };

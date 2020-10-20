@@ -34,7 +34,7 @@ const TopForm = props => {
   };
 
   return (
-    <Grid container xs={12}>
+    <Grid container item xs={12}>
       <Grid item xs={2}>
         Autor: {values.author_name},
         Verze: xxx,
@@ -70,7 +70,6 @@ const TopForm = props => {
         <FormControl variant="outlined" margin="normal" className={classes.formControl}>
           <InputLabel id="druh-label">Druh</InputLabel>
           <Select
-            margin="normal"
             labelId="druh-label"
             name="druh"
             value={values.druh}

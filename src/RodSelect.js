@@ -23,7 +23,7 @@ const RodSelect = props => {
       <InputLabel id={labelId}>Rod</InputLabel>
       <Select
         labelId={labelId}
-        value={rod}
+        value={rod || 'm'}
         name="rod"
         onChange={onChange}
         label="Rod"

@@ -373,7 +373,7 @@ const ExempListing = () => {
               <TablePagination
                 labelRowsPerPage="Řádků na stránce"
                 rowsPerPageOptions={[10, 25, 50, { label: 'Všechny', value: -1 }]}
-                colSpan={3}
+                colSpan={5}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

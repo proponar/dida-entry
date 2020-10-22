@@ -155,7 +155,7 @@ const ExempForm = props => {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
+            <VetneSwitch checked={values.vetne || false} onChange={handleValuesCheckChange} />
           </Grid>
           <Grid item xs={8}>
             <ZdrojInput options={[]} value={values.zdroj_id} onChange={handleZdrojChange} />
@@ -178,7 +178,7 @@ const ExempForm = props => {
           </Grid>
           <Grid item xs={4}>
             <FormControl>
-              <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam} onChange={handleValuesChange} />
+              <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam || ''} onChange={handleValuesChange} />
             </FormControl>
           </Grid>
           <Grid item xs={4}>

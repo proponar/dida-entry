@@ -28,6 +28,7 @@ const RodSelect = props => {
         onChange={onChange}
         label="Rod"
       >
+        <MenuItem value=' '>-o-</MenuItem>
         <MenuItem value='m'>m.</MenuItem>
         <MenuItem value='f'>f.</MenuItem>
         <MenuItem value='n'>n.</MenuItem>

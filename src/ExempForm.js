@@ -26,25 +26,37 @@ const parseExemplifikaceValue = value => {
   console.log('tvary: ', matched);
 
   return matched.map((t, i) => {
+    // 'obecním, f. 7 sg.'
+    const mtr = t.match(/^(\p{L}+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
+    if (mtr) {
+      return {
+        index: i,
+        key: i,
+        tvar: mtr[1],
+        rod: mtr[2],
+        pad: mtr[3] + ((mtr[4] == 'pl' && 'p') || 's'),
+      };
+
+    }
+
     // 'huse, 1 pl.'
-    // const mt = t.match(/^(\w+),\s*(\d)\s+(pl|sg)\.$/);
     const mt = t.match(/^(\p{L}+),\s*(\d)\s+(pl|sg)\.$/u);
     if (mt) {
       return {
         index: i,
         key: i,
         tvar: mt[1],
-        rod: 'm', // FIXME: chceme ho?
+        rod: ' ',
         pad: mt[2] + ((mt[3] == 'pl' && 'p') || 's'),
       };
-    } else {
-      return {
-        index: i,
-        key: i,
-        tvar: t,
-        rod: 'm',
-        pad: '1s',
-      }
+    }
+
+    return {
+      index: i,
+      key: i,
+      tvar: t,
+      rod: 'm',
+      pad: '1s',
     };
   });
 };

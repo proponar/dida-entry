@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
 
 import LokalizaceObec from "./LokalizaceObec";
+import LokalizaceCast from "./LokalizaceCast";
 //import useStyles from "./useStyles";
 
 const CastObceInput = props => {
@@ -31,35 +32,25 @@ const LokalizaceInput = props => {
     onChange
   } = props;
 
+  const [kodObce, setKodObce] = React.useState(
+    (valueObec && valueObec.kod_obec) || ''
+  );
+
+  console.log('kodObce: ', kodObce);
+
   const onChangeInternal = (event) => {
     console.log(`Lokalizace setting ${event.target.name} to ${event.target.value}`);
+    setKodObce(event.target.value);
     onChange(event);
   };
 
-  // FIXME: dynamicky nacist
-  const [castiObce, setCastiObce] = React.useState(['tam', 'jinde']);
+  const onChangeCastInternal = (event) => {
+    console.log(`Cast obce setting ${event.target.name} to ${event.target.value}`);
+    onChangePart(event);
+  };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await axios.get(
-  //         baseUrl + `locations/parts/${id}`, {
-  //         headers: {
-  //           Authorization: `Token ${window.localStorage.getItem('auth-token')}`
-  //         }
-  //       }
-  //     );
-  //     console.log('loaded entry:', response.data);
-  //     //setEntry(response.data);
-  //   }
-  //   if (id) {
-  //     fetchData();
-  //   } else {
-  //     //setEntry({});
-  //   }
-  // }, [id]);
-
-  const onChangePart = () => {
-    alert('onChangePart');
+  const onChangePart = (e) => {
+    console.log('onChangePart:', e);
   };
 
   return (
@@ -68,14 +59,16 @@ const LokalizaceInput = props => {
         <Grid item>
 					<LokalizaceObec value={valueObec} onChange={onChangeInternal} />
 				</Grid>
+        <Grid item>
+					<LokalizaceCast
+            value={valueCast}
+            onChange={onChangeCastInternal}
+            locationId={kodObce}
+          />
+				</Grid>
       </Grid>
     </FormControl>
   );
 }
-/*
-        <Grid item>
-					<CastObceInput value={valueCast} onChange={onChangePart} options={castiObce} />
-        </Grid>
-        <Grid item>Lokalizace</Grid>
-*/
+
 export default LokalizaceInput;

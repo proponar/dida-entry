@@ -24,7 +24,6 @@ const EntryCombo = props => {
         }
       );
       const sources = response.data.data;
-      console.log('sources: ', sources);
       setOptions(sources);
     }
     getOptions();

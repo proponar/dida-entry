@@ -94,7 +94,6 @@ TablePaginationActions.propTypes = {
 };
 
 const prepareEntryData = (entry, edit) => {
-  console.log('prepareEntryData: ', entry, edit);
   return (edit && entry) || {
     rod: 'm',
     druh: 'subst',
@@ -102,7 +101,6 @@ const prepareEntryData = (entry, edit) => {
 };
 
 const prepareExempData = (entry, exemp) => {
-  console.log('prepareExempData: ', entry, exemp);
   if (exemp) {
     return {
       ...exemp
@@ -277,7 +275,6 @@ const ExempListing = () => {
   };
 
   const handleCellClick = row => {
-    console.log('handleCellClick: ', row);
     setSelectedRow(row);
     setExempOpen(true);
     // history.push(`/entry/${rowId}`);
@@ -286,7 +283,6 @@ const ExempListing = () => {
   // selected row/entry/heslo
   const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
 
-  console.log('entryId=', (entry && entry.id) || null);
   return (
     <Paper className={classes.paper}>
       <Toolbar>

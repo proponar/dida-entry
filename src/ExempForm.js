@@ -124,6 +124,7 @@ const ExempForm = props => {
 
     const newValues = {
       ...values,
+      rok: zdroj.rok || values.rok, // FIXME: rok_sberu?
       zdroj_id: zdroj.cislo,
     };
     setValues(newValues);

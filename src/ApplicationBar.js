@@ -48,7 +48,6 @@ const ApplicationBar = ({title}) => {
                   <MenuIcon />
                 </IconButton>
                 <Menu {...bindMenu(popupState)}>
-                  <MenuItem onClick={() => {goTo(popupState, '/entries/')}}>Hesla</MenuItem>
                   <MenuItem onClick={() => {goTo(popupState, '/exemps/')}}>Exemplifikace</MenuItem>
                   <MenuItem onClick={() => {goTo(popupState, '/sources/')}}>Zdroje</MenuItem>
                 </Menu>
@@ -61,7 +60,7 @@ const ApplicationBar = ({title}) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <Button color="inherit">Odhlasit</Button>
+          <Button color="inherit">Odhlásit</Button>
         </Toolbar>
       </AppBar>
     </div>

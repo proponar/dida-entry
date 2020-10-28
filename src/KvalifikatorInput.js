@@ -81,7 +81,7 @@ const KvalifikatorInput = props => {
       <h2 id="modal-title">Výběr kvalifikátorů</h2>
       <CheckboxForm checks={checks} checkState={checkState} setCheckState={setCheckState} />
       <p id="modal-description">
-        Vyberte relevantní klasifikátory.
+        Vyberte relevantní kvalifikátory.
       </p>
     </div>
   );

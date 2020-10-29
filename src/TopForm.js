@@ -40,13 +40,10 @@ const TopForm = props => {
         Verze: xxx,
         Číslo: {formatId(values.id)}
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={10}>
         <FormControl fullWidth>
           <TextField required name="heslo" variant="outlined" margin="normal" label="Heslo" value={values.heslo} onChange={handleValuesChange} />
         </FormControl>
-      </Grid>
-      <Grid item xs={5}>
-        <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -58,7 +55,10 @@ const TopForm = props => {
           <TextField name="urceni" variant="outlined" margin="normal" fullWidth label="Určení" value={values.urceni} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={3}>
+        <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
+      </Grid>
+      <Grid item xs={9}>
         <FormControl fullWidth>
           <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam} onChange={handleValuesChange} />
         </FormControl>

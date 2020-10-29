@@ -57,7 +57,7 @@ const ZdrojInput = props => {
     getOptions();
   }, [zdrojIdIn]);
 
-  const source2label = source => `${source.name}, ${source.autor || ''}, ${source.rok || ''}`;
+  const source2label = source => `${source.autor || '-'}, ${source.name || '-'}, ${source.rok || ''}`;
   // valuegetOptionSelected={(option, value) => option.naz_obec === value.naz_obec}
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace

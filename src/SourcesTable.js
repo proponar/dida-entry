@@ -31,8 +31,8 @@ export default function SourcesTable() {
       <Table className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
         <TableHead>
         <TableRow>
-          <TableCell>Název</TableCell>
-          <TableCell align="right">Autor</TableCell>
+          <TableCell>Autor</TableCell>
+          <TableCell align="right">Název</TableCell>
           <TableCell align="right">Typ</TableCell>
           <TableCell align="right">Rok</TableCell>
           <TableCell align="right">Lokalizace</TableCell>
@@ -41,10 +41,8 @@ export default function SourcesTable() {
         <TableBody>
         {rows.map((row) => (
                 <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.autor}</TableCell>
+                <TableCell component="th" scope="row">{row.autor}</TableCell>
+                <TableCell align="right">{row.name}</TableCell>
                 <TableCell align="right">{row.typ}</TableCell>
                 <TableCell align="right">{row.rok}</TableCell>
                 <TableCell align="right">{row.lokalizace}</TableCell>

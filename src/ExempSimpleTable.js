@@ -13,6 +13,14 @@ import useStyles from "./useStyles";
 const ExempSimpleTable = ({rows}) => {
   const classes = useStyles();
 
+  const cellStyle = string => {
+    if (string) {
+      return '';
+    } else {
+      return classes.cellAlert;
+    }
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.listingTable} aria-label="Náhled importu exemplifikace">
@@ -32,9 +40,9 @@ const ExempSimpleTable = ({rows}) => {
                 {row.exemplifikace}
               </TableCell>
               <TableCell align="right">{row.kvalifikator}</TableCell>
-              <TableCell align="right">{row.lokalizace_obec_text}</TableCell>
+              <TableCell className={cellStyle(row.lokalizace_obec_text)} align="right">{row.lokalizace_obec_text}</TableCell>
               <TableCell align="right">{row.lokalizace_text}</TableCell>
-              <TableCell align="right">{row.zdroj_name}</TableCell>
+              <TableCell className={cellStyle(row.zdroj_name)} align="right">{row.zdroj_name}</TableCell>
             </TableRow>
           ))}
          </TableBody>

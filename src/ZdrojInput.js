@@ -71,7 +71,6 @@ const ZdrojInput = props => {
       options={options}
       getOptionSelected={(option, value) => option.naz_obec === value.naz_obec}
       getOptionLabel={source2label}
-      style={{ width: 300 }}
       renderInput={(params) => <TextField margin="normal" {...params} label="Zdroj" variant="outlined" />}
       onChange={handleChange}
     />

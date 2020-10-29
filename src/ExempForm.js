@@ -170,27 +170,24 @@ const ExempForm = props => {
           <Grid item xs={4}>
             <VetneSwitch checked={values.vetne || false} onChange={handleValuesCheckChange} />
           </Grid>
-          <Grid item xs={8}>
-            <ZdrojInput options={[]} value={values.zdroj_id} onChange={handleZdrojChange} />
+          <Grid item xs={12} container spacing={1}>
+            <Grid item xs={8}>
+              <ZdrojInput options={[]} value={values.zdroj_id} onChange={handleZdrojChange} />
+            </Grid>
+            <Grid item xs={4}>
+              <RokInput value={values.rok} onChange={handleValuesChange} />
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <RokInput value={values.rok} onChange={handleValuesChange} />
-          </Grid>
-          <Grid item xs={12}>
-            <LokalizaceInput
-              valueObec={valueObec}
-              valueCast={values.lokalizaceCast}
-              onChange={handleValuesChange}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <RodSelect rod={values.rod} onChange={handleValuesChange} />
-          </Grid>
+          <LokalizaceInput
+            valueObec={valueObec}
+            valueCast={values.lokalizaceCast}
+            onChange={handleValuesChange}
+          />
           <Grid item xs={4}>
             <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
           </Grid>
-          <Grid item xs={4}>
-            <FormControl>
+          <Grid item xs={8}>
+            <FormControl fullWidth>
               <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam || ''} onChange={handleValuesChange} />
             </FormControl>
           </Grid>

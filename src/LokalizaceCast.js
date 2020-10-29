@@ -67,7 +67,6 @@ const LokalizaceCast = props => {
   return (
     <Autocomplete
       id={elementId}
-      style={{ width: 300 }}
       open={open}
       onOpen={() => { setOpen(true); }}
       onClose={() => { setOpen(false); }}

@@ -10,11 +10,11 @@ import LokalizaceCast from "./LokalizaceCast";
 //import useStyles from "./useStyles";
 
 const CastObceInput = props => {
-	const {
-		options
-	} = props;
+  const {
+    options
+  } = props;
 
-	return (
+  return (
     <Autocomplete
       id="combo-box-demo"
       options={options}
@@ -22,7 +22,7 @@ const CastObceInput = props => {
       style={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Část obce" variant="outlined" />}
     />
-	);
+  );
 };
 
 const LokalizaceInput = props => {
@@ -54,20 +54,22 @@ const LokalizaceInput = props => {
   };
 
   return (
-    <FormControl>
-      <Grid component="label" container alignItems="center" spacing={1}>
-        <Grid item>
-					<LokalizaceObec value={valueObec} onChange={onChangeInternal} />
-				</Grid>
-        <Grid item>
-					<LokalizaceCast
+    <Grid item xs={12} container spacing={1}>
+      <Grid item xs={6}>
+        <FormControl fullWidth>
+          <LokalizaceObec value={valueObec} onChange={onChangeInternal} />
+        </FormControl>
+      </Grid>
+      <Grid item xs={6}>
+        <FormControl fullWidth>
+          <LokalizaceCast
             value={valueCast}
             onChange={onChangeCastInternal}
             locationId={kodObce}
           />
-				</Grid>
+        </FormControl>
       </Grid>
-    </FormControl>
+    </Grid>
   );
 }
 

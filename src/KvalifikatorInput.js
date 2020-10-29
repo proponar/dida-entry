@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
-import uniqueId from 'lodash/uniqueId'
 
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Modal from "@material-ui/core/Modal";
-
-import useStyles from "./useStyles";
-import BootstrapInput from "./BootstrapInput";
 import CheckboxForm from "./CheckboxForm";
+import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 
-const rand = () => {
-  return Math.round(Math.random() * 20) - 10;
-};
+import useStyles from "./useStyles";
+
+const rand = () => Math.round(Math.random() * 20) - 10;
 
 const getModalStyle = () => {
   const top = 50 + rand();
@@ -53,11 +48,11 @@ const KvalifikatorInput = props => {
 
   const classes = useStyles();
 
-  const [modalStyle] = React.useState(getModalStyle);
-  const [kvModalOpen, setKvModalOpen] = React.useState(false);
+  const [modalStyle] = useState(getModalStyle);
+  const [kvModalOpen, setKvModalOpen] = useState(false);
 
-  const [inputValue, setInputValue] = React.useState(value);
-  const [checkState, setCheckState] = React.useState(textToChecks(value));
+  const [inputValue, setInputValue] = useState(value);
+  const [checkState, setCheckState] = useState(textToChecks(value));
 
   // need this because value changes from outside (parent)
   // https://medium.com/@digruby/do-not-use-props-as-default-value-of-react-usestate-directly-818ee192f454
@@ -85,8 +80,6 @@ const KvalifikatorInput = props => {
       </p>
     </div>
   );
-
-  const [ inputId ] = useState(() => uniqueId('kvalifikator-textbox'))
 
   return (
     <FormControl>

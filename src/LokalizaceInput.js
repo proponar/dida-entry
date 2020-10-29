@@ -1,29 +1,10 @@
 import React from "react";
 
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
-import TextField from '@material-ui/core/TextField';
 
 import LokalizaceObec from "./LokalizaceObec";
 import LokalizaceCast from "./LokalizaceCast";
-//import useStyles from "./useStyles";
-
-const CastObceInput = props => {
-  const {
-    options
-  } = props;
-
-  return (
-    <Autocomplete
-      id="combo-box-demo"
-      options={options}
-      getOptionLabel={(option) => option}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Část obce" variant="outlined" />}
-    />
-  );
-};
 
 const LokalizaceInput = props => {
   const {

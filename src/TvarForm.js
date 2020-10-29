@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import uniqueId from 'lodash/uniqueId'
 
-import BootstrapInput from "./BootstrapInput";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import TextField from "@material-ui/core/TextField";
 
 import PadSelect from "./PadSelect";

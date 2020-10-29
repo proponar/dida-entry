@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import uniqueId from 'lodash/uniqueId'
-import axios from 'axios';
 
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormControl from "@material-ui/core/FormControl";
 import GenericSwitch from './GenericSwitch.js';
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +7,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TextField from '@material-ui/core/TextField';
 
-import BootstrapInput from "./BootstrapInput";
 import RokInput from './RokInput.js';
 import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
@@ -18,7 +14,6 @@ import KvalifikatorInput from "./KvalifikatorInput";
 import RodSelect from "./RodSelect";
 import TvarForm from "./TvarForm";
 import ZdrojInput from "./ZdrojInput";
-import { baseUrl } from './config';
 import useStyles from "./useStyles";
 
 const parseExemplifikaceValue = value => {
@@ -34,7 +29,7 @@ const parseExemplifikaceValue = value => {
         key: i,
         tvar: mtr[1],
         rod: mtr[2],
-        pad: mtr[3] + ((mtr[4] == 'pl' && 'p') || 's'),
+        pad: mtr[3] + ((mtr[4] === 'pl' && 'p') || 's'),
       };
 
     }
@@ -47,7 +42,7 @@ const parseExemplifikaceValue = value => {
         key: i,
         tvar: mt[1],
         rod: ' ',
-        pad: mt[2] + ((mt[3] == 'pl' && 'p') || 's'),
+        pad: mt[2] + ((mt[3] === 'pl' && 'p') || 's'),
       };
     }
 
@@ -73,7 +68,7 @@ const ExempForm = props => {
 	const exemplifikaceNotNull = (data && data.exemplifikace) || '';
 
   // handle prop change
-  React.useEffect(() => {
+  useEffect(() => {
     setValues(data);
     setTvary(parseExemplifikaceValue(exemplifikaceNotNull));
   }, [data]);
@@ -89,8 +84,7 @@ const ExempForm = props => {
     aktivni: true,
   });
 
-  //const [tvary, setTvary] = React.useState(parseExemplifikaceValue(values.exemplifikace));
-  const [tvary, setTvary] = React.useState([]);
+  const [tvary, setTvary] = useState([]);
 
   const handleTvarValuesChange = (ev, index) => {
     const {name, value} = ev.target;
@@ -140,8 +134,6 @@ const ExempForm = props => {
     setValues(newValues);
     setData(dataKey, newValues);
   };
-
-  const [ inputId ] = useState(() => uniqueId('vyznam-textbox'))
 
   const valueObec = (values && values.lokalizace_obec_id && {
     naz_obec: values.lokalizace_obec_text,

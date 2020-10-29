@@ -1,17 +1,11 @@
 import React from "react";
-//import { withStyles } from "@material-ui/core/styles";
-//import { purple } from "@material-ui/core/colors";
-//import FormGroup from "@material-ui/core/FormGroup";
-//import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-//import Paper from "@material-ui/core/Paper";
 
-import BootstrapInput from "./BootstrapInput";
 import useStyles from "./useStyles";
 import KvalifikatorInput from "./KvalifikatorInput";
 import RodSelect from "./RodSelect";

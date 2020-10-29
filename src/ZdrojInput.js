@@ -28,7 +28,7 @@ const ZdrojInput = props => {
   // setOptions and setSelected based on zdrojIdIn
   const setSources = sources => {
     setOptions(sources);
-    const selected = sources.find(e => e.cislo == zdrojIdIn);
+    const selected = sources.find(e => e.cislo === zdrojIdIn);
     if (selected) {
       setSelection(selected);
     }

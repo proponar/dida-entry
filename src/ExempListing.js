@@ -103,25 +103,17 @@ const prepareEntryData = (entry, edit) => {
 const prepareExempData = (entry, exemp) => {
   if (exemp) {
     return {
+      entryId: (entry && entry.id) || null,
       ...exemp
     };
   }
 
   return {
     entryId: (entry && entry.id) || null,
-    // text: null
-    // author_id: 1
-    // author_name: "martin"
-    // created_at: "2020-09-14T15:35:53.865Z"
-    // updated_at: "2020-09-14T15:35:53.865Z"
-    //heslo: "koleso"
     exemplifikace: '',
     kvalifikator: (entry && entry.kvalifikator) || null,
-    // vyznam: "koleso augm. vetne adj. n."
     vetne: (entry && entry.vetne) || null,
     vyznam: (entry && entry.vyznam) || '',
-    // druh: "adj"
-    // rod: "n"
   };
 };
 

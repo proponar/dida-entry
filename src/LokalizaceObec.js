@@ -53,7 +53,6 @@ const LokalizaceObec = props => {
   // }, [open]);
 
   const handleValueChange = (ev, value) => {
-    console.log('value change: ', value)
     if (value)
       onChange({target: {name: 'lokalizace_obec_id', value: value.kod_obec}});
   };

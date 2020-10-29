@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
@@ -17,22 +17,16 @@ const LokalizaceInput = props => {
     (valueObec && valueObec.kod_obec) || ''
   );
 
-  console.log('kodObce: ', kodObce);
+  useEffect(() => {
+    setKodObce((valueObec && valueObec.kod_obec) || '')
+  }, [valueObec]);
 
   const onChangeInternal = (event) => {
-    console.log(`Lokalizace setting ${event.target.name} to ${event.target.value}`);
     setKodObce(event.target.value);
     onChange(event);
   };
 
-  const onChangeCastInternal = (event) => {
-    console.log(`Cast obce setting ${event.target.name} to ${event.target.value}`);
-    onChangePart(event);
-  };
-
-  const onChangePart = (e) => {
-    console.log('onChangePart:', e);
-  };
+  const onChangeCastInternal = (event) => onChange(event);
 
   return (
     <Grid item xs={12} container spacing={1}>

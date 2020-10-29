@@ -100,10 +100,6 @@ const ExempForm = props => {
       setTvary(parseExemplifikaceValue(value));
     }
 
-    if (name === 'zdroj') {
-      console.log('zmena zdroje --> predvyplnit');
-    }
-
     const newValues = {
       ...values,
       [name]: value,
@@ -113,7 +109,6 @@ const ExempForm = props => {
   };
 
   const handleZdrojChange = zdroj => {
-    console.log('handleZdrojChange: ', zdroj);
     console.log(zdroj && zdroj.cislo);
 
     const newValues = {
@@ -138,6 +133,11 @@ const ExempForm = props => {
   const valueObec = (values && values.lokalizace_obec_id && {
     naz_obec: values.lokalizace_obec_text,
     kod_obec: values.lokalizace_obec_id
+  }) || undefined;
+
+  const valueCast = (values && values.lokalizace_cast_obce_id && {
+    naz_cob: values.lokalizace_cast_obce_text,
+    kod_cob: values.lokalizace_cast_obce_id
   }) || undefined;
 
   return (
@@ -172,7 +172,7 @@ const ExempForm = props => {
           </Grid>
           <LokalizaceInput
             valueObec={valueObec}
-            valueCast={values.lokalizaceCast}
+            valueCast={valueCast}
             onChange={handleValuesChange}
           />
           <Grid item xs={4}>

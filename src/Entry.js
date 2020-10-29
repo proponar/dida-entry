@@ -28,10 +28,10 @@ export default function Entry() {
       id: null,
       rod: 'm',
       druh: 'subst',
-      heslo: 'kleslo',
+      heslo: '',
       vetne: true,
-      kvalifikator: 'ex. kvlf.',
-      vyznam: 'vyznam...',
+      kvalifikator: '',
+      vyznam: '',
     },
     exemps: {},  // repeated "Exemp" data
   });

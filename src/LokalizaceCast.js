@@ -14,8 +14,6 @@ const LokalizaceCast = props => {
     onChange
   } = props;
 
-  console.log('LokalizaceCast: locationId: ', locationId);
-
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const [oldId, setOldId] = React.useState(locationId);
@@ -52,14 +50,12 @@ const LokalizaceCast = props => {
   }, [loading, locationId]);
 
   const handleValueChange = (ev, value) => {
-    console.log('value change: ', value)
-    // if (value)
-    //   onChange({target: {name: 'lokalizace_obec_id', value: value.kod_obec}});
+    if (value)
+      onChange({target: {name: 'lokalizace_cast_obce_id', value: value.kod_cob}});
   };
 
   const handleInputChange = (ev, value) => {
-    //console.log('val: ', value)
-    //NOOP
+    // NOOP
   };
 
   const [ elementId ] = useState(() => uniqueId('lokalizace-obec'))
@@ -79,7 +75,7 @@ const LokalizaceCast = props => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label={(value && value.naz_obec) || 'Část obce...'}
+          label={(value && value.naz_cob) || 'Část obce...'}
           variant="outlined"
           InputProps={{
             ...params.InputProps,

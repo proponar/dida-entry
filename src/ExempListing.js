@@ -95,6 +95,7 @@ TablePaginationActions.propTypes = {
 
 const prepareEntryData = (entry, edit) => {
   return (edit && entry) || {
+    author_name: window.localStorage.getItem('user-name'),
     rod: 'm',
     druh: 'subst',
   };
@@ -132,8 +133,12 @@ const ExempListing = () => {
   const [exempOpen, setExempOpen] = React.useState(false);
 
   const handleClickExempOpen = () => { 
-    setSelectedRow(null);
-    setExempOpen(true);
+    if (entry) {
+      setSelectedRow(null);
+      setExempOpen(true);
+    } else {
+      alert('Nejdříve, prosím, vyberte heslo.');
+    }
   };
 
   const handleExempClose = () => setExempOpen(false);

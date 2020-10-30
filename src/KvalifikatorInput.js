@@ -27,7 +27,6 @@ const checks = ['augm.', 'dem.', 'expr.', 'expr. dem.', 'bižut.', 'bot.',
   'tkalc.', 'truhl.', 'včel.', 'vinař.', 'voj.', 'vor.', 'stav.', 'zahrad.',
   'zedn.', 'zeměd.'];
 
-
 const textToChecks = text => {
   const checkedValues = text.split(new RegExp(/,\s+/, 'i')).reduce(
     (acc, key) => {

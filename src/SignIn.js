@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import base64js from 'base64-js'                                                                    
+import base64js from 'base64-js'
 import axios from 'axios';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -70,6 +70,7 @@ export default function SignIn() {
 			}
 		).then(response => {
 			window.localStorage.setItem('auth-token', response.data.auth_token);
+			window.localStorage.setItem('user-name', response.data.name);
 			history.push('/exemps');
 		});
 

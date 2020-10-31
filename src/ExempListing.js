@@ -319,11 +319,11 @@ const ExempListing = () => {
           <TableHead>
             <TableRow>
               <TableCell>Exemplifikace</TableCell>
-              <TableCell align="right">Kvalifikátor</TableCell>
               <TableCell align="right">Lokalizace</TableCell>
-              <TableCell align="right">Lok. textová</TableCell>
               <TableCell align="right">Zdroj</TableCell>
+              <TableCell align="right">Kvalifikátor</TableCell>
               <TableCell align="right">Význam</TableCell>
+              <TableCell align="right">Čas</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -335,11 +335,11 @@ const ExempListing = () => {
                 <TableCell component="th" scope="row" onClick={() => handleCellClick(row)}>
                   {row.exemplifikace}
                 </TableCell>
-                <TableCell align="right">{row.kvalifikator}</TableCell>
-                <TableCell align="right">{row.lokalizace_obec_text}</TableCell>
-                <TableCell align="right">{row.lokalizace_text}</TableCell>
+                <TableCell align="right">{row.lokalizace_format}</TableCell>
                 <TableCell align="right">{row.zdroj_name}</TableCell>
+                <TableCell align="right">{row.kvalifikator}</TableCell>
                 <TableCell align="right">{row.vyznam}</TableCell>
+                <TableCell align="right">{row.time}</TableCell>
               </TableRow>
             ))}
 

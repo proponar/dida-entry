@@ -35,7 +35,7 @@ const EntryCombo = props => {
       options={options}
       getOptionLabel={(option) => option.heslo}
       style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Heslo" variant="outlined" />}
+      renderInput={(params) => <TextField {...params} label="Heslo" variant="filled" margin="dense"/>}
       onChange={onChange}
     />
   );

@@ -73,7 +73,7 @@ const LokalizaceObec = props => {
       onOpen={() => { setOpen(true); }}
       onClose={() => { setOpen(false); }}
       getOptionSelected={(option, value) => option.naz_obec === value.naz_obec}
-      getOptionLabel={(option) => `${option.naz_obec} (${option.zk_okres})`}
+      getOptionLabel={(option) => `${option.naz_obec} ${option.zk_okres}`}
       options={options}
       loading={loading}
       onChange={handleValueChange}

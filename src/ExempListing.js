@@ -96,6 +96,7 @@ TablePaginationActions.propTypes = {
 const prepareEntryData = (entry, edit) => {
   return (edit && entry) || {
     author_name: window.localStorage.getItem('user-name'),
+    vetne: true,
     rod: 'm',
     druh: 'subst',
   };

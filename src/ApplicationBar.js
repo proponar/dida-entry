@@ -32,10 +32,16 @@ const ApplicationBar = ({title}) => {
     history.push(url);
   };
 
+  const logout = () => {
+		window.localStorage.removeItem('auth-token');
+		window.localStorage.removeItem('user-name');
+    history.push('/');
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar variant="dense">
           <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
               <React.Fragment>
@@ -60,7 +66,7 @@ const ApplicationBar = ({title}) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <Button color="inherit">Odhlásit</Button>
+          <Button color="inherit" onClick={logout}>Odhlásit</Button>
         </Toolbar>
       </AppBar>
     </div>

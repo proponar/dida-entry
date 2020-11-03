@@ -173,6 +173,7 @@ const ExempForm = props => {
           <LokalizaceInput
             valueObec={valueObec}
             valueCast={valueCast}
+            valueText={values.lokalizace_text}
             onChange={handleValuesChange}
           />
           <Grid item xs={4}>

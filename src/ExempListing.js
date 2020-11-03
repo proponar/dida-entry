@@ -111,10 +111,12 @@ const prepareExempData = (entry, exemp) => {
   }
 
   return {
+    // FIXME: vic hodnot? rok, rod, vyznam?
     entryId: (entry && entry.id) || null,
     exemplifikace: '',
     kvalifikator: (entry && entry.kvalifikator) || null,
     vetne: (entry && entry.vetne) || null,
+    aktivni: true,
     vyznam: (entry && entry.vyznam) || '',
   };
 };

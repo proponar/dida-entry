@@ -33,9 +33,11 @@ export default function SourcesTable() {
         <TableRow>
           <TableCell>Autor</TableCell>
           <TableCell align="right">Název</TableCell>
+          <TableCell align="right">Název 2</TableCell>
           <TableCell align="right">Typ</TableCell>
           <TableCell align="right">Rok</TableCell>
           <TableCell align="right">Lokalizace</TableCell>
+          <TableCell align="right">Lok. textová</TableCell>
         </TableRow>
         </TableHead>
         <TableBody>
@@ -43,9 +45,11 @@ export default function SourcesTable() {
                 <TableRow key={row.id}>
                 <TableCell component="th" scope="row">{row.autor}</TableCell>
                 <TableCell align="right">{row.name}</TableCell>
+                <TableCell align="right">{row.nazev2}</TableCell>
                 <TableCell align="right">{row.typ}</TableCell>
                 <TableCell align="right">{row.rok}</TableCell>
                 <TableCell align="right">{row.lokalizace}</TableCell>
+                <TableCell align="right">{row.lokalizace_text}</TableCell>
                 </TableRow>
               ))}
       </TableBody>

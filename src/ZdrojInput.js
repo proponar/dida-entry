@@ -57,8 +57,11 @@ const ZdrojInput = props => {
     getOptions();
   }, [zdrojIdIn]);
 
-  const source2label = source => `${source.autor || '-'}, ${source.name || '-'}, ${source.rok || ''}`;
-  // valuegetOptionSelected={(option, value) => option.naz_obec === value.naz_obec}
+  const source2label = s =>
+   ((s.autor && (s.autor + ' ')) || '') +
+   ((s.name && (s.name + ' ')) || '') +
+   ((s.nazev2 && '(' + s.nazev2 + ') ') || '') +
+   (s.rok || '') + '.';
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
   //        ^^ nebude. Jen, pokud bude prazdny, v zobrazeni (v gridu?) se ukaze

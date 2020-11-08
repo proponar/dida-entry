@@ -6,16 +6,48 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import ExempForm from "./ExempForm";
 
-const DialogExemp = ({open, onSave, onClose, data}) => {
+const ConfirmDialog = ({open, onYes, onNo}) => (
+  <Dialog
+    open={open}
+    onClose={onNo}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">{"Smazat exemplifikaci?"}</DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+        Chcete trvale smazat tuto exemplifikaci?
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onYes} color="primary">
+        Ano
+    </Button>
+      <Button onClick={onNo} color="primary" autoFocus>
+        Ne
+    </Button>
+    </DialogActions>
+  </Dialog>
+);
+
+const DialogExemp = ({open, onSave, onClose, onDelete, data}) => {
   const title = (data.entryId && "Editace exemplifikace") || "Nová exemplifikace";
 
   useEffect(() => { setFormData(data); }, [data]); // handle prop change
   const [formData, setFormData] = useState({});
   const handleSetData = (_key, newData) => setFormData({...formData, ...newData});
   const handleSave = () => onSave(formData);
+
+  // delete confirmation dialog logic
+  const [openConfirmation, setOpenConfirmation] = React.useState(false);
+  const handleDelete = () => {
+    setOpenConfirmation(false);
+    onDelete(formData);
+  };
 
   return (
     <Dialog
@@ -30,6 +62,10 @@ const DialogExemp = ({open, onSave, onClose, data}) => {
         <ExempForm data={formData} setData={handleSetData} />
       </DialogContent>
       <DialogActions>
+        <Button startIcon={<DeleteIcon />} onClick={() => setOpenConfirmation(true)} color="secondary" variant="outlined">
+          Smazat
+        </Button>
+        <ConfirmDialog open={openConfirmation} onNo={() => setOpenConfirmation(false)} onYes={handleDelete} />
         <Button onClick={onClose} color="secondary" variant="outlined">
           Zrušit
         </Button>

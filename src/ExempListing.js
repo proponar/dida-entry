@@ -187,6 +187,20 @@ const ExempListing = () => {
     setExempOpen(false);
   };
 
+  const handleExempDelete = exemp => {
+    if (!exemp.id) return;
+
+    axios.delete(`${baseUrl}entries/${exemp.entryId}/exemps/${exemp.id}`,
+      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+    ).then(response => {
+      setReloadEx(Math.random());
+      setExempOpen(false);
+    }, error => {
+      console.log(error.response.data);
+      alert(error.response.data.message);
+    });
+  };
+
   // modal Heslo dialog
   const [hesloOpen, setHesloOpen] = React.useState(false);
 
@@ -307,6 +321,7 @@ const ExempListing = () => {
         open={exempOpen}
         onSave={handleExempSave}
         onClose={handleExempClose}
+        onDelete={handleExempDelete}
         data={prepareExempData(entry, selectedRow)} />
       <DialogEntry
         open={hesloOpen}

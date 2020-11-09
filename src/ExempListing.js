@@ -297,6 +297,18 @@ const ExempListing = () => {
   // selected row/entry/heslo
   const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
 
+  const formatLokalizaceText = text => {
+    if (text)
+      return (
+        <React.Fragment>
+          <br />
+          <small>{text}</small>
+        </React.Fragment>
+      );
+    else
+      return '';
+  };
+
   return (
     <Paper className={classes.paper}>
       <Toolbar>
@@ -353,7 +365,10 @@ const ExempListing = () => {
                 <TableCell component="th" scope="row" onClick={() => handleCellClick(row)}>
                   {row.exemplifikace}
                 </TableCell>
-                <TableCell align="right">{row.lokalizace_format}</TableCell>
+                <TableCell align="right">
+                  {row.lokalizace_format}
+                  {formatLokalizaceText(row.lokalizace_text)}
+                </TableCell>
                 <TableCell align="right">{row.zdroj_name}</TableCell>
                 <TableCell align="right">{row.kvalifikator}</TableCell>
                 <TableCell align="right">{row.vyznam}</TableCell>

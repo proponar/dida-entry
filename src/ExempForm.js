@@ -11,7 +11,6 @@ import RokInput from './RokInput.js';
 import VetneSwitch from './VetneSwitch.js';
 import LokalizaceInput from './LokalizaceInput.js';
 import KvalifikatorInput from "./KvalifikatorInput";
-import RodSelect from "./RodSelect";
 import TvarForm from "./TvarForm";
 import ZdrojInput from "./ZdrojInput";
 import useStyles from "./useStyles";

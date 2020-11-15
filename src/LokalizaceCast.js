@@ -47,7 +47,7 @@ const LokalizaceCast = props => {
     return () => {
       active = false;
     };
-  }, [loading, locationId]);
+  }, [loading, locationId, oldId]);
 
   const handleValueChange = (ev, value) => {
     if (value)

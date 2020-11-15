@@ -93,7 +93,7 @@ const ExempForm = ({data, dataKey, setData}) => {
   useEffect(() => {
     setValues(data);
     setTvary(parseExemplifikaceValue(exemplifikaceNotNull));
-  }, [data]);
+  }, [data, exemplifikaceNotNull]);
 
   // project changes from TvaryForm back to the text of Exemplifikace
   const applyChangesToText = (index, fieldName, fieldValue) => {

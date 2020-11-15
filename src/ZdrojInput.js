@@ -25,18 +25,18 @@ const ZdrojInput = props => {
     onChange(zdroj);
   }
 
-  // setOptions and setSelected based on zdrojIdIn
-  const setSources = sources => {
-    setOptions(sources);
-    const selected = sources.find(e => e.cislo === zdrojIdIn);
-    if (selected) {
-      setSelection(selected);
-    }
-  };
-
   // use cached or fetch list of sources
   // https://www.robinwieruch.de/local-storage-react
   useEffect(() => {
+    // setOptions and setSelected based on zdrojIdIn
+    const setSources = sources => {
+      setOptions(sources);
+      const selected = sources.find(e => e.cislo === zdrojIdIn);
+      if (selected) {
+        setSelection(selected);
+      }
+    };
+
     async function getOptions() {
       const cachedSources = localStorage.getItem('sources');
       if (cachedSources) {

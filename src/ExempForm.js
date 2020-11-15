@@ -15,62 +15,65 @@ import TvarForm from "./TvarForm";
 import ZdrojInput from "./ZdrojInput";
 import useStyles from "./useStyles";
 
-const parseExemplifikaceValue = value => {
-  const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
-  console.log('tvary: ', matched);
+const addIndex = (h, i) => ({
+  index: i,
+  key: i,
+  ...h
+});
 
-  return matched.map((t, i) => {
-    // 'obecním, f. 7 sg.'
-    const mtr = t.match(/^(\p{L}+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
-    if (mtr) {
-      return {
-        index: i,
-        key: i,
-        tvar: mtr[1],
-        rod: mtr[2],
-        pad: mtr[3] + ((mtr[4] === 'pl' && 'p') || 's'),
-      };
+const urceni2string = u => {
+  try {
+    const m = u.pad.match(/^(\d)(\w)/);
+    const p = m[1];
+    const c = ((m[2] === 's') && 'sg') || 'pl';
 
+    if (u.rod && u.rod !== ' ') {
+      // 'obecním, f. 7 sg.'
+      return `${u.tvar}, ${u.rod}. ${p} ${c}.`
+    } else {
+      // 'huse, 1 pl.'
+      return `${u.tvar}, ${p} ${c}.`
     }
+  } catch {
+    return u.tvar;
+  }
+}
 
-    // 'huse, 1 pl.'
-    const mt = t.match(/^(\p{L}+),\s*(\d)\s+(pl|sg)\.$/u);
-    if (mt) {
-      return {
-        index: i,
-        key: i,
-        tvar: mt[1],
-        rod: ' ',
-        pad: mt[2] + ((mt[3] === 'pl' && 'p') || 's'),
-      };
-    }
-
+const string2urceni = t => {
+  // 'obecním, f. 7 sg.'
+  const mtr = t.match(/^(\p{L}+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
+  if (mtr) {
     return {
-      index: i,
-      key: i,
-      tvar: t,
-      rod: 'm',
-      pad: '1s',
+      tvar: mtr[1],
+      rod: mtr[2],
+      pad: mtr[3] + ((mtr[4] === 'pl' && 'p') || 's'),
     };
-  });
+  }
+
+  // 'huse, 1 pl.'
+  const mt = t.match(/^(\p{L}+),\s*(\d)\s+(pl|sg)\.$/u);
+  if (mt) {
+    return {
+      tvar: mt[1],
+      rod: ' ',
+      pad: mt[2] + ((mt[3] === 'pl' && 'p') || 's'),
+    };
+  }
+
+  return {
+    tvar: t,
+    rod: null, // 'm', // blbe
+    pad: null  // '1s', // blbe
+  };
 };
 
-const ExempForm = props => {
+const parseExemplifikaceValue = value => {
+  const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
+  return matched.map((t, i) => addIndex(string2urceni(t), i));
+};
+
+const ExempForm = ({data, dataKey, setData}) => {
   const classes = useStyles();
-
-  const {
-    data,
-    dataKey,
-    setData,
-  } = props;
-
-	const exemplifikaceNotNull = (data && data.exemplifikace) || '';
-
-  // handle prop change
-  useEffect(() => {
-    setValues(data);
-    setTvary(parseExemplifikaceValue(exemplifikaceNotNull));
-  }, [data]);
 
   const [values, setValues] = React.useState({
     rod: 'm',
@@ -79,15 +82,44 @@ const ExempForm = props => {
     exemplifikace: '',
     vyznam: '',
     vetne: true,
-    //lokalizaceObec: 'somewhere',
     aktivni: true,
   });
 
   const [tvary, setTvary] = useState([]);
 
+	const exemplifikaceNotNull = (values && values.exemplifikace) || '';
+
+  // handle prop change
+  useEffect(() => {
+    setValues(data);
+    setTvary(parseExemplifikaceValue(exemplifikaceNotNull));
+  }, [data]);
+
+  // project changes from TvaryForm back to the text of Exemplifikace
+  const applyChangesToText = (index, fieldName, fieldValue) => {
+    // split keeping the separators as separate items
+    const parts = values.exemplifikace.split(/(\{[^{}]+\})/g);
+
+    const changeIndex = 1 + index*2;
+    const u = string2urceni(
+      parts[changeIndex].replace(/^\{(.*)\}$/, '$1') // remove { }
+    );
+
+    // changes to 'pad' and 'rod' are applied
+    if ((fieldName === 'pad') || (fieldName === 'rod')) { u[fieldName] = fieldValue; }
+
+    parts[changeIndex] = '{' + urceni2string(u) + '}';
+
+    setValues({
+      ...values,
+      exemplifikace: parts.join(''),
+    });
+  };
+
   const handleTvarValuesChange = (ev, index) => {
     const {name, value} = ev.target;
     setTvary(tvary.map((t, i) => index === i ? {...t, [name]: value} : t));
+    applyChangesToText(index, name, value);
   };
 
   const handleValuesChange = (event) => {
@@ -138,6 +170,16 @@ const ExempForm = props => {
     naz_cob: values.lokalizace_cast_obce_text,
     kod_cob: values.lokalizace_cast_obce_id
   }) || undefined;
+
+  const parseTvarMap = tm => {
+    try {
+      return JSON.parse(values.tvar_map);
+    } catch {
+      return {};
+    }
+  }
+
+  const tvar_map = parseTvarMap(values.tvar_map);
 
   return (
     <React.Fragment>
@@ -195,8 +237,11 @@ const ExempForm = props => {
         </Grid>
         <Grid item container xs={4}>
           <Grid item xs={12}>
-            {tvary.map(t => <TvarForm onChange={handleTvarValuesChange} {...t} />)
-            }
+            {tvary.map(t => <TvarForm
+                              tvarList={tvar_map['huse']}
+                              onChange={handleTvarValuesChange}
+                              {...t}
+                            />)}
           </Grid>
         </Grid>
       </Grid>

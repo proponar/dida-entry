@@ -106,6 +106,7 @@ const prepareExempData = (entry, exemp) => {
   if (exemp) {
     return {
       entryId: (entry && entry.id) || null,
+      tvar_map: (entry && entry.tvar_map) || null,
       ...exemp
     };
   }

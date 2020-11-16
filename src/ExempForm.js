@@ -238,7 +238,7 @@ const ExempForm = ({data, dataKey, setData}) => {
         <Grid item container xs={4}>
           <Grid item xs={12}>
             {tvary.map(t => <TvarForm
-                              tvarList={tvar_map['huse']}
+                              tvarList={tvar_map[t]}
                               onChange={handleTvarValuesChange}
                               {...t}
                             />)}

@@ -125,10 +125,9 @@ const ExempForm = ({data, dataKey, setData}) => {
     applyChangesToText(index, name, value);
   };
 
-  const handleValuesChange = (event) => {
+  const handleValuesChange = event => {
     const {name, value} = event.target;
-
-    console.log(`Setting ${name} to ${value}`);
+    // console.log(`Setting ${name} to ${value}`);
 
     if (name === 'exemplifikace') {
       setTvary(parseExemplifikaceValue(value));
@@ -155,7 +154,7 @@ const ExempForm = ({data, dataKey, setData}) => {
   };
 
   const handleValuesCheckChange = event => {
-    console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
+    // console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
     const newValues = {
       ...values,
       [event.target.name]: event.target.checked,

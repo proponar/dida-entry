@@ -10,12 +10,16 @@ const EntryCombo = props => {
   const {
     reload,
     onChange,
+    onReload,
   } = props;
 
   const [options, setOptions] = useState([]);
 
+  const [initialLoad, setInitialLoad] = useState(true);
+
   useEffect(() => {
     async function getOptions() {
+      console.log('LOADING ENTRIES');
       const response = await axios.get(
           baseUrl + 'entries', {
           headers: {
@@ -23,10 +27,17 @@ const EntryCombo = props => {
           }
         }
       );
-      const sources = response.data.data;
-      setOptions(sources);
+      const entries = response.data.data;
+      if (initialLoad) {
+        setInitialLoad(false);
+      } else {
+        // we are reloading
+        onReload(entries)
+      }
+      setOptions(entries);
     }
     getOptions();
+    // eslint-disable-next-line
   }, [reload]); // reload on signal
 
   return (
@@ -34,6 +45,7 @@ const EntryCombo = props => {
       name="hesloSel"
       options={options}
       getOptionLabel={(option) => option.heslo}
+      getOptionSelected={(option, value) => option.heslo === value.heslo}
       style={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Heslo" variant="filled" margin="dense"/>}
       onChange={onChange}

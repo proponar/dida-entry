@@ -162,8 +162,7 @@ export default function Entry() {
 
   // TopForm events
   const handleValuesChange = (event) => {
-    console.log(`Setting ${event.target.name} to ${event.target.value}`);
-
+    // console.log(`Setting ${event.target.name} to ${event.target.value}`);
     const newEntry = {
       ...formData.entry,
       [event.target.name]: event.target.value,
@@ -176,8 +175,7 @@ export default function Entry() {
   };
 
   const handleValuesCheckChange = event => {
-    console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
-
+    // console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
     const newEntry = {
       ...formData.entry,
       [event.target.name]: event.target.checked,

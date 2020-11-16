@@ -136,7 +136,7 @@ const ExempListing = () => {
   // modal Exemp dialog
   const [exempOpen, setExempOpen] = React.useState(false);
 
-  const handleClickExempOpen = () => { 
+  const handleClickExempOpen = () => {
     if (entry) {
       setSelectedRow(null);
       setExempOpen(true);
@@ -239,8 +239,7 @@ const ExempListing = () => {
   };
 
   const handleHesloSave = (entry) => {
-    console.log('handleHesloSave: ', entry);
-
+    // console.log('handleHesloSave: ', entry);
     const successF = () => {
       console.log('Heslo uloženo.');
       setReloadEn(Math.random());
@@ -295,8 +294,13 @@ const ExempListing = () => {
     // history.push(`/entry/${rowId}`);
   };
 
-  // selected row/entry/heslo
-  const handleEntryChange = (e, entry) => (entry && setEntry(entry) && setSelectedRow(null));
+  // selected a new row/entry/heslo
+  const handleEntryChange = (ev, newEntry) => (newEntry && setEntry(newEntry) && setSelectedRow(null));
+
+  // selected entry was reloaded
+  const handleEntryReload = entries => (setEntry(
+    entries.find(e => e.id === entry.id)
+  ));
 
   const formatLokalizaceText = text => {
     if (text)
@@ -313,7 +317,7 @@ const ExempListing = () => {
   return (
     <Paper className={classes.paper}>
       <Toolbar>
-        <EntryCombo reload={reloadEn} onChange={handleEntryChange} />
+        <EntryCombo reload={reloadEn} onChange={handleEntryChange} onReload={handleEntryReload} />
         <Tooltip title="Filtrovat hesla">
           <IconButton aria-label="Filtrovat hesla">
             <FilterListIcon />

@@ -92,8 +92,11 @@ const ExempForm = ({data, dataKey, setData}) => {
   // handle prop change
   useEffect(() => {
     setValues(data);
-    setTvary(parseExemplifikaceValue(exemplifikaceNotNull));
-  }, [data, exemplifikaceNotNull]);
+    // cannot call parseExemplifikaceValue (would get a React warning)
+    // cannot add exemplifikaceNotNull to dependencies (updationg from form to
+    // the text field would stop working)
+    setTvary(parseExemplifikaceValue((data && data.exemplifikace) || ''));
+  }, [data]);
 
   // project changes from TvaryForm back to the text of Exemplifikace
   const applyChangesToText = (index, fieldName, fieldValue) => {

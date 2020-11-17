@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import uniqueId from 'lodash/uniqueId'
 
 import FormControl from "@material-ui/core/FormControl";
@@ -48,13 +48,21 @@ const PadSelect = ({pad, tvarList, onChange}) => {
   const [ labelId ] = useState(() => uniqueId('pad-label'))
 
   const optionsFiltered = (tvarList && filterOptions(options, tvarList)) || options;
+  const padFiltered = validPadValue(pad, optionsFiltered);
+
+  useEffect(() => {
+    if (padFiltered !== pad) {
+      // when chaning the value of Pad, fire the onChage
+      onChange({target: {name: 'pad', value: padFiltered}});
+    }
+  });
 
   return (
     <FormControl margin="normal" variant="outlined" className={classes.formControl}>
       <InputLabel id={labelId}>Pád</InputLabel>
-      <Select labelId={labelId} value={validPadValue(pad, optionsFiltered)} name="pad" onChange={onChange} label="Pád" >
+      <Select labelId={labelId} value={padFiltered} name="pad" onChange={onChange} label="Pád" >
       {optionsFiltered.map(o =>
-        <MenuItem value={o[0]}>{o[1]}</MenuItem>
+        <MenuItem key={o[0]} value={o[0]}>{o[1]}</MenuItem>
       )}
       </Select>
     </FormControl>

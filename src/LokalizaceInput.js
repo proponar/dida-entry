@@ -48,7 +48,7 @@ const LokalizaceInput = props => {
       </Grid>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <TextField name="lokalizace_text" variant="outlined" label="Lokalizace text" value={valueText} onChange={onChange} />
+          <TextField name="lokalizace_text" variant="outlined" label="Lokalizace text" value={valueText || ''} onChange={onChange} />
         </FormControl>
       </Grid>
     </Grid>

@@ -20,13 +20,11 @@ const LokalizaceCast = props => {
   const loading = open && options.length === 0;
 
   React.useEffect(() => {
-    console.log('useEffect');
     let active = true;
 
     if (!locationId || (locationId === '') || (locationId === oldId)) {
        return undefined;
     }
-    console.log('loading...');
 
     (async () => {
       const response = await axios.get(

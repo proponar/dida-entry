@@ -41,7 +41,7 @@ const urceni2string = u => {
 
 const string2urceni = t => {
   // 'obecním, f. 7 sg.'
-  const mtr = t.match(/^(\p{L}+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
+  const mtr = t.match(/^([\p{L}\s]+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
   if (mtr) {
     return {
       tvar: mtr[1],
@@ -51,7 +51,7 @@ const string2urceni = t => {
   }
 
   // 'huse, 1 pl.'
-  const mt = t.match(/^(\p{L}+),\s*(\d)\s+(pl|sg)\.$/u);
+  const mt = t.match(/^([\p{L}\s]+),\s*(\d)\s+(pl|sg)\.$/u);
   if (mt) {
     return {
       tvar: mt[1],

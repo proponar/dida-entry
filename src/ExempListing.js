@@ -173,8 +173,6 @@ const ExempListing = () => {
   };
 
   const handleExempSave = (exemp) => {
-    console.log('handleExempSave', exemp);
-
     const successF = () => {
       console.log('Exemplifikace uložena.');
       setReloadEx(Math.random());

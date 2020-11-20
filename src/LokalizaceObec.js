@@ -52,14 +52,21 @@ const LokalizaceObec = props => {
   //   }
   // }, [open]);
 
-  const handleValueChange = (ev, value) => {
-    if (value)
-      onChange({target: {name: 'lokalizace_obec_id', value: value.kod_obec}});
-  };
+  const handleValueChange = (ev, value) => (value &&
+    onChange({
+      lokalizace_obec_id: value.kod_obec,
+      lokalizace_obec_text: value.naz_obec,
+    })
+  );
 
   const handleInputChange = (ev, value) => {
-    // fixme: populate options
-    console.log('val: ', value)
+    if (value === '') {
+      // remove value
+      onChange({
+        lokalizace_obec_id: null,
+        lokalizace_obec_text: '',
+      })
+    }
     setSearchStr(value);
     setOptions([]);
   };

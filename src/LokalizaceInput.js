@@ -12,7 +12,9 @@ const LokalizaceInput = props => {
     valueObec,
     valueCast,
     valueText,
-    onChange
+    onChange,
+    onObecChange,
+    onCastChange
   } = props;
 
   const [kodObce, setKodObce] = React.useState(
@@ -23,12 +25,12 @@ const LokalizaceInput = props => {
     setKodObce((valueObec && valueObec.kod_obec) || '')
   }, [valueObec]);
 
-  const handleObecChange = (event) => {
-    setKodObce(event.target.value);
-    onChange(event);
+  const handleObecChange = ev => {
+    setKodObce(ev.lokalizace_obec_id);
+    onObecChange(ev);
   };
 
-  const handleCastChange = (event) => onChange(event);
+  const handleCastChange = ev => onCastChange(ev);
 
   return (
     <Grid item xs={12} container spacing={1}>
@@ -39,11 +41,7 @@ const LokalizaceInput = props => {
       </Grid>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <LokalizaceCast
-            value={valueCast}
-            onChange={handleCastChange}
-            locationId={kodObce}
-          />
+          <LokalizaceCast value={valueCast} onChange={handleCastChange} locationId={kodObce} />
         </FormControl>
       </Grid>
       <Grid item xs={4}>

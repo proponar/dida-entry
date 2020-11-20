@@ -125,8 +125,30 @@ const ExempForm = ({data, dataKey, setData}) => {
     applyChangesToText(index, name, value);
   };
 
-  const handleValuesChange = event => {
-    const {name, value} = event.target;
+  const handleCastValueChange = ev => {
+    const newValues = {
+      lokalizace_cast_obce_id: ev.lokalizace_cast_obce_id,
+      lokalizace_cast_obce_text: ev.lokalizace_cast_obce_text
+    };
+    setValues(newValues);
+    setData(dataKey, newValues);
+    return;
+  }
+
+  const handleObecValueChange = ev => {
+    const newValues = {
+      lokalizace_obec_id: ev.lokalizace_obec_id,
+      lokalizace_obec_text: ev.lokalizace_obec_text,
+      lokalizace_cast_obce_id: null,
+      lokalizace_cast_obce_text: '',
+    };
+    setValues(newValues);
+    setData(dataKey, newValues);
+    return;
+  };
+
+  const handleValuesChange = ev => {
+    const {name, value} = ev.target;
     // console.log(`Setting ${name} to ${value}`);
 
     if (name === 'exemplifikace') {
@@ -217,6 +239,8 @@ const ExempForm = ({data, dataKey, setData}) => {
             valueObec={valueObec}
             valueCast={valueCast}
             valueText={values.lokalizace_text}
+            onCastChange={handleCastValueChange}
+            onObecChange={handleObecValueChange}
             onChange={handleValuesChange}
           />
           <Grid item xs={4}>

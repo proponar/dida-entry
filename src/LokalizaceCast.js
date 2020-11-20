@@ -23,7 +23,7 @@ const LokalizaceCast = props => {
     let active = true;
 
     if (!locationId || (locationId === '') || (locationId === oldId)) {
-       return undefined;
+      return undefined;
     }
 
     (async () => {
@@ -47,14 +47,20 @@ const LokalizaceCast = props => {
     };
   }, [loading, locationId, oldId]);
 
-  const handleValueChange = (ev, value) => {
-    if (value)
-      onChange({target: {name: 'lokalizace_cast_obce_id', value: value.kod_cob}});
-  };
+  const handleValueChange = (ev, value) => (value &&
+    onChange({
+      lokalizace_cast_obce_id: value.kod_cob,
+      lokalizace_cast_obce_text: value.naz_cob,
+    })
+  );
 
-  const handleInputChange = (ev, value) => {
-    // NOOP
-  };
+  const handleInputChange = (ev, value) => ((value === '') &&
+    // remove value
+    onChange({
+      lokalizace_cast_obce_id: null,
+      lokalizace_cast_obce_text: '',
+    })
+  );
 
   const [ elementId ] = useState(() => uniqueId('lokalizace-obec'))
 

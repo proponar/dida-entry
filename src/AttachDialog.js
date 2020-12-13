@@ -6,16 +6,17 @@ const AttachDialog = ({open, onClose, onSave}) => (
     open={open}
     onSave={onSave}
     onClose={onClose}
-		dialogTitle={"Připojit soubory"}
-  	cancelButtonText={"Zavřít"}
+    dialogTitle={"Připojit soubory"}
+    previewText={'Náhled'}
+    cancelButtonText={"Zavřít"}
     submitButtonText={"Uložit"}
     acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-    showPreviews={false}
+    showPreviews={true}
     maxFileSize={5000000}
-  	dropzoneText={"Přetáhněte soubory sem"}
-  	showFileNames={true}
-  	getFileAddedMessage={fileName => (`Soubor ${fileName} přidán.`)}
-  	getFileRemovedMessage={fileName => (`Soubor ${fileName} odebrán.`)}
+    dropzoneText={"Přetáhněte soubory sem"}
+    showFileNames={true}
+    getFileAddedMessage={fileName => (`Soubor ${fileName} přidán.`)}
+    getFileRemovedMessage={fileName => (`Soubor ${fileName} odebrán.`)}
   />
 );
 

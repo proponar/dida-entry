@@ -80,9 +80,38 @@ const ExempListing = () => {
   // modal Attachment dialog
   const [attachOpen, setAttachOpen] = React.useState(false);
 
-  const handleAttachSaveClick = () => {
-    console.log('handleAttachSaveClick');
+  const handleAttachSaveClick = files => {
+    console.log('handleAttachSaveClick:', files);
     setAttachOpen(false);
+
+    const entryId = entry.id;
+    const exempId = selectedRow.id;
+
+    // Upload files one by one.
+    files.map(file => {
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(file);
+      fileReader.onload = (e) => {
+        console.log(e.target.result);
+        axios.post( // /api/entries/:entry_id/exemps/:exemp_id/attach(.:format)
+          baseUrl + `entries/${entryId}/exemps/${exempId}/attach`,
+          e.target.result, {
+            headers: {
+              "X-File-Name": file.name,
+              Authorization: `Token ${window.localStorage.getItem('auth-token')}`,
+              "Content-Type": "application/octet-stream; charset=binary",
+            }
+          }
+        ).then(response => {
+          console.log(response);
+          alert(response.data.message);
+        }, error => {
+          console.log(error);
+          console.log(error.response);
+          alert(error.response.data.message);
+        });
+      };
+    });
   };
 
   const handleClickExempOpen = () => {
@@ -160,7 +189,6 @@ const ExempListing = () => {
     setImportOpen(true);
   };
 
-
   const storeNewHeslo = (entry, successFunc) => {
     axios.post(`${baseUrl}entries`,
       {...entry},
@@ -186,9 +214,9 @@ const ExempListing = () => {
   };
 
   const handleHesloSave = (entry) => {
-    // console.log('handleHesloSave: ', entry);
     const successF = () => {
       console.log('Heslo uloženo.');
+      // Request reload of both Entry and Exemp.
       setReloadEn(Math.random());
       setReloadEx(Math.random());
     };
@@ -209,7 +237,8 @@ const ExempListing = () => {
     setImportOpen(false);
   }
 
-  // load exemps for selected entry, when entry changes or reload is requested
+  // Load exemps for selected entry, when entry changes or reload is requested
+  // via reloadEx.
   useEffect(() => {
     if (entry) {
       axios.get(baseUrl + `entries/${entry.id}/exemps`, {
@@ -224,7 +253,7 @@ const ExempListing = () => {
 
   const classes = useStyles();
 
-  // paginator
+  // Paginator
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -235,6 +264,7 @@ const ExempListing = () => {
     setPage(0);
   };
 
+  // Popup menu
   const [anchorEl, setMenuAnchorEl] = React.useState(null);
 
   // when table cell is clicked, open pop-up menu
@@ -243,14 +273,14 @@ const ExempListing = () => {
     setMenuAnchorEl(e.currentTarget);
   };
 
-  // open Exemp edit dialog
+  // Open Exemp edit dialog.
   const openExemp = () => {
     setExempOpen(true);
     setMenuAnchorEl(null);
     // history.push(`/entry/${rowId}`);
   };
 
-  // open Exemp attachments dialog
+  // Open Exemp attachments dialog.
   const openAttach = () => {
     setAttachOpen(true);
     setMenuAnchorEl(null);
@@ -281,19 +311,13 @@ const ExempListing = () => {
       <Toolbar>
         <EntryCombo reload={reloadEn} onChange={handleEntryChange} onReload={handleEntryReload} />
         <Tooltip title="Filtrovat hesla">
-          <IconButton aria-label="Filtrovat hesla">
-            <FilterListIcon />
-          </IconButton>
+          <IconButton aria-label="Filtrovat hesla"><FilterListIcon /></IconButton>
         </Tooltip>
         <IconButton color="secondary" onClick={handleClickHesloEdit} aria-label="Editovat heslo" >
-          <Tooltip title="Editovat heslo">
-            <Edit />
-          </Tooltip>
+          <Tooltip title="Editovat heslo"><Edit /></Tooltip>
         </IconButton>
         <IconButton color="secondary" onClick={handleClickHesloNew} aria-label="Přidat heslo" >
-          <Tooltip title="Přidat heslo">
-            <AddCircle />
-          </Tooltip>
+          <Tooltip title="Přidat heslo"><AddCircle /></Tooltip>
         </IconButton>
       </Toolbar>
       <DialogExemp
@@ -376,7 +400,7 @@ const ExempListing = () => {
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
+                  inputProps: { 'aria-label': 'Řádků na stránce' },
                   native: true,
                 }}
                 onChangePage={handleChangePage}

@@ -17,6 +17,17 @@ const theme = createMuiTheme({
       default: '#fff',
     },
   },
+
+  // Fixing extra scrollbars in the AttachDialog when preview is on and present.
+  // TODO: does this break something else?
+  overrides: {
+    MuiDialogContent: {
+      root: {
+        'overflow-x': 'hidden',
+        'overflow-y': 'hidden',
+      },
+    }
+  },
 });
 
 export default theme;

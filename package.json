@@ -17,6 +17,7 @@
     "clsx": "latest",
     "file-saver": "^2.0.2",
     "lodash": "^4.17.20",
+    "material-ui-dropzone": "^3.5.0",
     "material-ui-popup-state": "^1.6.1",
     "react": "latest",
     "react-dom": "latest",

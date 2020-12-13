@@ -31,6 +31,10 @@ import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
 import DialogEntry from "./DialogEntry";
 import DialogImport from "./DialogImport";
+import AttachDialog from "./AttachDialog";
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from "./useStyles";
 import { baseUrl } from './config';
@@ -135,6 +139,14 @@ const ExempListing = () => {
 
   // modal Exemp dialog
   const [exempOpen, setExempOpen] = React.useState(false);
+
+  // modal Attachment dialog
+  const [attachOpen, setAttachOpen] = React.useState(false);
+
+  const handleAttachSaveClick = () => {
+    console.log('handleAttachSaveClick');
+    setAttachOpen(false);
+  };
 
   const handleClickExempOpen = () => {
     if (entry) {
@@ -286,10 +298,25 @@ const ExempListing = () => {
     setPage(0);
   };
 
-  const handleCellClick = row => {
+  const [anchorEl, setMenuAnchorEl] = React.useState(null);
+
+  // when table cell is clicked, open pop-up menu
+  const handleCellClick = (e, row) => {
     setSelectedRow(row);
+    setMenuAnchorEl(e.currentTarget);
+  };
+
+  // open Exemp edit dialog
+  const openExemp = () => {
     setExempOpen(true);
+    setMenuAnchorEl(null);
     // history.push(`/entry/${rowId}`);
+  };
+
+  // open Exemp attachments dialog
+  const openAttach = () => {
+    setAttachOpen(true);
+    setMenuAnchorEl(null);
   };
 
   // selected a new row/entry/heslo
@@ -347,6 +374,11 @@ const ExempListing = () => {
         open={importOpen}
         onClose={handleImportClose}
         entryId={(entry && entry.id) || null} />
+      <AttachDialog
+        open={attachOpen}
+        onClose={() => setAttachOpen(false)}
+        onSave={handleAttachSaveClick}
+      />
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>
@@ -365,7 +397,7 @@ const ExempListing = () => {
               : rows
             ).map(row => (
               <TableRow key={row.id}>
-                <TableCell component="th" scope="row" onClick={() => handleCellClick(row)}>
+                <TableCell component="th" scope="row" onClick={e => handleCellClick(e, row)}>
                   {row.exemplifikace}
                 </TableCell>
                 <TableCell align="right">
@@ -418,6 +450,16 @@ const ExempListing = () => {
           </TableFooter>
         </Table>
       </TableContainer>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={() => setMenuAnchorEl(null)}
+      >
+        <MenuItem onClick={openExemp}>Editovat</MenuItem>
+        <MenuItem onClick={openAttach}>Připojené soubory</MenuItem>
+        <MenuItem onClick={() => setMenuAnchorEl(null)}>Mapa</MenuItem>
+      </Menu>
     </Paper>
   );
 }

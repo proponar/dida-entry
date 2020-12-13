@@ -1,73 +1,67 @@
-# ManageIQ starter app
+# DIDA entry
 
-A single page application running possibly on a separate (different) domain than the ManageIQ API consuming the ManageIQ API.
+Data entry app frontend for DIDA.
 
-## Setting up Apache CORS
-
-Use your appliance or download and run one from [https://www.manageiq.org/download/](https://www.manageiq.org/download/).
-
-Edit `/etc/httpd/conf.d/manageiq-https-application.conf` on the appliance to include:
-
+## Setting up Apache httpd
 
 ```
-SetEnvIf Origin "^(.*)$" cors=$0
-# wash out these headers in the 'onsuccess' table if we get them from the backend
-Header onsuccess unset Access-Control-Allow-Origin env=cors
-Header onsuccess unset Access-Control-Allow-Credentials env=cors
-Header onsuccess unset Access-Control-Allow-Methods env=cors
-Header onsuccess unset Access-Control-Allow-Headers env=cors
-# add them to the 'always' table
-Header always set Access-Control-Allow-Origin %{cors}e env=cors
-Header always set Access-Control-Allow-Credentials "true" env=cors
-Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, PUT, DELETE" env=cors
-Header always set Access-Control-Allow-Headers "accept,x-requested-method,origin,authorization,x-auth-token" env=cors
+  # Prevent indexing by crawlers
+  Alias /robots.txt /home/martin/x/www/robots-disallow.txt
+  <Directory /home/martin/x/www/>
+    Options -Indexes -FollowSymLinks
+    AllowOverride none
+    Require all granted
+  </Directory>
 
+  # Proxy to the API (dida production server)
+  ProxyPass        /api/ http://localhost:3000/api/
+  ProxyPassReverse /api/ http://localhost:3000/api/
+
+  <Proxy *>
+    Require all granted
+  </Proxy>
+
+  # Statically build client (dida production client)
+  DocumentRoot /home/martin/Projects/dida/dida-entry/build
+  <Directory /home/martin/Projects/dida/dida-entry/build>
+    Header set Cache-Control "max-age=84600, public"
+
+    Options Indexes FollowSymLinks
+    AllowOverride all
+    Require all granted
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.html [QSA,L]
+  </Directory>
 ```
-
-We are unsetting the CORS headers and setting our own version.
-
-Specifically adding:
-  * 'Authorization' (HTTP basic auth) header and 
-  * 'X-Auth-Tok' header (token based authentization for the ManageIQ API).
-
-Then reload the apache: `service httpd reload`.
-
-Alternatively you can run agains a local development environment. In that case you need to edit `manageiq/config/initializers/secure_headers.rb'.
 
 ## Run this app:
 
-Download the example [or clone the repo](https://github.com/martinpovolny/miq-starter-app):
+Running development server:
+```bash
+REACT_APP_ENV=development npm start
+```
 
-Edit `./src/config.js` and set the baseUrl to the ManageIQ API.
+Building static assets for production:
 
-Install it and run:
-
-```sh
-npm install
-npm start
+```bash
+REACT_APP_ENV=production npm run build
 ```
 
 ## Screenshots
 
 ![Login form](doc/starter-login.png)
 
-![List of VMs](doc/starter-vms.png)
+![List of Exemps](doc/starter-vms.png)
 
-## Libs
+## Libs and links
 
- * Material-ui
- * https://github.com/s-yadav/react-number-format
+ * [Material UI](https://material-ui.com/)
+ * [Dropzone for Material UI](https://github.com/Yuvaleros/material-ui-dropzone)
+ * [create-react-app configuration](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/advanced-configuration.md)
 
-Take a look: https://github.com/mbrn/material-table
 
-## create-react-app configuration
-
-https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/advanced-configuration.md
-
-## Mapy.cz Integration
-
- * https://github.com/flsy/react-mapycz
-
-## Toasts
- 
- * https://fkhadra.github.io/react-toastify/autoClose
+## TODO:
+ * Take a look: https://github.com/mbrn/material-table
+ * Mapy.cz Integration: https://github.com/flsy/react-mapycz
+ * Toasts: https://fkhadra.github.io/react-toastify/autoClose

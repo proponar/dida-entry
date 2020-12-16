@@ -105,6 +105,8 @@ const ExempListing = () => {
         ).then(response => {
           console.log(response);
           alert(response.data.message);
+          // reload Exemplifikace
+          setReloadEx(Math.random());
         }, error => {
           console.log(error);
           console.log(error.response);

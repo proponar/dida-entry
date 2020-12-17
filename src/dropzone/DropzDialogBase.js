@@ -81,18 +81,11 @@ class DropzDialogBase extends React.PureComponent {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button
-                        color="primary"
-                        onClick={onClose}
-                    >
+                    <Button color="secondary" variant="outlined" onClick={onClose} >
                         {cancelButtonText}
                     </Button>
 
-                    <Button
-                        color="primary"
-                        disabled={submitDisabled}
-                        onClick={onSave}
-                    >
+                    <Button color="primary" variant="outlined" disabled={submitDisabled} onClick={onSave} >
                         {submitButtonText}
                     </Button>
                 </DialogActions>

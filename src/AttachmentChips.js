@@ -37,11 +37,11 @@ const AttachmentChips = ({chips, entryId, exempId}) => {
   }
 
   return (
-    <div className={classes.paper} >
+    <div className={classes.chipPaper} >
       {chips.map(c =>
         <Chip
           // icon={<FaceIcon />}
-          key={c.key}
+          key={c.id}
           label={c.filename}
           onClick={handleClick}
           onDelete={e => handleDelete(c.filename, c.id)}

@@ -24,12 +24,12 @@ const ConfirmDialog = ({open, onYes, onNo}) => (
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={onYes} color="primary">
+      <Button onClick={onYes} color="primary" variant="outlined">
         Ano
-    </Button>
-      <Button onClick={onNo} color="primary" autoFocus>
+      </Button>
+      <Button onClick={onNo} color="primary" variant="outlined" autoFocus>
         Ne
-    </Button>
+      </Button>
     </DialogActions>
   </Dialog>
 );
@@ -56,9 +56,6 @@ const DialogExemp = ({open, onSave, onClose, onDelete, data}) => {
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Přidání/editace exemplifikace k heslu...
-        </DialogContentText>
         <ExempForm data={formData} setData={handleSetData} />
       </DialogContent>
       <DialogActions>

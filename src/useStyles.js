@@ -42,6 +42,17 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     marginBottom: theme.spacing(2),
   },
+  chipPaper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
   button: {
     marginRight: theme.spacing(1),
   },

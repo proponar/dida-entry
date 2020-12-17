@@ -341,6 +341,7 @@ const ExempListing = () => {
         open={attachOpen}
         onClose={() => setAttachOpen(false)}
         onSave={handleAttachSaveClick}
+        data={prepareExempData(entry, selectedRow)}
       />
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">

@@ -16,10 +16,11 @@ import AddCircle from '@material-ui/icons/AddCircle';
 import Edit from '@material-ui/icons/Edit';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Publish from '@material-ui/icons/Publish';
-
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
@@ -77,11 +78,27 @@ const ExempListing = () => {
   // modal Exemp dialog
   const [exempOpen, setExempOpen] = React.useState(false);
 
+  // snacks
+  const [snack, setSnack] = React.useState({
+    open: false,
+    severity: 'success', // error, warning, info, success
+    message: '',
+  });
+  const handleCloseSnack = () => setSnack({open: false});
+  const successMsg = text => setSnack({open: true, severity: 'success', message: text});
+  const errorMsg   = text => setSnack({open: true, severity: 'error', message: text});
+
   // modal Attachment dialog
   const [attachOpen, setAttachOpen] = React.useState(false);
 
+  const handleAttachCloseClick = () => {
+    // Reload exemps in case some Attachments were removed.
+    // FIXME: we could check if the reload is actually needed.
+    setAttachOpen(false);
+    setReloadEx(Math.random());
+  }
+
   const handleAttachSaveClick = files => {
-    console.log('handleAttachSaveClick:', files);
     setAttachOpen(false);
 
     const entryId = entry.id;
@@ -103,14 +120,14 @@ const ExempListing = () => {
             }
           }
         ).then(response => {
-          console.log(response);
-          alert(response.data.message);
-          // reload Exemplifikace
+          // FIXME: some progress bar, maybe?
+          // FIXME: we could reload after uploading ALL files.
           setReloadEx(Math.random());
+          successMsg(response.data.message);
         }, error => {
           console.log(error);
           console.log(error.response);
-          alert(error.response.data.message);
+          errorMsg(error.response.data.message);
         });
       };
     });
@@ -121,7 +138,7 @@ const ExempListing = () => {
       setSelectedRow(null);
       setExempOpen(true);
     } else {
-      alert('Nejdříve, prosím, vyberte heslo.');
+      errorMsg('Nejdříve, prosím, vyberte heslo.');
     }
   };
 
@@ -136,7 +153,7 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      alert(error.response.data.message);
+      errorMsg(error.response.data.message);
     });
   };
 
@@ -148,13 +165,13 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      alert(error.response.data.message);
+      errorMsg(error.response.data.message);
     });
   };
 
   const handleExempSave = (exemp) => {
     const successF = () => {
-      console.log('Exemplifikace uložena.');
+      successMsg('Exemplifikace uložena.');
       setReloadEx(Math.random());
     };
 
@@ -176,7 +193,7 @@ const ExempListing = () => {
       setExempOpen(false);
     }, error => {
       console.log(error.response.data);
-      alert(error.response.data.message);
+      errorMsg(error.response.data.message);
     });
   };
 
@@ -199,7 +216,7 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      alert(error.response.data.message);
+      errorMsg(error.response.data.message);
     });
   };
 
@@ -211,13 +228,13 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      alert(error.response.data.message);
+      errorMsg(error.response.data.message);
     });
   };
 
   const handleHesloSave = (entry) => {
     const successF = () => {
-      console.log('Heslo uloženo.');
+      successMsg('Heslo uloženo.');
       // Request reload of both Entry and Exemp.
       setReloadEn(Math.random());
       setReloadEx(Math.random());
@@ -339,7 +356,7 @@ const ExempListing = () => {
         entryId={(entry && entry.id) || null} />
       <AttachDialog
         open={attachOpen}
-        onClose={() => setAttachOpen(false)}
+        onClose={handleAttachCloseClick}
         onSave={handleAttachSaveClick}
         data={prepareExempData(entry, selectedRow)}
       />
@@ -424,6 +441,11 @@ const ExempListing = () => {
         <MenuItem onClick={openAttach}>Připojené soubory</MenuItem>
         <MenuItem onClick={() => setMenuAnchorEl(null)}>Mapa</MenuItem>
       </Menu>
+      <Snackbar open={snack.open} autoHideDuration={6000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity={snack.severity}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 }

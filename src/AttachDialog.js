@@ -21,8 +21,9 @@ const AttachDialog = ({open, onClose, onSave, data}) => (
     maxFileSize={5242880} // 5MB
     dropzoneText={"Přetáhněte soubory sem"}
     showFileNames={true}
-    getFileAddedMessage={fileName => (`Soubor ${fileName} přidán.`)}
-    getFileRemovedMessage={fileName => (`Soubor ${fileName} odebrán.`)}
+    showAlerts={false}
+    // getFileAddedMessage={fileName => (`Soubor ${fileName} přidán.`)}
+    // getFileRemovedMessage={fileName => (`Soubor ${fileName} odebrán.`)}
   >
     <AttachmentChips entryId={data.entryId} exempId={data.id} chips={data.attachments} />
   </DropzDialog>

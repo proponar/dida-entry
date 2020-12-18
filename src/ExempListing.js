@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -19,8 +19,6 @@ import Publish from '@material-ui/icons/Publish';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
 
 import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
@@ -33,6 +31,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from "./useStyles";
+import chipContext from './chipContext';
 import { baseUrl } from './config';
 
 const prepareEntryData = (entry, edit) => {
@@ -65,31 +64,21 @@ const prepareExempData = (entry, exemp) => {
 };
 
 const ExempListing = () => {
-  const [rows, setRows] = useState([]);
+  const chip = useContext(chipContext);
   // const history = useHistory();
 
+  const [rows, setRows] = useState([]);
   const [entry, setEntry] = useState(null);
   const [reloadEx, setReloadEx] = useState(null);
   const [reloadEn, setReloadEn] = useState(null);
-
-  const [selectedRow, setSelectedRow] = React.useState();
-  const [editEntry, setEditEntry] = React.useState(false);
+  const [selectedRow, setSelectedRow] = useState();
+  const [editEntry, setEditEntry] = useState(false);
 
   // modal Exemp dialog
-  const [exempOpen, setExempOpen] = React.useState(false);
-
-  // snacks
-  const [snack, setSnack] = React.useState({
-    open: false,
-    severity: 'success', // error, warning, info, success
-    message: '',
-  });
-  const handleCloseSnack = () => setSnack({open: false});
-  const successMsg = text => setSnack({open: true, severity: 'success', message: text});
-  const errorMsg   = text => setSnack({open: true, severity: 'error', message: text});
+  const [exempOpen, setExempOpen] = useState(false);
 
   // modal Attachment dialog
-  const [attachOpen, setAttachOpen] = React.useState(false);
+  const [attachOpen, setAttachOpen] = useState(false);
 
   const handleAttachCloseClick = () => {
     // Reload exemps in case some Attachments were removed.
@@ -105,9 +94,9 @@ const ExempListing = () => {
     const exempId = selectedRow.id;
 
     // Upload files one by one.
-    files.map(file => {
+    // FIXME: collect promises, wait for all?
+    files.forEach(file => {
       const fileReader = new FileReader();
-      fileReader.readAsArrayBuffer(file);
       fileReader.onload = (e) => {
         console.log(e.target.result);
         axios.post( // /api/entries/:entry_id/exemps/:exemp_id/attach(.:format)
@@ -123,13 +112,14 @@ const ExempListing = () => {
           // FIXME: some progress bar, maybe?
           // FIXME: we could reload after uploading ALL files.
           setReloadEx(Math.random());
-          successMsg(response.data.message);
+          chip.successMsg(response.data.message);
         }, error => {
           console.log(error);
           console.log(error.response);
-          errorMsg(error.response.data.message);
+          chip.errorMsg(error.response.data.message);
         });
       };
+      fileReader.readAsArrayBuffer(file);
     });
   };
 
@@ -138,7 +128,7 @@ const ExempListing = () => {
       setSelectedRow(null);
       setExempOpen(true);
     } else {
-      errorMsg('Nejdříve, prosím, vyberte heslo.');
+      chip.errorMsg('Nejdříve, prosím, vyberte heslo.');
     }
   };
 
@@ -153,7 +143,7 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      errorMsg(error.response.data.message);
+      chip.errorMsg(error.response.data.message);
     });
   };
 
@@ -165,13 +155,13 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      errorMsg(error.response.data.message);
+      chip.errorMsg(error.response.data.message);
     });
   };
 
   const handleExempSave = (exemp) => {
     const successF = () => {
-      successMsg('Exemplifikace uložena.');
+      chip.successMsg('Exemplifikace uložena.');
       setReloadEx(Math.random());
     };
 
@@ -193,12 +183,12 @@ const ExempListing = () => {
       setExempOpen(false);
     }, error => {
       console.log(error.response.data);
-      errorMsg(error.response.data.message);
+      chip.errorMsg(error.response.data.message);
     });
   };
 
   // modal Heslo dialog
-  const [hesloOpen, setHesloOpen] = React.useState(false);
+  const [hesloOpen, setHesloOpen] = useState(false);
 
   const handleClickHesloEdit = () => { setEditEntry(true); setHesloOpen(true); };
   const handleClickHesloNew = () => { setEditEntry(false); setHesloOpen(true); };
@@ -216,7 +206,7 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      errorMsg(error.response.data.message);
+      chip.errorMsg(error.response.data.message);
     });
   };
 
@@ -228,13 +218,13 @@ const ExempListing = () => {
       successFunc();
     }, error => {
       console.log(error.response.data);
-      errorMsg(error.response.data.message);
+      chip.errorMsg(error.response.data.message);
     });
   };
 
   const handleHesloSave = (entry) => {
     const successF = () => {
-      successMsg('Heslo uloženo.');
+      chip.successMsg('Heslo uloženo.');
       // Request reload of both Entry and Exemp.
       setReloadEn(Math.random());
       setReloadEx(Math.random());
@@ -250,7 +240,7 @@ const ExempListing = () => {
   }
 
   // Import wizard
-  const [importOpen, setImportOpen] = React.useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const handleImportClose = () => {
     setReloadEx(Math.random());
     setImportOpen(false);
@@ -273,8 +263,8 @@ const ExempListing = () => {
   const classes = useStyles();
 
   // Paginator
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   const handleChangePage = (_e, newPage) => setPage(newPage);
 
@@ -284,7 +274,7 @@ const ExempListing = () => {
   };
 
   // Popup menu
-  const [anchorEl, setMenuAnchorEl] = React.useState(null);
+  const [anchorEl, setMenuAnchorEl] = useState(null);
 
   // when table cell is clicked, open pop-up menu
   const handleCellClick = (e, row) => {
@@ -441,11 +431,6 @@ const ExempListing = () => {
         <MenuItem onClick={openAttach}>Připojené soubory</MenuItem>
         <MenuItem onClick={() => setMenuAnchorEl(null)}>Mapa</MenuItem>
       </Menu>
-      <Snackbar open={snack.open} autoHideDuration={6000} onClose={handleCloseSnack}>
-        <Alert onClose={handleCloseSnack} severity={snack.severity}>
-          {snack.message}
-        </Alert>
-      </Snackbar>
     </Paper>
   );
 }

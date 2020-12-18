@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 
 import Chip from '@material-ui/core/Chip';
 
 import { baseUrl } from './config';
-import useStyles from "./useStyles"
+import useStyles from './useStyles';
+import chipContext from './chipContext';
 
 const AttachmentChips = ({chips, entryId, exempId}) => {
   const classes = useStyles();
+  const chip = useContext(chipContext);
+
+  const [theChips, setTheChips] = useState(chips);
 
   const handleClick = () => {
     console.log('display attachment');
   }
 
   const handleDelete = (fname, id) => {
-    console.log('delete attachment: ', fname, id);
-    axios.post( // /api/entries/:entry_id/exemps/:exemp_id/detach
+    axios.post(
       baseUrl + `entries/${entryId}/exemps/${exempId}/detach`,
       {
         attachment_id: id,
@@ -27,19 +30,20 @@ const AttachmentChips = ({chips, entryId, exempId}) => {
         }
       }
     ).then(response => {
-      console.log(response);
-      alert(response.data.message);
+      setTheChips(theChips.filter(c => c.id !== id));
+      chip.successMsg(response.data.message);
     }, error => {
       console.log(error);
       console.log(error.response);
-      alert(error.response.data.message);
+      chip.errorMsg(error.response.data.message);
     });
   }
 
   return (
     <div className={classes.chipPaper} >
-      {chips.map(c =>
+      {theChips.map(c =>
         <Chip
+          color="primary"
           // icon={<FaceIcon />}
           key={c.id}
           label={c.filename}

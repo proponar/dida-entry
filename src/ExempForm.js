@@ -14,6 +14,7 @@ import KvalifikatorInput from "./KvalifikatorInput";
 import TvarForm from "./TvarForm";
 import ZdrojInput from "./ZdrojInput";
 import useStyles from "./useStyles";
+import { rodMap, rodRE } from "./RodSelect";
 
 const addIndex = (h, i) => ({
   index: i,
@@ -29,7 +30,7 @@ const urceni2string = u => {
 
     if (u.rod && u.rod !== ' ') {
       // 'obecním, f. 7 sg.'
-      return `${u.tvar}, ${u.rod}. ${p} ${c}.`
+      return `${u.tvar}, ${rodMap.get(u.rod)} ${p} ${c}.`
     } else {
       // 'huse, 1 pl.'
       return `${u.tvar}, ${p} ${c}.`
@@ -41,11 +42,13 @@ const urceni2string = u => {
 
 const string2urceni = t => {
   // 'obecním, f. 7 sg.'
-  const mtr = t.match(/^([\p{L}\s]+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
+  //const mtr = t.match(/^([\p{L}\s]+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
+  const mtr = t.match(
+    new RegExp(`^([\\p{L}\\s]+),\\s*(${rodRE})\\s*(\\d)\\s+(pl|sg)\\.$`, 'u'))
   if (mtr) {
     return {
       tvar: mtr[1],
-      rod: mtr[2],
+      rod: mtr[2].replaceAll(/[. ]/g, ''),
       pad: mtr[3] + ((mtr[4] === 'pl' && 'p') || 's'),
     };
   }
@@ -102,7 +105,6 @@ const ExempForm = ({data, dataKey, setData}) => {
   const applyChangesToText = (index, fieldName, fieldValue) => {
     // split keeping the separators as separate items
     const parts = values.exemplifikace.split(/(\{[^{}]+\})/g);
-
     const changeIndex = 1 + index*2;
     const u = string2urceni(
       parts[changeIndex].replace(/^\{(.*)\}$/, '$1') // remove { }
@@ -149,7 +151,6 @@ const ExempForm = ({data, dataKey, setData}) => {
 
   const handleValuesChange = ev => {
     const {name, value} = ev.target;
-    // console.log(`Setting ${name} to ${value}`);
 
     if (name === 'exemplifikace') {
       setTvary(parseExemplifikaceValue(value));
@@ -164,8 +165,6 @@ const ExempForm = ({data, dataKey, setData}) => {
   };
 
   const handleZdrojChange = zdroj => {
-    console.log(zdroj && zdroj.cislo);
-
     const newValues = {
       ...values,
       rok: zdroj.rok || values.rok, // FIXME: rok_sberu?
@@ -176,7 +175,6 @@ const ExempForm = ({data, dataKey, setData}) => {
   };
 
   const handleValuesCheckChange = event => {
-    // console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
     const newValues = {
       ...values,
       [event.target.name]: event.target.checked,

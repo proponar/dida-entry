@@ -8,6 +8,26 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import useStyles from "./useStyles";
 
+const rody = [
+  [' ',     '-o-'],
+  ['m',     'm.'],
+  ['f',     'f.'],
+  ['n',     'n.'],
+  ['mf',    'm./f.'],
+  ['fn',    'f./n.'],
+  ['mn',    'm./n.'],
+  ['mplt',  'm. plt.'],
+  ['fplt',  'f. plt.'],
+  ['nplt',  'n. plt.'],
+  ['mfplt', 'm./f. plt.'],
+  ['fnplt', 'f./n. plt.'],
+  ['mnplt', 'm./n. plt.'],
+];
+
+export const rodMap = new Map(rody);
+export const rodRE = Array.from(rodMap.values())
+  .map(v => v.replaceAll('.', '\\.')).join('|')
+
 const RodSelect = props => {
   const classes = useStyles();
 
@@ -28,10 +48,7 @@ const RodSelect = props => {
         onChange={onChange}
         label="Rod"
       >
-        <MenuItem value=' '>-o-</MenuItem>
-        <MenuItem value='m'>m.</MenuItem>
-        <MenuItem value='f'>f.</MenuItem>
-        <MenuItem value='n'>n.</MenuItem>
+        { rody.map(r => <MenuItem key={r[0]} value={r[0]}>{r[1]}</MenuItem>) }
       </Select>
     </FormControl>
   );

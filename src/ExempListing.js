@@ -1,3 +1,4 @@
+/* eslint-disable no-sequences */
 import React, { useContext, useEffect, useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -80,12 +81,9 @@ const ExempListing = () => {
   // modal Attachment dialog
   const [attachOpen, setAttachOpen] = useState(false);
 
-  const handleAttachCloseClick = () => {
-    // Reload exemps in case some Attachments were removed.
-    // FIXME: we could check if the reload is actually needed.
-    setAttachOpen(false);
-    setReloadEx(Math.random());
-  }
+  // Reload exemps in case some Attachments were removed.
+  // FIXME: we could check if the reload is actually needed.
+  const handleAttachCloseClick = () => (setAttachOpen(false), setReloadEx(Math.random()));
 
   const handleAttachSaveClick = files => {
     setAttachOpen(false);
@@ -194,9 +192,7 @@ const ExempListing = () => {
   const handleClickHesloNew = () => { setEditEntry(false); setHesloOpen(true); };
   const handleHesloClose = () => setHesloOpen(false);
 
-  const handleClickImport = () => {
-    setImportOpen(true);
-  };
+  const handleClickImport = () => setImportOpen(true);
 
   const storeNewHeslo = (entry, successFunc) => {
     axios.post(`${baseUrl}entries`,
@@ -241,10 +237,7 @@ const ExempListing = () => {
 
   // Import wizard
   const [importOpen, setImportOpen] = useState(false);
-  const handleImportClose = () => {
-    setReloadEx(Math.random());
-    setImportOpen(false);
-  }
+  const handleImportClose = () => (setReloadEx(Math.random()), setImportOpen(false));
 
   // Load exemps for selected entry, when entry changes or reload is requested
   // via reloadEx.
@@ -254,9 +247,7 @@ const ExempListing = () => {
         headers: {
           'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
         }
-      }).then(response => {
-        setRows(response.data.data);
-      });
+      }).then(response => setRows(response.data.data));
     }
   }, [entry, reloadEx]);
 
@@ -268,52 +259,38 @@ const ExempListing = () => {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   const handleChangePage = (_e, newPage) => setPage(newPage);
 
-  const handleChangeRowsPerPage = ev => {
-    setRowsPerPage(parseInt(ev.target.value, 10));
-    setPage(0);
-  };
+  const handleChangeRowsPerPage = e => (
+    setRowsPerPage(parseInt(e.target.value, 10)), setPage(0));
 
   // Popup menu
-  const [anchorEl, setMenuAnchorEl] = useState(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
-  // when table cell is clicked, open pop-up menu
-  const handleCellClick = (e, row) => {
-    setSelectedRow(row);
-    setMenuAnchorEl(e.currentTarget);
-  };
+  // When table cell is clicked, open pop-up menu.
+  const handleCellClick = (e, row) => (setSelectedRow(row),
+    setMenuAnchorEl(e.currentTarget));
 
   // Open Exemp edit dialog.
-  const openExemp = () => {
-    setExempOpen(true);
-    setMenuAnchorEl(null);
-    // history.push(`/entry/${rowId}`);
-  };
+  // history.push(`/entry/${rowId}`);
+  const openExemp = () => (setExempOpen(true), setMenuAnchorEl(null));
 
   // Open Exemp attachments dialog.
-  const openAttach = () => {
-    setAttachOpen(true);
-    setMenuAnchorEl(null);
-  };
+  const openAttach = () => (setAttachOpen(true), setMenuAnchorEl(null));
 
-  // selected a new row/entry/heslo
-  const handleEntryChange = (ev, newEntry) => (newEntry && setEntry(newEntry) && setSelectedRow(null));
+  // Selected a new row/entry/heslo.
+  const handleEntryChange = (_e, newEntry) => (newEntry &&
+   (setEntry(newEntry), setPage(0), setSelectedRow(null)));
 
   // selected entry was reloaded
   const handleEntryReload = entries => (setEntry(
     entries.find(e => e.id === entry.id)
   ));
 
-  const formatLokalizaceText = text => {
-    if (text)
-      return (
-        <React.Fragment>
-          <br />
-          <small>{text}</small>
-        </React.Fragment>
-      );
-    else
-      return '';
-  };
+  const formatLokalizaceText = text => (text &&
+    <React.Fragment>
+      <br />
+      <small>{text}</small>
+    </React.Fragment>
+  ) || '';
 
   return (
     <Paper className={classes.paper}>
@@ -422,9 +399,9 @@ const ExempListing = () => {
         </Table>
       </TableContainer>
       <Menu
-        anchorEl={anchorEl}
+        anchorEl={menuAnchorEl}
         keepMounted
-        open={Boolean(anchorEl)}
+        open={Boolean(menuAnchorEl)}
         onClose={() => setMenuAnchorEl(null)}
       >
         <MenuItem onClick={openExemp}>Editovat</MenuItem>

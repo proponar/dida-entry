@@ -40,6 +40,8 @@ const urceni2string = u => {
   }
 }
 
+const filterTvar = t => (t.replace(/,.*/,''));
+
 const string2urceni = t => {
   // 'obecním, f. 7 sg.'
   //const mtr = t.match(/^([\p{L}\s]+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
@@ -47,7 +49,7 @@ const string2urceni = t => {
     new RegExp(`^([\\p{L}\\s]+),\\s*(${rodRE})\\s*(\\d)\\s+(pl|sg)\\.$`, 'u'))
   if (mtr) {
     return {
-      tvar: mtr[1],
+      tvar: filterTvar(mtr[1]),
       rod: mtr[2].replaceAll(/[. ]/g, ''),
       pad: mtr[3] + ((mtr[4] === 'pl' && 'p') || 's'),
     };
@@ -57,14 +59,14 @@ const string2urceni = t => {
   const mt = t.match(/^([\p{L}\s]+),\s*(\d)\s+(pl|sg)\.$/u);
   if (mt) {
     return {
-      tvar: mt[1],
+      tvar: filterTvar(mt[1]),
       rod: ' ',
       pad: mt[2] + ((mt[3] === 'pl' && 'p') || 's'),
     };
   }
 
   return {
-    tvar: t,
+    tvar: filterTvar(t),
     rod: null, // 'm', // blbe
     pad: null  // '1s', // blbe
   };
@@ -90,6 +92,7 @@ const ExempForm = ({data, dataKey, setData}) => {
   });
 
   const [tvary, setTvary] = useState([]);
+  const [exempFocused, setExempFocused] = useState(false);
 
 	const exemplifikaceNotNull = (values && values.exemplifikace) || '';
 
@@ -124,6 +127,9 @@ const ExempForm = ({data, dataKey, setData}) => {
 
   const handleTvarValuesChange = (ev, index) => {
     const {name, value} = ev.target;
+    if (exempFocused) { // do not apply any changes to exemp if exemp is focused
+      return;
+    }
     setTvary(tvary.map((t, i) => index === i ? {...t, [name]: value} : t));
     applyChangesToText(index, name, value);
   };
@@ -153,7 +159,8 @@ const ExempForm = ({data, dataKey, setData}) => {
   const handleValuesChange = ev => {
     const {name, value} = ev.target;
 
-    if (name === 'exemplifikace') {
+    if ((name === 'exemplifikace') && exempFocused) {
+      // apply changes to Tvary only if exemp is focused
       setTvary(parseExemplifikaceValue(value));
     }
 
@@ -220,6 +227,8 @@ const ExempForm = ({data, dataKey, setData}) => {
                 name="exemplifikace"
                 value={exemplifikaceNotNull}
                 onChange={handleValuesChange}
+                onFocus={() => setExempFocused(true)}
+                onBlur={() => setExempFocused(false)}
               />
             </div>
           </Grid>

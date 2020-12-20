@@ -71,7 +71,8 @@ const string2urceni = t => {
 };
 
 const parseExemplifikaceValue = value => {
-  const matched = (value || '').match(/[^{}]+(?=\})/g) || [];
+  // positive look-behind, then the group, then positive look-ahead
+  const matched = (value || '').match(/(?<=\{)[^{}]+(?=\})/g) || [];
   return matched.map((t, i) => addIndex(string2urceni(t), i));
 };
 

@@ -7,7 +7,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
-import TopForm from './TopForm.js';
+import EntryForm from './EntryForm.js';
 import ExempForm from './ExempForm.js';
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
@@ -160,7 +160,7 @@ export default function Entry() {
     );
   }
 
-  // TopForm events
+  // EntryForm events
   const handleValuesChange = (event) => {
     // console.log(`Setting ${event.target.name} to ${event.target.value}`);
     const newEntry = {
@@ -191,7 +191,7 @@ export default function Entry() {
     <React.Fragment>
       <Box className={classes.root}>
         <Grid container item xs={12} spacing={3}>
-          <TopForm
+          <EntryForm
             data={formData.entry}
             valuesChange={handleValuesChange}
             valuesCheckChange={handleValuesCheckChange}

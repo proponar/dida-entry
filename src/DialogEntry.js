@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-import TopForm from "./TopForm";
+import EntryForm from "./EntryForm";
 
 const DialogEntry = ({open, onClose, onSave, data}) => {
   const title = (data && data.id && "Editace hesla") || "Nové heslo";
@@ -38,7 +38,7 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <TopForm
+        <EntryForm
           data={formData}
           valuesChange={handleFormDataChange}
           valuesCheckChange={handleFormDataCheckChange}

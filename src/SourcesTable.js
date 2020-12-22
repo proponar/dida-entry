@@ -30,29 +30,29 @@ export default function SourcesTable() {
     <TableContainer component={Paper}>
       <Table className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
         <TableHead>
-        <TableRow>
-          <TableCell>Autor</TableCell>
-          <TableCell align="right">Název</TableCell>
-          <TableCell align="right">Název 2</TableCell>
-          <TableCell align="right">Typ</TableCell>
-          <TableCell align="right">Rok</TableCell>
-          <TableCell align="right">Lokalizace</TableCell>
-          <TableCell align="right">Lok. textová</TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell component="th">Autor</TableCell>
+            <TableCell component="th" align="right">Název</TableCell>
+            <TableCell component="th" align="right">Název 2</TableCell>
+            <TableCell component="th" align="right">Typ</TableCell>
+            <TableCell component="th" align="right">Rok</TableCell>
+            <TableCell component="th" align="right">Lokalizace</TableCell>
+            <TableCell component="th" align="right">Lok. textová</TableCell>
+          </TableRow>
         </TableHead>
         <TableBody>
-        {rows.map((row) => (
-                <TableRow key={row.id}>
-                <TableCell component="th" scope="row">{row.autor}</TableCell>
-                <TableCell align="right">{row.name}</TableCell>
-                <TableCell align="right">{row.nazev2}</TableCell>
-                <TableCell align="right">{row.typ}</TableCell>
-                <TableCell align="right">{row.rok}</TableCell>
-                <TableCell align="right">{row.lokalizace}</TableCell>
-                <TableCell align="right">{row.lokalizace_text}</TableCell>
-                </TableRow>
-              ))}
-      </TableBody>
+          {rows.map(row => (
+            <TableRow key={row.id}>
+              <TableCell>{row.autor}</TableCell>
+              <TableCell align="right">{row.name}</TableCell>
+              <TableCell align="right">{row.nazev2}</TableCell>
+              <TableCell align="right">{row.typ}</TableCell>
+              <TableCell align="right">{row.rok}</TableCell>
+              <TableCell align="right">{row.lokalizace}</TableCell>
+              <TableCell align="right">{row.lokalizace_text}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );

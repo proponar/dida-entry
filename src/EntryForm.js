@@ -7,11 +7,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
 import useStyles from "./useStyles";
-import KvalifikatorInput from "./KvalifikatorInput";
 import RodSelect from "./RodSelect";
 import VetneSwitch from "./VetneSwitch";
+import MeaningTable from "./MeaningTable";
 
-const TopForm = props => {
+const EntryForm = props => {
   const classes = useStyles();
 
   const {
@@ -49,13 +49,8 @@ const TopForm = props => {
           <TextField name="urceni" variant="outlined" margin="normal" fullWidth label="Určení" value={values.urceni} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={3}>
-        <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
-      </Grid>
-      <Grid item xs={9}>
-        <FormControl fullWidth>
-          <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam} onChange={handleValuesChange} />
-        </FormControl>
+      <Grid item xs={12}>
+        <MeaningTable meanings={values.meanings || []} onChange={handleValuesChange} />
       </Grid>
       <Grid item xs={3}>
         <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
@@ -82,4 +77,4 @@ const TopForm = props => {
   );
 };
 
-export default TopForm;
+export default EntryForm;

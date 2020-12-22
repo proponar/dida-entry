@@ -331,12 +331,12 @@ const ExempListing = () => {
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>
             <TableRow>
-              <TableCell>Exemplifikace</TableCell>
-              <TableCell align="right">Lokalizace</TableCell>
-              <TableCell align="right">Zdroj</TableCell>
-              <TableCell align="right">Kvalifikátor</TableCell>
-              <TableCell align="right">Význam</TableCell>
-              <TableCell align="right">Čas</TableCell>
+              <TableCell component="th">Exemplifikace</TableCell>
+              <TableCell component="th" align="right">Lokalizace</TableCell>
+              <TableCell component="th" align="right">Zdroj</TableCell>
+              <TableCell component="th" align="right">Kvalifikátor</TableCell>
+              <TableCell component="th" align="right">Význam</TableCell>
+              <TableCell component="th" align="right">Čas</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -345,7 +345,7 @@ const ExempListing = () => {
               : rows
             ).map(row => (
               <TableRow key={row.id}>
-                <TableCell component="th" scope="row" onClick={e => handleCellClick(e, row)}>
+                <TableCell onClick={e => handleCellClick(e, row)}>
                   {row.exemplifikace}
                 </TableCell>
                 <TableCell align="right">

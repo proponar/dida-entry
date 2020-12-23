@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircle from '@material-ui/icons/AddCircle';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import Edit from '@material-ui/icons/Edit';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Publish from '@material-ui/icons/Publish';
@@ -335,6 +336,7 @@ const ExempListing = () => {
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>
             <TableRow>
+              <TableCell component="th" style={{ paddingBottom: 0, paddingTop: 0, width: '20px' }}></TableCell>
               <TableCell component="th">Exemplifikace</TableCell>
               <TableCell component="th" align="right">Lokalizace</TableCell>
               <TableCell component="th" align="right">Zdroj</TableCell>
@@ -349,6 +351,9 @@ const ExempListing = () => {
               : rows
             ).map(row => (
               <TableRow key={row.id}>
+                <TableCell align="center">
+                  {(row.attachments && row.attachments.length > 0) && <AttachFileIcon size="small" />}
+                </TableCell>
                 <TableCell onClick={e => handleCellClick(e, row)}>
                   {row.exemplifikace}
                 </TableCell>

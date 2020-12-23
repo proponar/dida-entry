@@ -3,7 +3,6 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,11 +13,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 
 import DialogMeaning from './DialogMeaning';
-import useStyles from "./useStyles";
 
 const MeaningTable = ({meanings, onChange}) => {
-  const classes = useStyles();
-
   const [meaningOpen, setMeaningOpen] = useState(false);
   const [meaning, setMeaning] = useState({});
 
@@ -72,7 +68,7 @@ const MeaningTable = ({meanings, onChange}) => {
         </IconButton>
       </Toolbar>
       <TableContainer component={Paper}>
-        <Table className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
+        <Table size="small" aria-label="Seznam zdrojů">
           <TableHead>
             <TableRow>
               <TableCell component="th">Číslo</TableCell>

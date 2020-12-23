@@ -49,10 +49,10 @@ const EntryForm = props => {
           <TextField name="urceni" variant="outlined" margin="normal" fullWidth label="Určení" value={values.urceni} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} style={{marginBottom: '30px'}} className={classes.meaningCell} >
         <MeaningTable meanings={values.meanings || []} onChange={handleValuesChange} />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
       </Grid>
       <Grid item xs={3}>

@@ -6,20 +6,13 @@ import TextField from '@material-ui/core/TextField';
 
 import { baseUrl } from './config';
 
-const EntryCombo = props => {
-  const {
-    reload,
-    onChange,
-    onReload,
-  } = props;
-
+const EntryCombo = ({reload, onChange, onReload}) => {
   const [options, setOptions] = useState([]);
 
   const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     async function getOptions() {
-      console.log('LOADING ENTRIES');
       const response = await axios.get(
           baseUrl + 'entries', {
           headers: {

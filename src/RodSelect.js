@@ -28,14 +28,8 @@ export const rodMap = new Map(rody);
 export const rodRE = Array.from(rodMap.values())
   .map(v => v.replaceAll('.', '\\.')).join('|')
 
-const RodSelect = props => {
+const RodSelect = ({rod, onChange}) => {
   const classes = useStyles();
-
-  const {
-    rod,
-    onChange,
-  } = props;
-
   const [ labelId ] = useState(() => uniqueId('rod-label'))
 
   return (

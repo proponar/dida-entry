@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import FormControl from "@material-ui/core/FormControl";
-import GenericSwitch from './GenericSwitch.js';
+import GenericSwitch from './GenericSwitch';
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import TextField from '@material-ui/core/TextField';
 
-import RokInput from './RokInput.js';
-import VetneSwitch from './VetneSwitch.js';
-import LokalizaceInput from './LokalizaceInput.js';
-import KvalifikatorInput from "./KvalifikatorInput";
+import MeaningSelector from './MeaningSelector';
+import RokInput from './RokInput';
+import VetneSwitch from './VetneSwitch';
+import LokalizaceInput from './LokalizaceInput';
 import TvarForm from "./TvarForm";
 import ZdrojInput from "./ZdrojInput";
 import useStyles from "./useStyles";
@@ -251,13 +249,12 @@ const ExempForm = ({data, dataKey, setData}) => {
             onObecChange={handleObecValueChange}
             onChange={handleValuesChange}
           />
-          <Grid item xs={4}>
-            <KvalifikatorInput value={values.kvalifikator} onChange={handleValuesChange} />
-          </Grid>
-          <Grid item xs={8}>
-            <FormControl fullWidth>
-              <TextField name="vyznam" variant="outlined" margin="normal" label="Význam" value={values.vyznam || ''} onChange={handleValuesChange} />
-            </FormControl>
+          <Grid item xs={12}>
+            <MeaningSelector
+              value={values.meaning_id || -1}
+              meanings={values.meanings || []}
+              onChange={handleValuesChange}
+            />
           </Grid>
           <Grid item xs={4}>
             <GenericSwitch

@@ -49,6 +49,7 @@ const prepareExempData = (entry, exemp) => {
     return {
       entryId: (entry && entry.id) || null,
       tvar_map: (entry && entry.tvar_map) || null,
+      meanings: (entry && entry.meanings) || null,
       ...exemp
     };
   }
@@ -56,8 +57,11 @@ const prepareExempData = (entry, exemp) => {
   return {
     // FIXME: vic hodnot? rok, rod, vyznam?
     entryId: (entry && entry.id) || null,
-    exemplifikace: '',
-    kvalifikator: (entry && entry.kvalifikator) || null,
+    tvar_map: (entry && entry.tvar_map) || null,
+    meanings: (entry && entry.meanings) || null,
+
+    // exemplifikace: '',
+    // kvalifikator: (entry && entry.kvalifikator) || null,
     vetne: (entry && entry.vetne) || null,
     aktivni: true,
     vyznam: (entry && entry.vyznam) || '',

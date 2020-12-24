@@ -20,39 +20,14 @@ const EntryForm = props => {
     valuesCheckChange: handleValuesCheckChange,
   } = props;
 
-  const formatId = id => {
-    if (id)
-      return id;
-    else
-      return 'žádné';
-  };
-
   return (
     <Grid container item xs={12}>
-      <Grid item xs={2}>
-        Autor: {values.author_name},
-        Verze: xxx,
-        Číslo: {formatId(values.id)}
-      </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={4}>
         <FormControl fullWidth>
           <TextField required name="heslo" variant="outlined" margin="normal" label="Heslo" value={values.heslo} onChange={handleValuesChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-          <TextField name="tvary" variant="outlined" margin="normal" fullWidth label="Tvary" value={values.tvary} onChange={handleValuesChange} />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-          <TextField name="urceni" variant="outlined" margin="normal" fullWidth label="Určení" value={values.urceni} onChange={handleValuesChange} />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} style={{marginBottom: '30px'}} className={classes.meaningCell} >
-        <MeaningTable meanings={values.meanings || []} onChange={handleValuesChange} />
-      </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <VetneSwitch checked={values.vetne} onChange={handleValuesCheckChange} />
       </Grid>
       <Grid item xs={3}>
@@ -70,8 +45,21 @@ const EntryForm = props => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <RodSelect rod={values.rod} onChange={handleValuesChange} />
+      </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <TextField name="tvary" variant="outlined" margin="normal" fullWidth label="Tvary" value={values.tvary} onChange={handleValuesChange} />
+        </FormControl>
+      </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <TextField name="urceni" variant="outlined" margin="normal" fullWidth label="Určení" value={values.urceni} onChange={handleValuesChange} />
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} style={{marginBottom: '30px'}} className={classes.meaningCell} >
+        <MeaningTable meanings={values.meanings || []} onChange={handleValuesChange} />
       </Grid>
     </Grid>
   );

@@ -376,7 +376,7 @@ const ExempListing = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell>
+              <TableCell colSpan={2}>
                 <IconButton color="secondary" onClick={handleClickExempOpen} aria-label="Přidat exemplifikaci" >
                   <Tooltip title="Přidat exemplifikaci">
                     <AddCircleOutline />

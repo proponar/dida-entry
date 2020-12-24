@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography'
 
 import EntryForm from "./EntryForm";
 
@@ -16,7 +17,6 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
   const handleSave = () => onSave(formData);
 
   const handleFormDataChange = (event) => {
-    console.log(`Setting ${event.target.name} to ${event.target.value}`);
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -24,19 +24,25 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
   };
 
   const handleFormDataCheckChange = event => {
-    console.log(`Setting check ${event.target.name} to ${event.target.checked}`);
     setFormData({
       ...formData,
       [event.target.name]: event.target.checked,
     });
   };
 
+  const formatId = id => (id || 'žádné');
+
   return (
     <Dialog
-      fullWidth={true}
-      maxWidth='xl'
+      fullScreen={true}
+      scroll="body"
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+      <DialogTitle id="form-dialog-title" disableTypography>
+        <Typography variant="h6">{title}</Typography>
+        <Typography variant="span">
+          Autor: {data.author_name}, Číslo: {formatId(data.id)}
+        </Typography>
+      </DialogTitle>
       <DialogContent>
         <EntryForm
           data={formData}

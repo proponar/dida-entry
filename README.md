@@ -63,5 +63,5 @@ REACT_APP_ENV=production npm run build
 
 ## TODO:
  * Take a look: https://github.com/mbrn/material-table
- * Mapy.cz Integration: https://github.com/flsy/react-mapycz
- * Toasts: https://fkhadra.github.io/react-toastify/autoClose
+ * Mapy.cz integration: https://github.com/flsy/react-mapycz
+ * Google Maps integration: https://www.npmjs.com/package/google-maps-react

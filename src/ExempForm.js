@@ -48,7 +48,7 @@ const string2urceni = t => {
   if (mtr) {
     return {
       tvar: filterTvar(mtr[1]),
-      rod: mtr[2].replaceAll(/[. ]/g, ''),
+      rod: mtr[2].replaceAll(/[. /]/g, ''),
       pad: mtr[3] + ((mtr[4] === 'pl' && 'p') || 's'),
     };
   }
@@ -117,10 +117,12 @@ const ExempForm = ({data, dataKey, setData}) => {
 
     parts[changeIndex] = '{' + urceni2string(u) + '}';
 
-    setValues({
+    const newValues = {
       ...values,
       exemplifikace: parts.join(''),
-    });
+    };
+    setValues(newValues);
+    setData(dataKey, newValues);
   };
 
   const handleTvarValuesChange = (ev, index) => {

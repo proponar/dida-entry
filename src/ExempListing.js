@@ -287,7 +287,7 @@ const ExempListing = () => {
 
   // selected entry was reloaded
   const handleEntryReload = entries => (setEntry(
-    entries.find(e => e.id === entry.id)
+    entries.find(e => e.id === (entry && entry.id))
   ));
 
   const formatLokalizaceText = text => (text &&

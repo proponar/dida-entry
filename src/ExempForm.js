@@ -177,6 +177,12 @@ const ExempForm = ({data, dataKey, setData}) => {
       ...values,
       rok: zdroj.rok || values.rok, // FIXME: rok_sberu?
       zdroj_id: zdroj.cislo,
+
+      // FIXME: set location
+      lokalizace_obec_id: zdroj.lokalizace_obec,
+      lokalizace_obec_text: zdroj.lokalizace,
+      lokalizace_cast_obce_id: null,
+      lokalizace_cast_obce_text: '',
     };
     setValues(newValues);
     setData(dataKey, newValues);

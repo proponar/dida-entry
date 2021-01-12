@@ -29,7 +29,7 @@ const MeaningTable = ({meanings, onChange}) => {
   }
 
   const handleMeaningSave = newMeaning => {
-    const newMeanings = (newMeaning.ord && 
+    const newMeanings = ((newMeaning.ord !== undefined) &&
       meanings.map((m, i) => i === newMeaning.ord ? newMeaning : m)) ||
       [...meanings, newMeaning];
 

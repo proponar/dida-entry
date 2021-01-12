@@ -20,6 +20,9 @@ const EntryForm = props => {
     valuesCheckChange: handleValuesCheckChange,
   } = props;
 
+  const sortMeanings = m =>
+    (m && m.sort((a, b) => a.cislo - b.cislo)) || [];
+
   return (
     <Grid container item xs={12}>
       <Grid item xs={4}>
@@ -59,7 +62,7 @@ const EntryForm = props => {
         </FormControl>
       </Grid>
       <Grid item xs={12} style={{marginBottom: '30px'}} className={classes.meaningCell} >
-        <MeaningTable meanings={values.meanings || []} onChange={handleValuesChange} />
+        <MeaningTable meanings={sortMeanings(values.meanings)} onChange={handleValuesChange} />
       </Grid>
     </Grid>
   );

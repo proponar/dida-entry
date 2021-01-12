@@ -29,7 +29,6 @@ const MeaningTable = ({meanings, onChange}) => {
   }
 
   const handleMeaningSave = newMeaning => {
-    console.log('handleMeaningSave: ', newMeaning);
     const newMeanings = (newMeaning.ord && 
       meanings.map((m, i) => i === newMeaning.ord ? newMeaning : m)) ||
       [...meanings, newMeaning];
@@ -45,7 +44,6 @@ const MeaningTable = ({meanings, onChange}) => {
   }
 
   const handleMeaningRemove = meaning => {
-    console.log('handleMeaningRemove: ', meaning);
     meaning.ord &&
       onChange({
         target: {

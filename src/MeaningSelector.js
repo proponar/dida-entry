@@ -13,7 +13,7 @@ const MeaningSelector = ({value, meanings, onChange}) => {
   return (
     <FormControl fullWidth margin="normal" variant="outlined" className={classes.formControl}>
       <InputLabel id='vyznam_label'>Význam</InputLabel>
-      <Select labelId='vyznam_label' value={value} name="meaning" onChange={onChange} label="Význam">
+      <Select labelId='vyznam_label' value={value} name="meaning_id" onChange={onChange} label="Význam">
         <MenuItem key={-1} value={-1}>
           Nepřiřazený význam
         </MenuItem>

@@ -47,7 +47,7 @@ const DialogMeaning = ({meaning, open, onSave, onClose, onRemove}) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onRemove} color="secondary" variant="outlined">
+        <Button onClick={() => onRemove(value)} color="secondary" variant="outlined">
           Smazat
         </Button>
         <Button onClick={onClose} color="secondary" variant="outlined">

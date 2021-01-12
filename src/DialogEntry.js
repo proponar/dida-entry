@@ -39,7 +39,7 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title" disableTypography>
         <Typography variant="h6">{title}</Typography>
-        <Typography variant="span">
+        <Typography variant="body1">
           Autor: {data.author_name}, Číslo: {formatId(data.id)}
         </Typography>
       </DialogTitle>

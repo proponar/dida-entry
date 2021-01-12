@@ -17,9 +17,9 @@ const AttachDialog = ({open, onClose, onSave, data}) => (
     cancelButtonText={"Zavřít"}
     submitButtonText={"Uložit"}
     acceptedFiles={['image/jpeg', 'image/png', 'image/bmp', 'image/gif',
-                    'audio/mpeg3', 'audio/x-mpeg-3', 'audio/mp3']}
+                    'audio/mpeg3', 'audio/x-mpeg-3', 'audio/mp3', 'video/*', 'audio/*']}
     showPreviews={true}
-    maxFileSize={5242880} // 5MB
+    maxFileSize={52428800} // 50MB
     dropzoneText={"Přetáhněte soubory sem"}
     showFileNames={true}
     showAlerts={false}

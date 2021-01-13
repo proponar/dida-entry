@@ -325,6 +325,7 @@ const ExempListing = () => {
       <DialogImport
         open={importOpen}
         onClose={handleImportClose}
+        meanings={(entry && entry.meanings) || null}
         entryId={(entry && entry.id) || null} />
       <AttachDialog
         open={attachOpen}

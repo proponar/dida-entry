@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import ExempSimpleTable from "./ExempSimpleTable";
+import MeaningSelector from './MeaningSelector';
+import VetneSwitch from './VetneSwitch';
+
+import chipContext from './chipContext';
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
 
 function getSteps() {
-  return ['Vožení dat', 'Kontrola'];
+  return ['Vožení dat', 'Vyplnění společných hodnot', 'Kontrola'];
 }
 
-const ImportStepper = ({entryId, onClose}) => {
+const ImportStepper = ({entryId, onClose, meanings}) => {
   const classes = useStyles();
+  const chip = useContext(chipContext);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [text, setText] = React.useState('');
+  const [vetne, setVetne] = React.useState(true);
+  const [meaning, setMeaning] = React.useState(-1);
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -43,11 +52,23 @@ const ImportStepper = ({entryId, onClose}) => {
       case 1:
         return (
           <React.Fragment>
+            <MeaningSelector
+              value={meaning}
+              meanings={meanings || []}
+              onChange={e => setMeaning(e.target.value)}
+            />
+            <VetneSwitch checked={vetne} onChange={e => setVetne(e.target.checked)} />
+            <Typography className={classes.instructions}>Vyberte význam</Typography>
+          </React.Fragment>
+        );
+      case 2:
+        return (
+          <React.Fragment>
             <ExempSimpleTable rows={rows} />
             <Typography className={classes.instructions}>Je vše v pořádku?</Typography>
           </React.Fragment>
         );
-      case 2:
+      case 3:
         return (
            <Typography className={classes.instructions}>Importujeme...</Typography>
         );
@@ -57,7 +78,7 @@ const ImportStepper = ({entryId, onClose}) => {
   }
 
   const callImport = dryRun => axios.post(
-    baseUrl + `entries/${entryId}/import?dry_run=${dryRun}`,
+    baseUrl + `entries/${entryId}/import?dry_run=${dryRun}&vetne=${vetne}&meaning=${meaning}`,
     text,
     {
       headers: {
@@ -67,29 +88,31 @@ const ImportStepper = ({entryId, onClose}) => {
     }
   );
 
+  const tryImport = () => {
+    callImport(true).then(response => {
+      chip.successMsg(response.data.message);
+      // display preview
+      setRows(response.data.data);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }, error => {
+      chip.errorMsg(error.response.data.message);
+    });
+  };
+
+  const runImport = () => {
+    callImport(false).then(response => {
+      // close the wizard
+      onClose();
+    }, error => {
+      chip.errorMsg(error.response.data.message);
+    });
+  };
+
   const handleNext = () => {
-    if (activeStep === 0) { // test import
-      // try import
-      callImport(true).then(response => {
-        console.log(response.data.message);
-        // display preview
-        setRows(response.data.data);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      }, error => {
-        console.log(error);
-        console.log(error.response);
-        alert(error.response.data.message);
-      });
-    } else if (activeStep === 1) {
-      // do import
-      callImport(false).then(response => {
-        // close the wizard
-        onClose();
-      }, error => {
-        console.log(error);
-        console.log(error.response);
-        alert(error.response.data.message);
-      });
+    if (activeStep === 1) {
+      tryImport();
+    } else if (activeStep === 2) {
+      runImport();
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
@@ -129,19 +152,17 @@ const ImportStepper = ({entryId, onClose}) => {
         ) : (
           <div>
             {getStepContent(activeStep)}
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+            <DialogActions>
+              <Button disabled={activeStep !== 0} onClick={onClose} color="secondary" variant="outlined">
+                Zrušit
+              </Button>
+              <Button disabled={activeStep === 0} onClick={handleBack} color="secondary" variant="outlined">
                 Zpět
               </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
+              <Button onClick={handleNext} color="primary" variant="outlined">
                 {activeStep === steps.length - 1 ? 'Importovat' : 'Dál'}
               </Button>
-            </div>
+            </DialogActions>
           </div>
         )}
       </div>

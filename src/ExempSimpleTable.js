@@ -21,6 +21,9 @@ const ExempSimpleTable = ({rows}) => {
     }
   }
 
+  const formatLokalizace = r => (r.lokalizace_cast_obce_text &&
+    `${r.lokalizace_obec_text} (${r.lokalizace_cast_obce_text})`) || r.lokalizace_obec_text;
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.listingTable} aria-label="Náhled importu exemplifikace">
@@ -40,7 +43,7 @@ const ExempSimpleTable = ({rows}) => {
                 {row.exemplifikace}
               </TableCell>
               <TableCell align="right">{row.kvalifikator}</TableCell>
-              <TableCell className={cellStyle(row.lokalizace_obec_text)} align="right">{row.lokalizace_obec_text}</TableCell>
+              <TableCell className={cellStyle(row.lokalizace_obec_text)} align="right">{formatLokalizace(row)}</TableCell>
               <TableCell align="right">{row.lokalizace_text}</TableCell>
               <TableCell className={cellStyle(row.zdroj_name)} align="right">{row.zdroj_name}</TableCell>
             </TableRow>

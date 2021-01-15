@@ -165,6 +165,7 @@ const ExempListing = () => {
   const handleExempSave = (exemp) => {
     const successF = () => {
       chip.successMsg('Exemplifikace uložena.');
+      setExempOpen(false);
       setReloadEx(Math.random());
     };
 
@@ -173,7 +174,6 @@ const ExempListing = () => {
     } else {
       storeNewExemp(exemp, successF);
     }
-    setExempOpen(false);
   };
 
   const handleExempDelete = exemp => {
@@ -227,6 +227,7 @@ const ExempListing = () => {
     const successF = () => {
       chip.successMsg('Heslo uloženo.');
       // Request reload of both Entry and Exemp.
+      setHesloOpen(false);
       setReloadEn(Math.random());
       setReloadEx(Math.random());
     };
@@ -236,8 +237,6 @@ const ExempListing = () => {
     } else {
       storeNewHeslo(entry, successF);
     }
-
-    setHesloOpen(false);
   }
 
   // Import wizard

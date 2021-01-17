@@ -12,17 +12,23 @@ import Paper from '@material-ui/core/Paper';
 import useStyles from "./useStyles";
 import { baseUrl } from './config';
 
-export default function SourcesTable() {
+const SourcesTable = ({onStart, onFinish}) => {
   const [rows, setRows] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
+    onStart && onStart();
+    console.log(1);
     axios.get(baseUrl + 'sources', {
       headers: {
         'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
       }
     }).then(response => {
-      setRows(response.data.data);
+      const sources = response.data.data;
+      console.log(2);
+      onFinish && onFinish();
+      setRows(sources);
+      localStorage.setItem('sources', JSON.stringify(sources));
     });
   }, []);
 
@@ -57,3 +63,5 @@ export default function SourcesTable() {
     </TableContainer>
   );
 }
+
+export default SourcesTable;

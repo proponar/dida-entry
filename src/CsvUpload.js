@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from 'axios';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -6,22 +6,18 @@ import Publish from '@material-ui/icons/Publish';
 
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
+import chipContext from './chipContext';
 
-const CsvUpload = props => {
+const CsvUpload = ({onStart, onFinish}) => {
   const classes = useStyles();
+  const chip = useContext(chipContext);
 
   const handleUpload = ({target}) => {
-    // console.log('handleUpload');
     const fileReader = new FileReader();
-    // const name = target.accept.includes('image') ? 'images' : 'videos';
-
-    // fileReader.readAsDataURL(target.files[0]);
     fileReader.readAsArrayBuffer(target.files[0]);
     fileReader.onload = (e) => {
-      //this.setState((prevState) => ({
-      //    [name]: [...prevState[name], e.target.result]
-      //}));
-      console.log(e.target.result);
+      onStart && onStart();
+
       axios.post(
         baseUrl + `sources/upload`,
         e.target.result, {
@@ -31,12 +27,12 @@ const CsvUpload = props => {
           }
         }
       ).then(response => {
-        console.log(response);
-        alert(response.data.message);
+        onFinish && onFinish();
+        chip.successMsg(response.data.message);
       }, error => {
+        onFinish && onFinish();
         console.log(error);
-        console.log(error.response);
-        alert(error.response.data.message);
+        chip.errorMsg(error.response.data.message);
       });
     };
   };

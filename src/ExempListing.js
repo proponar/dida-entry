@@ -71,7 +71,6 @@ const prepareExempData = (entry, exemp) => {
 
 const ExempListing = () => {
   const chip = useContext(chipContext);
-  // const history = useHistory();
 
   const [rows, setRows] = useState([]);
   const [entry, setEntry] = useState(null);

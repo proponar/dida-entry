@@ -7,7 +7,7 @@ import { saveAs } from 'file-saver';
 
 import { baseUrl } from './config';
 
-const CsvDownload = props => {
+const CsvDownload = () => {
   const handleDownload = () => {
     axios.get(baseUrl + 'sources/download', {
       headers: {

@@ -88,7 +88,7 @@ const Listing = () => {
   useEffect(() => {
     axios.get(baseUrl + 'entries', {
       headers: {
-        'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+        'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
       }
     }).then(response => {
       setRows(response.data.data);

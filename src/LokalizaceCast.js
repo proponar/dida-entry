@@ -30,7 +30,7 @@ const LokalizaceCast = props => {
       const response = await axios.get(
           baseUrl + `locations/${locationId}/parts`, {
           headers: {
-            Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+            Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`
           }
         }
       );

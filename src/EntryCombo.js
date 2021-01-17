@@ -16,7 +16,7 @@ const EntryCombo = ({reload, onChange, onReload}) => {
       const response = await axios.get(
           baseUrl + 'entries', {
           headers: {
-            Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+            Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`
           }
         }
       );

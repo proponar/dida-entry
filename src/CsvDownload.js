@@ -11,7 +11,7 @@ const CsvDownload = props => {
   const handleDownload = () => {
     axios.get(baseUrl + 'sources/download', {
       headers: {
-        'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+        'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
       }
     }).then(response => {
 			saveAs(new Blob([response.data], {type: "text/csv;charset=utf-8"}), 'zdroje.csv');

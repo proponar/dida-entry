@@ -44,7 +44,7 @@ export default function Entry() {
       const response = await axios.get(
           baseUrl + `entries/${id}`, {
           headers: {
-            Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+            Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`
           }
         }
       );
@@ -85,7 +85,7 @@ export default function Entry() {
       },
       {
         headers: {
-          'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+          'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
         },
       }
     ).then(response => {
@@ -111,7 +111,7 @@ export default function Entry() {
       },
       {
         headers: {
-          'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+          'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
         },
       }
     ).then(response => {

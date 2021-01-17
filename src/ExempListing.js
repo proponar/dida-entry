@@ -38,7 +38,7 @@ import { baseUrl } from './config';
 
 const prepareEntryData = (entry, edit) => {
   return (edit && entry) || {
-    author_name: window.localStorage.getItem('user-name'),
+    author_name: window.sessionStorage.getItem('user-name'),
     vetne: true,
     rod: 'm',
     druh: 'subst',
@@ -107,7 +107,7 @@ const ExempListing = () => {
           e.target.result, {
             headers: {
               "X-File-Name": file.name,
-              Authorization: `Token ${window.localStorage.getItem('auth-token')}`,
+              Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
               "Content-Type": "application/octet-stream; charset=binary",
             }
           }
@@ -140,8 +140,8 @@ const ExempListing = () => {
   const storeNewExemp = (exemp, successFunc) => {
     axios.post(`${baseUrl}entries/${exemp.entryId}/exemps`,
       {...exemp},
-      //{headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
-      {headers: {Authorization: `Token ${window.localStorage.getItem('auth-token')}`}}
+      //{headers: {'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')}}
+      {headers: {Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`}}
     ).then(response => {
       successFunc();
     }, error => {
@@ -153,7 +153,7 @@ const ExempListing = () => {
   const storeExistingExemp = (exemp, successFunc) => {
     axios.put(`${baseUrl}entries/${exemp.entryId}/exemps/${exemp.id}`,
       {...exemp},
-      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+      {headers: {'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')}}
     ).then(response => {
       successFunc();
     }, error => {
@@ -180,7 +180,7 @@ const ExempListing = () => {
     if (!exemp.id) return;
 
     axios.delete(`${baseUrl}entries/${exemp.entryId}/exemps/${exemp.id}`,
-      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+      {headers: {'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')}}
     ).then(response => {
       setReloadEx(Math.random());
       setExempOpen(false);
@@ -202,7 +202,7 @@ const ExempListing = () => {
   const storeNewHeslo = (entry, successFunc) => {
     axios.post(`${baseUrl}entries`,
       {...entry},
-      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+      {headers: {'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')}}
     ).then(response => {
       successFunc();
     }, error => {
@@ -214,7 +214,7 @@ const ExempListing = () => {
   const storeExistingHeslo = (entry, successFunc) => {
     axios.put(`${baseUrl}entries/${entry.id}`, // FIXME: kde je ID?
       {...entry},
-      {headers: {'Authorization': 'Token ' + window.localStorage.getItem('auth-token')}}
+      {headers: {'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')}}
     ).then(response => {
       successFunc();
     }, error => {
@@ -249,7 +249,7 @@ const ExempListing = () => {
     if (entry) {
       axios.get(baseUrl + `entries/${entry.id}/exemps`, {
         headers: {
-          'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+          'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
         }
       }).then(response => setRows(response.data.data));
     }

@@ -82,7 +82,7 @@ const ImportStepper = ({entryId, onClose, meanings}) => {
     text,
     {
       headers: {
-        Authorization: `Token ${window.localStorage.getItem('auth-token')}`,
+        Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
         "Content-Type": "application/octet-stream; charset=binary",
       }
     }

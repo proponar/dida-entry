@@ -45,7 +45,7 @@ const ZdrojInput = props => {
         const response = await axios.get(
             baseUrl + 'sources', {
             headers: {
-              Authorization: `Token ${window.localStorage.getItem('auth-token')}`
+              Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`
             }
           }
         );

@@ -33,8 +33,9 @@ const ApplicationBar = ({title}) => {
   };
 
   const logout = () => {
-		window.localStorage.removeItem('auth-token');
-		window.localStorage.removeItem('user-name');
+		window.sessionStorage.removeItem('auth-token');
+		window.sessionStorage.removeItem('user-name');
+		window.localStorage.removeItem('auth');
     history.push('/');
   };
 

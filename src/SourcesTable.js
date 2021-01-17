@@ -19,7 +19,7 @@ export default function SourcesTable() {
   useEffect(() => {
     axios.get(baseUrl + 'sources', {
       headers: {
-        'Authorization': 'Token ' + window.localStorage.getItem('auth-token')
+        'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
       }
     }).then(response => {
       setRows(response.data.data);

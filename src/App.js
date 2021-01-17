@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  //Link
 } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
@@ -26,7 +25,6 @@ import SourcesTable from './SourcesTable.js';
 import chipContext from './chipContext';
 
 const App = () => {
-
   // snacks
   const [snack, setSnack] = React.useState({
     open: false,
@@ -81,6 +79,7 @@ const App = () => {
             </Snackbar>
           </React.Fragment>
         </Route>
+
         <Route path="/sources">
           <React.Fragment>
             <ApplicationBar title="Zdroje" />

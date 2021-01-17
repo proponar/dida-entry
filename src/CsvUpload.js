@@ -26,7 +26,7 @@ const CsvUpload = props => {
         baseUrl + `sources/upload`,
         e.target.result, {
           headers: {
-            Authorization: `Token ${window.localStorage.getItem('auth-token')}`,
+            Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
             "Content-Type": "application/octet-stream; charset=binary",
           }
         }

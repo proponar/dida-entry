@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import base64js from 'base64-js'
 import axios from 'axios';
@@ -58,7 +58,35 @@ export default function SignIn() {
 
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
+	const [remember, setRemember] = useState(false);
 	const history = useHistory();
+
+	const lStore = window.localStorage;
+	const sStore = window.sessionStorage;
+
+  const getAuth = () => {
+    try {
+      return JSON.parse(window.localStorage.getItem('auth'));
+    } catch (_) {
+      return null;
+    }
+  };
+
+  // check for stored credentials
+  useEffect(() => {
+    const navigate = async () => {
+      const auth = getAuth();
+
+      if (auth && auth['auth-token']) { // TODO: check auth['date']
+	      const sStore = window.sessionStorage;
+	      sStore.setItem('auth-token', auth['auth-token']);
+	      sStore.setItem('user-name', auth['user-name']);
+        history.push('/exemps');
+      }
+    }
+
+    navigate();
+  }, [history]);
 
 	const handleLoginSubmit = (event) => {
 		axios.get(baseUrl + 'auth?requester_type=ui',
@@ -69,8 +97,17 @@ export default function SignIn() {
 				}
 			}
 		).then(response => {
-			window.localStorage.setItem('auth-token', response.data.auth_token);
-			window.localStorage.setItem('user-name', response.data.name);
+      if (remember) {
+        lStore.setItem('auth', JSON.stringify({
+			    'auth-token': response.data.auth_token,
+			    'user-name': response.data.name,
+          date: Date.now(),
+        }));
+      } else {
+        lStore.removeItem('auth');
+      }
+			sStore.setItem('auth-token', response.data.auth_token);
+			sStore.setItem('user-name', response.data.name);
 			history.push('/exemps');
 		});
 
@@ -115,7 +152,13 @@ export default function SignIn() {
             autoComplete="current-password"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                onClick={e => setRemember(e.target.checked)}
+                checked={remember}
+                name="remember" value="remember" color="primary"
+              />
+            }
             label="Zapamatovat přihlášení"
           />
           <Button

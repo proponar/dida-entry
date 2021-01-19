@@ -105,7 +105,7 @@ const ExempListing = () => {
           baseUrl + `entries/${entryId}/exemps/${exempId}/attach`,
           e.target.result, {
             headers: {
-              "X-File-Name": file.name,
+              "X-File-Name": encodeURIComponent(file.name),
               Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
               "Content-Type": "application/octet-stream; charset=binary",
             }

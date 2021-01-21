@@ -25,7 +25,8 @@
     "react-number-format": "^4.4.1",
     "react-router-dom": "latest",
     "react-scripts": "latest",
-    "react-toastify": "^6.0.8"
+    "react-toastify": "^6.0.8",
+    "string.prototype.replaceall": "^1.0.4"
   },
   "browserslist": {
     "production": [

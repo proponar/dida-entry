@@ -65,3 +65,7 @@ REACT_APP_ENV=production npm run build
  * Take a look: https://github.com/mbrn/material-table
  * Mapy.cz integration: https://github.com/flsy/react-mapycz
  * Google Maps integration: https://www.npmjs.com/package/google-maps-react
+
+---
+
+[![Node test workflow](https://github.com/martinpovolny/dida-entry/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/martinpovolny/dida-entry/actions?query=workflow%3A%22Node.js+CI%22)

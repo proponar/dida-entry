@@ -17,7 +17,7 @@ import { baseUrl } from './config';
 import useStyles from "./useStyles";
 
 function getSteps() {
-  return ['Vožení dat', 'Vyplnění společných hodnot', 'Kontrola'];
+  return ['Vložení dat', 'Vyplnění společných hodnot', 'Kontrola'];
 }
 
 const ImportStepper = ({entryId, onClose, meanings}) => {
@@ -36,6 +36,7 @@ const ImportStepper = ({entryId, onClose, meanings}) => {
       case 0:
         return (
           <React.Fragment>
+            <Typography className={classes.instructions}>Vložte exemplifikace...</Typography>
             <div className={classes.autosizeWrap}>
               <TextareaAutosize
                 style={{width: '100%'}}
@@ -46,26 +47,25 @@ const ImportStepper = ({entryId, onClose, meanings}) => {
                 onChange={e => setText(e.target.value)}
               />
             </div>
-            <Typography className={classes.instructions}>Vložte exemplifikace...</Typography>
           </React.Fragment>
         );
       case 1:
         return (
           <React.Fragment>
+            <Typography className={classes.instructions}>Vyberte význam</Typography>
             <MeaningSelector
               value={meaning}
               meanings={meanings || []}
               onChange={e => setMeaning(e.target.value)}
             />
             <VetneSwitch checked={vetne} onChange={e => setVetne(e.target.checked)} />
-            <Typography className={classes.instructions}>Vyberte význam</Typography>
           </React.Fragment>
         );
       case 2:
         return (
           <React.Fragment>
-            <ExempSimpleTable rows={rows} />
             <Typography className={classes.instructions}>Je vše v pořádku?</Typography>
+            <ExempSimpleTable rows={rows} />
           </React.Fragment>
         );
       case 3:
@@ -143,7 +143,7 @@ const ImportStepper = ({entryId, onClose, meanings}) => {
         {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
+              Všechny kroky dokončeny.
             </Typography>
             <Button onClick={handleReset} className={classes.button}>
               Reset

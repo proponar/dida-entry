@@ -54,9 +54,9 @@ const KvalifikatorInput = props => {
   const [checkState, setCheckState] = useState(textToChecks(value));
 
   // need this because value changes from outside (parent)
-  // https://medium.com/@digruby/do-not-use-props-as-default-value-of-react-usestate-directly-818ee192f454
   React.useEffect(() => {
     setInputValue(value);
+    setCheckState(textToChecks(value));
   }, [value]);
 
   const handleKvalifikatorOpen = () => {
@@ -73,10 +73,10 @@ const KvalifikatorInput = props => {
   const modalBody = (
     <div style={modalStyle} className={classes.modalPaper}>
       <h2 id="modal-title">Výběr kvalifikátorů</h2>
-      <CheckboxForm checks={checks} checkState={checkState} setCheckState={setCheckState} />
       <p id="modal-description">
         Vyberte relevantní kvalifikátory.
       </p>
+      <CheckboxForm checks={checks} checkState={checkState} setCheckState={setCheckState} />
     </div>
   );
 

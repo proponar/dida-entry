@@ -14,7 +14,7 @@ const DialogMeaning = ({meaning, open, onSave, onClose, onRemove}) => {
   const [value, setValue] = useState(meaning || {});
 
   // Ally changes when value changes.
-  useEffect(() => { setValue(meaning || {}); }, [meaning]); 
+  useEffect(() => { setValue(meaning || {}); }, [meaning]);
 
   const handleValuesChange = e => {
     setValue({

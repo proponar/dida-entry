@@ -27,8 +27,8 @@ const DialogMeaning = ({meaning, open, onSave, onClose, onRemove}) => {
     <Dialog
       fullWidth={false}
       maxWidth='xl'
-      open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-      <DialogTitle id="Editace významu">Editace významu</DialogTitle>
+      open={open} onClose={onClose} aria-labelledby="editm-dialog-title">
+      <DialogTitle id="editm-dialog-title">Editace významu</DialogTitle>
       <DialogContent>
         <Grid container>
           <Grid item xs={4}>

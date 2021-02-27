@@ -42,6 +42,7 @@ const SourcesTable = ({onStart, onFinish}) => {
             <TableCell component="th" align="right">Název 2</TableCell>
             <TableCell component="th" align="right">Typ</TableCell>
             <TableCell component="th" align="right">Rok</TableCell>
+            <TableCell component="th" align="right">Rok sběru</TableCell>
             <TableCell component="th" align="right">Lokalizace</TableCell>
             <TableCell component="th" align="right">Lok. textová</TableCell>
           </TableRow>
@@ -54,6 +55,7 @@ const SourcesTable = ({onStart, onFinish}) => {
               <TableCell align="right">{row.nazev2}</TableCell>
               <TableCell align="right">{row.typ}</TableCell>
               <TableCell align="right">{row.rok}</TableCell>
+              <TableCell align="right">{row.rok_sberu}</TableCell>
               <TableCell align="right">{row.lokalizace}</TableCell>
               <TableCell align="right">{row.lokalizace_text}</TableCell>
             </TableRow>

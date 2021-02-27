@@ -26,6 +26,7 @@ import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
 import DialogEntry from "./DialogEntry";
 import DialogImport from "./DialogImport";
+import DialogMap from "./DialogMap";
 import AttachDialog from "./AttachDialog";
 import TablePaginationActions from "./TablePaginationActions";
 
@@ -78,6 +79,9 @@ const ExempListing = () => {
   const [reloadEn, setReloadEn] = useState(null);
   const [selectedRow, setSelectedRow] = useState();
   const [editEntry, setEditEntry] = useState(false);
+
+  // modal Map dialog
+  const [mapOpen, setMapOpen] = useState(false);
 
   // modal Exemp dialog
   const [exempOpen, setExempOpen] = useState(false);
@@ -267,6 +271,7 @@ const ExempListing = () => {
 
   // Popup menu
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const openMap = () => (setMapOpen(true), setMenuAnchorEl(null));
 
   // When table cell is clicked, open pop-up menu.
   const handleCellClick = (e, row) => (setSelectedRow(row),
@@ -309,6 +314,11 @@ const ExempListing = () => {
           <Tooltip title="Přidat heslo"><AddCircle /></Tooltip>
         </IconButton>
       </Toolbar>
+      <DialogMap
+        open={mapOpen}
+        onClose={_e => setMapOpen(false)}
+        entryId={entry && entry.id}
+        exempId={selectedRow && selectedRow.id} />
       <DialogExemp
         open={exempOpen}
         onSave={handleExempSave}
@@ -414,7 +424,7 @@ const ExempListing = () => {
       >
         <MenuItem onClick={openExemp}>Editovat</MenuItem>
         <MenuItem onClick={openAttach}>Připojené soubory</MenuItem>
-        <MenuItem onClick={() => setMenuAnchorEl(null)}>Mapa</MenuItem>
+        <MenuItem onClick={openMap}>Mapa</MenuItem>
       </Menu>
     </Paper>
   );

@@ -37,6 +37,7 @@ const SourcesTable = ({onStart, onFinish}) => {
       <Table className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
         <TableHead>
           <TableRow>
+            <TableCell component="th">Číslo</TableCell>
             <TableCell component="th">Autor</TableCell>
             <TableCell component="th" align="right">Název</TableCell>
             <TableCell component="th" align="right">Název 2</TableCell>
@@ -50,6 +51,7 @@ const SourcesTable = ({onStart, onFinish}) => {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
+              <TableCell>{row.cislo}</TableCell>
               <TableCell>{row.autor}</TableCell>
               <TableCell align="right">{row.name}</TableCell>
               <TableCell align="right">{row.nazev2}</TableCell>

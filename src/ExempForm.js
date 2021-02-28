@@ -173,16 +173,18 @@ const ExempForm = ({data, dataKey, setData}) => {
   };
 
   const handleZdrojChange = zdroj => {
+    console.log('setting from: ', zdroj);
+
     const newValues = {
       ...values,
-      rok: zdroj.rok || values.rok, // FIXME: rok_sberu?
+      rok: zdroj.rok_sberu || zdroj.rok || values.rok,
       zdroj_id: zdroj.cislo,
 
-      // FIXME: set location
+      // set location
       lokalizace_obec_id: zdroj.lokalizace_obec,
-      lokalizace_obec_text: zdroj.lokalizace,
-      lokalizace_cast_obce_id: null,
-      lokalizace_cast_obce_text: '',
+      lokalizace_obec_text: zdroj.lokalizace_obec_text,
+      lokalizace_cast_obce_id: zdroj.lokalizace_cast_obce,
+      lokalizace_cast_obce_text: zdroj.lokalizace_cast_obce_text,
     };
     setValues(newValues);
     setData(dataKey, newValues);

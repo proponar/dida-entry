@@ -38,13 +38,13 @@ const urceni2string = u => {
   }
 }
 
-const filterTvar = t => (t.replace(/,.*/,''));
+const filterTvar = t => (t.replace(/,.*/u,''));
 
 const string2urceni = t => {
   // 'obecním, f. 7 sg.'
   //const mtr = t.match(/^([\p{L}\s]+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
   const mtr = t.match(
-    new RegExp(`^([\\p{L}\\s]+),\\s*(${rodRE})\\s*(\\d)\\s+(pl|sg)\\.$`, 'u'))
+    new RegExp(`^([\\p{L}\\p{M}\\s]+),\\s*(${rodRE})\\s*(\\d)\\s+(pl|sg)\\.$`, 'u'))
   if (mtr) {
     return {
       tvar: filterTvar(mtr[1]),
@@ -54,7 +54,7 @@ const string2urceni = t => {
   }
 
   // 'huse, 1 pl.'
-  const mt = t.match(/^([\p{L}\s]+),\s*(\d)\s+(pl|sg)\.$/u);
+  const mt = t.match(/^([\p{L}\p{M}\s]+),\s*(\d)\s+(pl|sg)\.$/u);
   if (mt) {
     return {
       tvar: filterTvar(mt[1]),
@@ -72,7 +72,7 @@ const string2urceni = t => {
 
 const parseExemplifikaceValue = value => {
   // positive look-behind, then the group, then positive look-ahead
-  const matched = (value || '').match(/(?<=\{)[^{}]+(?=\})/g) || [];
+  const matched = (value || '').match(/(?<=\{)[^{}]+(?=\})/gu) || [];
   return matched.map((t, i) => addIndex(string2urceni(t), i));
 };
 
@@ -98,7 +98,7 @@ const ExempForm = ({data, dataKey, setData}) => {
   useEffect(() => {
     setValues(data);
     // cannot call parseExemplifikaceValue (would get a React warning)
-    // cannot add exemplifikaceNotNull to dependencies (updationg from form to
+    // cannot add exemplifikaceNotNull to dependencies (updating from form to
     // the text field would stop working)
     setTvary(parseExemplifikaceValue((data && data.exemplifikace) || ''));
   }, [data]);
@@ -106,10 +106,10 @@ const ExempForm = ({data, dataKey, setData}) => {
   // project changes from TvaryForm back to the text of Exemplifikace
   const applyChangesToText = (index, fieldName, fieldValue) => {
     // split keeping the separators as separate items
-    const parts = values.exemplifikace.split(/(\{[^{}]+\})/g);
+    const parts = values.exemplifikace.split(/(\{[^{}]+\})/gu);
     const changeIndex = 1 + index*2;
     const u = string2urceni(
-      parts[changeIndex].replace(/^\{(.*)\}$/, '$1') // remove { }
+      parts[changeIndex].replace(/^\{(.*)\}$/u, '$1').normalize() // remove { }
     );
 
     // changes to 'pad' and 'rod' are applied
@@ -119,7 +119,7 @@ const ExempForm = ({data, dataKey, setData}) => {
 
     const newValues = {
       ...values,
-      exemplifikace: parts.join(''),
+      exemplifikace: parts.join('').normalize(),
     };
     setValues(newValues);
     setData(dataKey, newValues);

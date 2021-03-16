@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
-import TextField from '@material-ui/core/TextField';
 
 import LokalizaceObec from "./LokalizaceObec";
 import LokalizaceCast from "./LokalizaceCast";
+import TextLoc from "./TextLoc";
 
 const LokalizaceInput = props => {
   const {
     valueObec,
     valueCast,
     valueText,
-    onChange,
+    onTextChange,
     onObecChange,
     onCastChange
   } = props;
@@ -46,7 +46,7 @@ const LokalizaceInput = props => {
       </Grid>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <TextField name="lokalizace_text" variant="outlined" label="Lokalizace text" value={valueText || ''} onChange={onChange} />
+          <TextLoc value={valueText} onChange={onTextChange} />
         </FormControl>
       </Grid>
     </Grid>

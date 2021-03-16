@@ -127,25 +127,22 @@ const ExempForm = ({data, dataKey, setData}) => {
 
   const handleTvarValuesChange = (ev, index) => {
     const {name, value} = ev.target;
+
+    const newTvary =
+      (tvary.length > index ? tvary : [...tvary, {}]).
+        map((t, i) => index === i ? {...t, [name]: value} : t);
+
+    setTvary(newTvary);
+
     if (exempFocused) { // do not apply any changes to exemp if exemp is focused
       return;
     }
-    setTvary(tvary.map((t, i) => index === i ? {...t, [name]: value} : t));
-    applyChangesToText(index, name, value);
+    applyChangesToText(index, name, value.normalize());
   };
-
-  const handleCastValueChange = ev => {
-    const newValues = {
-      lokalizace_cast_obce_id: ev.lokalizace_cast_obce_id,
-      lokalizace_cast_obce_text: ev.lokalizace_cast_obce_text
-    };
-    setValues(newValues);
-    setData(dataKey, newValues);
-    return;
-  }
 
   const handleObecValueChange = ev => {
     const newValues = {
+      ...values,
       lokalizace_obec_id: ev.lokalizace_obec_id,
       lokalizace_obec_text: ev.lokalizace_obec_text,
       lokalizace_cast_obce_id: null,
@@ -155,6 +152,28 @@ const ExempForm = ({data, dataKey, setData}) => {
     setData(dataKey, newValues);
     return;
   };
+
+  const handleCastValueChange = ev => {
+    const newValues = {
+      ...values,
+      lokalizace_cast_obce_id: ev.lokalizace_cast_obce_id,
+      lokalizace_cast_obce_text: ev.lokalizace_cast_obce_text
+    };
+    setValues(newValues);
+    setData(dataKey, newValues);
+    return;
+  }
+
+  const handleLocTextChange = loc => {
+    const newValues = {
+      ...values,
+      lokalizace_text: loc.identifikator,
+      lokalizace_text_id: loc.id,
+    };
+    setValues(newValues);
+    setData(dataKey, newValues);
+    return;
+  }
 
   const handleValuesChange = ev => {
     const {name, value} = ev.target;
@@ -209,6 +228,8 @@ const ExempForm = ({data, dataKey, setData}) => {
     kod_cob: values.lokalizace_cast_obce_id
   }) || undefined;
 
+  const valueText = values && values.lokalizace_text_id;
+
   const parseTvarMap = tm => {
     try {
       return JSON.parse(values.tvar_map);
@@ -254,10 +275,10 @@ const ExempForm = ({data, dataKey, setData}) => {
           <LokalizaceInput
             valueObec={valueObec}
             valueCast={valueCast}
-            valueText={values.lokalizace_text}
+            valueText={valueText}
             onCastChange={handleCastValueChange}
             onObecChange={handleObecValueChange}
-            onChange={handleValuesChange}
+            onTextChange={handleLocTextChange}
           />
           <Grid item xs={12}>
             <MeaningSelector

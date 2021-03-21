@@ -192,8 +192,6 @@ const ExempForm = ({data, dataKey, setData}) => {
   };
 
   const handleZdrojChange = zdroj => {
-    console.log('setting from: ', zdroj);
-
     const newValues = {
       ...values,
       rok: zdroj.rok_sberu || zdroj.rok || values.rok,
@@ -204,7 +202,10 @@ const ExempForm = ({data, dataKey, setData}) => {
       lokalizace_obec_text: zdroj.lokalizace_obec_text,
       lokalizace_cast_obce_id: zdroj.lokalizace_cast_obce,
       lokalizace_cast_obce_text: zdroj.lokalizace_cast_obce_text,
+      lokalizace_text_id: zdroj.location_text_id, // cislo lokalizace
+      lokalizace_text: zdroj.lokalizace_text,
     };
+
     setValues(newValues);
     setData(dataKey, newValues);
   };
@@ -228,6 +229,7 @@ const ExempForm = ({data, dataKey, setData}) => {
     kod_cob: values.lokalizace_cast_obce_id
   }) || undefined;
 
+  // pozor: jedna se o CISLO textove lokalizace
   const valueText = values && values.lokalizace_text_id;
 
   const parseTvarMap = tm => {

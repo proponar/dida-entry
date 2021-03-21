@@ -12,7 +12,7 @@ const TextLoc = ({options, value, onChange}) => {
       label="Lokalizace text"
       value={value}
       options={options || []}
-      valueIsSelected={(option, value) => option.id === value.id}
+      valueIsSelected={(option, value) => option.cislo === value.cislo}
       value2label={loc2label}
       onChange={onChange}
       cacheKey="location_texts"

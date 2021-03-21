@@ -57,6 +57,8 @@ const ApplicationBar = ({title}) => {
                 <Menu {...bindMenu(popupState)}>
                   <MenuItem onClick={() => {goTo(popupState, '/exemps/')}}>Exemplifikace</MenuItem>
                   <MenuItem onClick={() => {goTo(popupState, '/sources/')}}>Zdroje</MenuItem>
+                  <MenuItem onClick={() => {goTo(popupState, '/text-loc/')}}>Textové lokalizace</MenuItem>
+                  <MenuItem onClick={() => {goTo(popupState, '/search/')}}>Vyhledávání</MenuItem>
                 </Menu>
               </React.Fragment>
             )}

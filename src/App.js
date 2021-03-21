@@ -15,6 +15,8 @@ import ExempListing from './ExempListing.js';
 import MapView from './MapView.js';
 import SignIn from './SignIn.js';
 import SourcesListing from './SourcesListing.js';
+import TextLocListing from './TextLocListing.js';
+import Searcher from './Searcher.js';
 import chipContext from './chipContext';
 
 const App = () => {
@@ -64,6 +66,26 @@ const App = () => {
             <ApplicationBar title="Zdroje" />
             <chipContext.Provider value={{successMsg, errorMsg}}>
               <SourcesListing />
+            </chipContext.Provider>
+            { snackbar() }
+          </React.Fragment>
+        </Route>
+
+        <Route path="/text-loc">
+          <React.Fragment>
+            <ApplicationBar title="Textové lokalizace" />
+            <chipContext.Provider value={{successMsg, errorMsg}}>
+              <TextLocListing />
+            </chipContext.Provider>
+            { snackbar() }
+          </React.Fragment>
+        </Route>
+
+        <Route path="/search">
+          <React.Fragment>
+            <ApplicationBar title="Vyhledávání" />
+            <chipContext.Provider value={{successMsg, errorMsg}}>
+              <Searcher />
             </chipContext.Provider>
             { snackbar() }
           </React.Fragment>

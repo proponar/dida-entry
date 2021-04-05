@@ -24,7 +24,7 @@ const TvarForm = ({index, tvar, rod, pad, tvarList, onChange}) => {
             id={inputId}
             name='tvar'
             value={tvar}
-            onChange={ev => onChange(ev, index)} />
+          />
         </FormControl>
       </Grid>
       <Grid item xs={3}>

@@ -129,8 +129,8 @@ const ExempForm = ({data, dataKey, setData}) => {
     const {name, value} = ev.target;
 
     const newTvary =
-      (tvary.length > index ? tvary : [...tvary, {}]).
-        map((t, i) => index === i ? {...t, [name]: value} : t);
+      (tvary.length > index ? tvary : [...tvary, {}])
+        .map((t, i) => index === i ? {...t, [name]: value} : t);
 
     setTvary(newTvary);
 
@@ -167,8 +167,8 @@ const ExempForm = ({data, dataKey, setData}) => {
   const handleLocTextChange = loc => {
     const newValues = {
       ...values,
-      lokalizace_text: loc.identifikator,
-      lokalizace_text_id: loc.id,
+      lokalizace_text: loc && loc.identifikator,
+      lokalizace_text_id: loc && loc.id,
     };
     setValues(newValues);
     setData(dataKey, newValues);

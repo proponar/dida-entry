@@ -92,7 +92,10 @@ const App = () => {
         </Route>
 
         <Route path="/">
-          <SignIn />
+          <chipContext.Provider value={{successMsg, errorMsg}}>
+            <SignIn />
+          </chipContext.Provider>
+          { snackbar() }
         </Route>
       </Switch>
     </Router>

@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 
 const CachingAutocomplete = props  => {
   const {
+    validNullValue, // is null a valid value? will it propagete to onChange?
+    textMargin,
     options: optionsIn,
     value: valueIdIn,
     onChange,
@@ -20,7 +22,15 @@ const CachingAutocomplete = props  => {
   const [options, setOptions] = useState(optionsIn);
   const [selection, setSelection] = useState(null);
 
-  const handleChange = (ev, option) => {
+  const handleChange = (ev, option, reason) => {
+    if (reason === 'clear') {
+      if (validNullValue) {
+        setSelection(null);
+        onChange(option);
+      }
+      return
+    }
+
     if (!option) {
       return;
     }
@@ -72,7 +82,7 @@ const CachingAutocomplete = props  => {
       options={options}
       getOptionSelected={valueIsSelected}
       getOptionLabel={value2label}
-      renderInput={(params) => <TextField margin="normal" {...params} label={label} variant="outlined" />}
+      renderInput={(params) => <TextField margin={textMargin} {...params} label={label} variant="outlined" />}
       onChange={handleChange}
     />
   );

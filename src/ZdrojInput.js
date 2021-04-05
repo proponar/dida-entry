@@ -12,6 +12,7 @@ const ZdrojInput = ({options, value, onChange}) => {
 
   return (
     <CachingAutocomplete 
+      textMargin="normal"
       name="zdroj"
       label="Zdroj"
       value={value}

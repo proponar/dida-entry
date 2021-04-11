@@ -51,7 +51,9 @@ const PadSelect = ({pad, tvarList, onChange}) => {
   const padFiltered = validPadValue(pad, optionsFiltered);
 
   useEffect(() => {
+    console.log('effect');
     if (padFiltered !== pad) {
+      console.log('old pad: ', pad, " , new pad: ", padFiltered);
       // when chaning the value of Pad, fire the onChage
       onChange({target: {name: 'pad', value: padFiltered}});
     }

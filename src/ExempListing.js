@@ -21,6 +21,8 @@ import Publish from '@material-ui/icons/Publish';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
@@ -29,9 +31,6 @@ import DialogImport from "./DialogImport";
 import DialogMap from "./DialogMap";
 import AttachDialog from "./AttachDialog";
 import TablePaginationActions from "./TablePaginationActions";
-
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from "./useStyles";
 import chipContext from './chipContext';

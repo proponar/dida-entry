@@ -24,7 +24,6 @@ const filter2chips = filter => {
       ...chips,
       { key: 'vetne', label: `větné: ${filter.vetne ? 'ano' : 'ne'}` }
     ]
-    console.log(chips);
   }
 
   if (filter.rok !== undefined) {
@@ -56,9 +55,6 @@ const FilterChips = ({filter, onDelete}) => {
     onDelete(chip.key);
     // setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
-
-  console.log(filter);
-  console.log(chipData);
 
   return (
     <Toolbar>

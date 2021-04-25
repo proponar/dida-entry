@@ -7,7 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import IconButton from '@material-ui/core/IconButton';
 import InputLabel from "@material-ui/core/InputLabel";
 import Paper from '@material-ui/core/Paper';
-import Publish from '@material-ui/icons/Publish';
+import GetApp from '@material-ui/icons/GetApp';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,6 +21,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from "@material-ui/core/Grid";
 import Switch from "@material-ui/core/Switch";
+import { saveAs } from 'file-saver';
 
 import EntryCombo from "./EntryCombo";
 import FilterChips from "./FilterChips";
@@ -53,7 +54,6 @@ const Searcher = () => {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState({});
-  console.log('filter: ', filter);
 
   // Paginator
   const [page, setPage] = useState(0);
@@ -110,6 +110,18 @@ const Searcher = () => {
         }
     }).then(response => setRows(response.data.data));
   }, [filter]);
+
+  const handleDownload = () => {
+    axios.post(
+      baseUrl + `search?d=1`,
+      filter, {
+        headers: {
+          Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
+        }
+    }).then(response => {
+			saveAs(new Blob([response.data], {type: "text/csv;charset=utf-8"}), 'exemps-filtered.csv');
+    });
+  }
 
   const deleteChip = chip => {
     var newFilter = { ...filter };
@@ -183,14 +195,9 @@ const Searcher = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>
-                <IconButton color="secondary" onClick={() => {}} aria-label="Přidat exemplifikaci" >
-                  <Tooltip title="Přidat exemplifikaci">
-                    <AddCircleOutline />
-                  </Tooltip>
-                </IconButton>
-                <IconButton color="secondary" onClick={() => {}} aria-label="Importovat exemplifikace" >
-                  <Tooltip title="Importovat exemplifikace">
-                    <Publish />
+                <IconButton color="secondary" onClick={handleDownload} aria-label="Importovat exemplifikace" >
+                  <Tooltip title="Stáhnout výpis">
+                    <GetApp />
                   </Tooltip>
                 </IconButton>
               </TableCell>

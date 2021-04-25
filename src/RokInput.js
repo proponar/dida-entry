@@ -3,55 +3,37 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import NumberFormat from 'react-number-format';
 
-function NumberFormatCustom(props) {
-  const { inputRef, onChange, ...other } = props;
+const NumberFormatCustom = ({name, inputRef, onChange, ...other}) => (
+  <NumberFormat
+    {...other}
+    getInputRef={inputRef}
+    onValueChange={(values) => {
+      onChange({
+        target: {
+          name: name,
+          value: values.value,
+        },
+      });
+    }}
+    thousandSeparator
+    isNumericString
+		format="####"
+  />
+);
 
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      // prefix="$"
-			format="####"
-    />
-  );
-}
-
-// NumberFormatCustom.propTypes = {
-//   inputRef: PropTypes.func.isRequired,
-//   name: PropTypes.string.isRequired,
-//   onChange: PropTypes.func.isRequired,
-// };
-
-const RokInput = props => {
-  const {
-    value,
-    onChange
-  } = props;
-
-  return (
-    <TextField
-      variant="outlined"
-      margin="normal"
-      label="Rok"
-      value={value}
-      onChange={onChange}
-      name="rok"
-      id="rok-input"
-      InputProps={{
-        inputComponent: NumberFormatCustom,
-      }}
-    />
-  )
-};
+const RokInput = ({value, onChange, dense}) => (
+  <TextField
+    variant={(dense && "filled") || "outlined"}
+    margin={(dense && "dense") || "normal"}
+    label="Rok"
+    value={value}
+    onChange={onChange}
+    name="rok"
+    id="rok-input"
+    InputProps={{
+      inputComponent: NumberFormatCustom,
+    }}
+  />
+);
 
 export default RokInput;

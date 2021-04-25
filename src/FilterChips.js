@@ -1,50 +1,77 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
+import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    listStyle: 'none',
-    padding: theme.spacing(0.5),
-    margin: 0,
-  },
   chip: {
     margin: theme.spacing(0.5),
   },
 }));
 
-const FilterChips = () => {
-  const classes = useStyles();
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'React' },
-    { key: 4, label: 'Vue.js' },
-  ]);
+const filter2chips = filter => {
+  var chips = []
+  if (filter.entry !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'entry', label: `heslo: ${filter.entry.heslo}` }
+    ]
+  }
 
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  if (filter.vetne !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'vetne', label: `větné: ${filter.vetne ? 'ano' : 'ne'}` }
+    ]
+    console.log(chips);
+  }
+
+  if (filter.rok !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'rok', label: `rok: ${filter.rok}` }
+    ]
+  }
+
+  if (filter.exemp !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'exemp', label: `exemplifikace: ${filter.exemp}` }
+    ]
+  }
+
+  return chips
+}
+
+const FilterChips = ({filter, onDelete}) => {
+  const classes = useStyles();
+  const [chipData, setChipData] = React.useState([]);
+
+  useEffect(() => {
+    setChipData(filter2chips(filter));
+  }, [filter]);
+
+  const handleDelete = (chip) => () => {
+    onDelete(chip.key);
+    // setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
+  console.log(filter);
+  console.log(chipData);
+
   return (
-    <Paper component="ul" className={classes.root}>
+    <Toolbar>
       {chipData.map((data) => {
         return (
-          <li key={data.key}>
-            <Chip
-              label={data.label}
-              onDelete={handleDelete(data)}
-              className={classes.chip}
-            />
-          </li>
+          <Chip
+            label={data.label}
+            onDelete={handleDelete(data)}
+            className={classes.chip}
+          />
         );
       })}
-    </Paper>
+    </Toolbar>
   );
 }
 

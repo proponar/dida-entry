@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
   },
   meaningCell: { // FIXME: this does not work when used as class in EntryForm, why?
     marginBottom: '30px',
-  }
+  },
 }));
 
 export default useStyles;

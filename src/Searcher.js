@@ -3,7 +3,9 @@ import axios from 'axios';
 
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import FormControl from "@material-ui/core/FormControl";
 import IconButton from '@material-ui/core/IconButton';
+import InputLabel from "@material-ui/core/InputLabel";
 import Paper from '@material-ui/core/Paper';
 import Publish from '@material-ui/icons/Publish';
 import Table from '@material-ui/core/Table';
@@ -14,24 +16,44 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from "@material-ui/core/TextField";
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
+import Grid from "@material-ui/core/Grid";
+import Switch from "@material-ui/core/Switch";
 
 import EntryCombo from "./EntryCombo";
 import FilterChips from "./FilterChips";
 import RokInput from "./RokInput";
 import TablePaginationActions from "./TablePaginationActions";
-import VetneSwitch from "./VetneSwitch";
 
 import useStyles from "./useStyles";
 import chipContext from './chipContext';
 import { baseUrl } from './config';
+
+const VetneSmallSwitch = ({checked, onChange}) => (
+  <FormControl style={{marginLeft: "20px", marginRight: "20px", marginTop: "5px"}}>
+    <Grid component="label" container alignItems="center" spacing={1}>
+      <Grid item>Nevětné</Grid>
+      <Grid item>
+        <Switch
+          color="primary"
+          checked={checked}
+          onChange={onChange}
+          name="vetne"
+        />
+      </Grid>
+      <Grid item>Větné</Grid>
+    </Grid>
+  </FormControl>
+);
 
 const Searcher = () => {
   const chip = useContext(chipContext);
   const classes = useStyles();
   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState({});
+  console.log('filter: ', filter);
 
   // Paginator
   const [page, setPage] = useState(0);
@@ -45,30 +67,73 @@ const Searcher = () => {
   const [entry, setEntry] = useState(null);
 
   // Selected a new row/entry/heslo.
-  const handleEntryChange = (_e, newEntry) => (newEntry &&
-   (setEntry(newEntry), setPage(0)));
-  // TODO add entry to filter
+  const handleEntryChange = (_e, newEntry) => {
+    if (! newEntry) {
+      return
+    }
+    setEntry(newEntry)
+    setPage(0)
+    setFilter({
+      ...filter,
+      entry: { heslo: newEntry.heslo, id: newEntry.id },
+    })
+  }
+
+  const handleVetneChange = ({target}) => {
+    setFilter({
+      ...filter,
+      vetne: target.checked
+    })
+  }
+
+  const handleRokChange = ({target}) => {
+    setFilter({
+      ...filter,
+      rok: target.value,
+    })
+  }
+
+  const handleExempChange = ({target}) => {
+    setFilter({
+      ...filter,
+      exemp: target.value,
+    })
+  }
 
   // TODO: pass filter
   useEffect(() => {
-    axios.get(baseUrl + `search`, {
-      headers: {
-        'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
-      }
+    axios.post(
+      baseUrl + `search`,
+      filter, {
+        headers: {
+          Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
+        }
     }).then(response => setRows(response.data.data));
-  }, []); // FIXME bude zalezet na filtrech
+  }, [filter]);
+
+  const deleteChip = chip => {
+    var newFilter = { ...filter };
+    delete(newFilter[chip]);
+    setFilter(newFilter);
+  };
 
   return (
     <Paper className={classes.paper}>
       <Toolbar>
         <EntryCombo reload={0} onChange={handleEntryChange} onReload={() => {}} />
-        <Tooltip title="Filtrovat hesla">
-          <IconButton aria-label="Filtrovat hesla"><FilterListIcon /></IconButton>
-        </Tooltip>
-        <VetneSwitch checked={true} onChange={() => {}}/>
-        <RokInput value={1997} onChange={() => {}}/>
-        <FilterChips filter={filter} />
+        &nbsp;
+        <FormControl>
+          <TextField
+            name="exemp" variant="filled" margin="dense" label="Exemplifikace"
+            value={filter.exemp}
+            onChange={handleExempChange}
+          />
+        </FormControl>
+        <VetneSmallSwitch checked={filter.vetne} onChange={handleVetneChange}/>
+        &nbsp;
+        <RokInput dense={true} value={filter.rok} onChange={handleRokChange}/>
       </Toolbar>
+      <FilterChips filter={filter} onDelete={deleteChip}/>
 
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
@@ -97,14 +162,14 @@ const Searcher = () => {
                 <TableCell align="center"> </TableCell>
                 <TableCell> {row.exemplifikace} </TableCell>
                 <TableCell> {row.druh} </TableCell>
-                <TableCell align="right"> {row.entry} </TableCell>
+                <TableCell align="right"> {row.heslo} </TableCell>
                 <TableCell align="right">{row.urceni}</TableCell>
                 <TableCell align="right">{row.lokalizace_format}</TableCell>
                 <TableCell align="right">{row.zdroj_name}</TableCell>
                 <TableCell align="right">{row.rok}</TableCell>
                 <TableCell align="right">{row.vyznam}</TableCell>
-                <TableCell align="right">{row.vetne}</TableCell>
-                <TableCell align="right">{row.aktivni}</TableCell>
+                <TableCell align="right">{(row.vetne && 'ano') || 'ne'}</TableCell>
+                <TableCell align="right">{(row.aktivni && 'ano') || 'ne'}</TableCell>
                 <TableCell align="right">{row.time}</TableCell>
               </TableRow>
             ))}
@@ -117,7 +182,7 @@ const Searcher = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={7}>
+              <TableCell colSpan={3}>
                 <IconButton color="secondary" onClick={() => {}} aria-label="Přidat exemplifikaci" >
                   <Tooltip title="Přidat exemplifikaci">
                     <AddCircleOutline />
@@ -132,7 +197,7 @@ const Searcher = () => {
               <TablePagination
                 labelRowsPerPage="Řádků na stránce"
                 rowsPerPageOptions={[10, 25, 50, { label: 'Všechny', value: -1 }]}
-                colSpan={5}
+                colSpan={9}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

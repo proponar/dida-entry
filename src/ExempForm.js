@@ -168,7 +168,7 @@ const ExempForm = ({data, dataKey, setData}) => {
     const newValues = {
       ...values,
       lokalizace_text: loc && loc.identifikator,
-      lokalizace_text_id: loc && loc.id,
+      lokalizace_text_id: loc && loc.cislo,
     };
     setValues(newValues);
     setData(dataKey, newValues);

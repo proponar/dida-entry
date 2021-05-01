@@ -44,7 +44,7 @@ const string2urceni = t => {
   // 'obecním, f. 7 sg.'
   //const mtr = t.match(/^([\p{L}\s]+),\s*([fmn])\.\s*(\d)\s+(pl|sg)\.$/u);
   const mtr = t.match(
-    new RegExp(`^([’'e\\p{L}\\p{M}\\s]+),\\s*(${rodRE})\\s*(\\d)\\s+(pl|sg)\\.$`, 'u'))
+    new RegExp(`^([’'\\p{L}\\p{M}\\s]+),\\s*(${rodRE})\\s*(\\d)\\s+(pl|sg)\\.$`, 'u'))
   if (mtr) {
     return {
       tvar: filterTvar(mtr[1]),
@@ -247,7 +247,7 @@ const ExempForm = ({data, dataKey, setData}) => {
       <Grid item container xs={12}>
         <Grid item container xs={8}>
           <Grid item xs={8}>
-            <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace ł Ł e̬ E̬ o̬ O̬ u̯ U̯ ə ḁ́ ł́ ◘ ▲ ●</InputLabel>
+            <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace ł Ł e̬ E̬ o̬ O̬ u̯ U̯ ə ḁ́ ł́ ◘ ▲ ● ’ { } </InputLabel>
             <div className={classes.autosizeWrap}>
               <TextareaAutosize
                 style={{width: '100%'}}

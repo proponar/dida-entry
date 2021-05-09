@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputLabel from "@material-ui/core/InputLabel";
 import Paper from '@material-ui/core/Paper';
 import GetApp from '@material-ui/icons/GetApp';
+import Subject from '@material-ui/icons/Subject';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -111,7 +112,7 @@ const Searcher = () => {
     }).then(response => setRows(response.data.data));
   }, [filter]);
 
-  const handleDownload = () => {
+  const handleCSVDownload = () => {
     axios.post(
       baseUrl + `search?d=1`,
       filter, {
@@ -120,6 +121,19 @@ const Searcher = () => {
         }
     }).then(response => {
 			saveAs(new Blob([response.data], {type: "text/csv;charset=utf-8"}), 'exemps-filtered.csv');
+    });
+  }
+
+  const handleDocxDownload = () => {
+    axios.post(
+      baseUrl + `search?w=1`,
+      filter, {
+        responseType: 'arraybuffer',
+        headers: {
+          Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
+        }
+    }).then(response => {
+			saveAs(new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}), 'exemps-filtered.docx');
     });
   }
 
@@ -195,9 +209,14 @@ const Searcher = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>
-                <IconButton color="secondary" onClick={handleDownload} aria-label="Importovat exemplifikace" >
+                <IconButton color="secondary" onClick={handleCSVDownload} aria-label="Stáhnout výpis" >
                   <Tooltip title="Stáhnout výpis">
                     <GetApp />
+                  </Tooltip>
+                </IconButton>
+                <IconButton color="secondary" onClick={handleDocxDownload} aria-label="Export do Wordu" >
+                  <Tooltip title="Export do Wordu">
+                    <Subject />
                   </Tooltip>
                 </IconButton>
               </TableCell>

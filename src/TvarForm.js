@@ -8,9 +8,29 @@ import TextField from "@material-ui/core/TextField";
 import PadSelect from "./PadSelect";
 import RodSelect from "./RodSelect";
 
-const TvarForm = ({index, tvar, rod, pad, tvarList, onChange}) => {
+const TvarForm = ({index, invalid, tvar, rod, pad, tvarList, onChange}) => {
   // value from "{"gynś"=>[{:pad=>"1", :cislo=>"sg"}], "gynš"=>[{:pad=>"1", :cislo=>"sg"}], "hos"=>[{:pad=>"1", :cislo=>"sg"}], ...
   const [ inputId ] = useState(() => uniqueId('tvar-textbox'));
+
+  if (invalid) {
+    return (
+      <Grid item container xs={12}>
+        <Grid item xs={6}>
+          <FormControl>
+            <TextField
+              disabled
+              variant="outlined"
+              margin="normal"
+              label="Tvar"
+              id={inputId}
+              name='tvar'
+              value={tvar}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
+    );
+  }
 
   return (
     <Grid item container xs={12}>

@@ -15,7 +15,7 @@ const SourcesListing = () => {
       { loading && <LinearProgress /> }
       <CsvUpload onStart={e => setLoading(true)} onFinish={e => setLoading(false)}/>
       <CsvDownload />
-      <Button onClick={localStorage.removeItem('sources')} color="primary">
+      <Button onClick={() => localStorage.removeItem('sources')} color="primary">
         Obnovit Zdroje
       </Button>
     </React.Fragment>

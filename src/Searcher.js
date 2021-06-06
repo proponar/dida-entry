@@ -22,6 +22,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from "@material-ui/core/Grid";
 import Switch from "@material-ui/core/Switch";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { saveAs } from 'file-saver';
 
 import EntryCombo from "./EntryCombo";
@@ -66,8 +67,8 @@ const Searcher = () => {
     setRowsPerPage(parseInt(e.target.value, 10)), setPage(0));
 
   const [entry, setEntry] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Selected a new row/entry/heslo.
   const handleEntryChange = (_e, newEntry) => {
     if (! newEntry) {
       return
@@ -101,15 +102,19 @@ const Searcher = () => {
     })
   }
 
-  // TODO: pass filter
   useEffect(() => {
+    setLoading(true);
     axios.post(
       baseUrl + `search`,
       filter, {
         headers: {
           Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
         }
-    }).then(response => setRows(response.data.data));
+    }).then(response => {
+      setLoading(false);
+      chip.successMsg(response.data.message);
+      setRows(response.data.data);
+    });
   }, [filter]);
 
   const handleCSVDownload = () => {
@@ -160,7 +165,8 @@ const Searcher = () => {
         <RokInput dense={true} value={filter.rok} onChange={handleRokChange}/>
       </Toolbar>
       <FilterChips filter={filter} onDelete={deleteChip}/>
-
+      {loading ? (<CircularProgress/>) :
+      (
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>
@@ -239,6 +245,7 @@ const Searcher = () => {
           </TableFooter>
         </Table>
       </TableContainer>
+      )}
     </Paper>
   );
 }

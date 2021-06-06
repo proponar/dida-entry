@@ -24,6 +24,8 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import EntryCombo from "./EntryCombo";
 import DialogExemp from "./DialogExemp";
 import DialogEntry from "./DialogEntry";
@@ -91,6 +93,8 @@ const ExempListing = () => {
   // Reload exemps in case some Attachments were removed.
   // FIXME: we could check if the reload is actually needed.
   const handleAttachCloseClick = () => (setAttachOpen(false), setReloadEx(Math.random()));
+
+  const [loading, setLoading] = useState(false);
 
   const handleAttachSaveClick = files => {
     setAttachOpen(false);
@@ -249,11 +253,15 @@ const ExempListing = () => {
   // via reloadEx.
   useEffect(() => {
     if (entry) {
+      setLoading(true);
       axios.get(baseUrl + `entries/${entry.id}/exemps`, {
         headers: {
           'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
         }
-      }).then(response => setRows(response.data.data));
+      }).then(response => {
+        setLoading(false);
+        setRows(response.data.data)
+      });
     }
   }, [entry, reloadEx]);
 
@@ -340,6 +348,8 @@ const ExempListing = () => {
         onSave={handleAttachSaveClick}
         data={prepareExempData(entry, selectedRow)}
       />
+      {loading ? (<CircularProgress/>) :
+      (
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">
           <TableHead>
@@ -415,6 +425,7 @@ const ExempListing = () => {
           </TableFooter>
         </Table>
       </TableContainer>
+      )}
       <Menu
         anchorEl={menuAnchorEl}
         keepMounted

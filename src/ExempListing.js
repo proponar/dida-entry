@@ -320,6 +320,11 @@ const ExempListing = () => {
         <IconButton color="secondary" onClick={handleClickHesloNew} aria-label="Přidat heslo" >
           <Tooltip title="Přidat heslo"><AddCircle /></Tooltip>
         </IconButton>
+        <IconButton color="secondary" onClick={handleClickExempOpen} aria-label="Přidat exemplifikaci" >
+          <Tooltip title="Přidat exemplifikaci">
+            <AddCircleOutline />
+          </Tooltip>
+        </IconButton>
       </Toolbar>
       <DialogMap
         open={mapOpen}

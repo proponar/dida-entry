@@ -7,6 +7,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import useStyles from "./useStyles";
 
+const meaning2label = m =>
+  m.kvalifikator ? (m.cislo + ': ' + m.kvalifikator + ' ' + m.vyznam) : (m.cislo + ': ' + m.vyznam);
+
 const MeaningSelector = ({value, meanings, onChange}) => {
   const classes = useStyles();
 
@@ -19,7 +22,7 @@ const MeaningSelector = ({value, meanings, onChange}) => {
         </MenuItem>
         { meanings.map(m =>
           <MenuItem key={m.id} value={m.id}>
-            {m.cislo + ': ' + m.kvalifikator + ' ' + m.vyznam}
+            {meaning2label(m)}
           </MenuItem>
         )}
       </Select>

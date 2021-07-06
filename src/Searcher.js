@@ -118,6 +118,7 @@ const Searcher = () => {
   }, [filter]);
 
   const handleCSVDownload = () => {
+    setLoading(true);
     axios.post(
       baseUrl + `search?d=1`,
       filter, {
@@ -125,11 +126,13 @@ const Searcher = () => {
           Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
         }
     }).then(response => {
+      setLoading(false);
 			saveAs(new Blob([response.data], {type: "text/csv;charset=utf-8"}), 'exemps-filtered.csv');
     });
   }
 
   const handleDocxDownload = () => {
+    setLoading(true);
     axios.post(
       baseUrl + `search?w=1`,
       filter, {
@@ -138,6 +141,7 @@ const Searcher = () => {
           Authorization: `Token ${window.sessionStorage.getItem('auth-token')}`,
         }
     }).then(response => {
+      setLoading(false);
 			saveAs(new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}), 'exemps-filtered.docx');
     });
   }
@@ -160,7 +164,7 @@ const Searcher = () => {
             onChange={handleExempChange}
           />
         </FormControl>
-        <VetneSmallSwitch checked={filter.vetne} onChange={handleVetneChange}/>
+        <VetneSmallSwitch checked={!! filter.vetne} onChange={handleVetneChange}/>
         &nbsp;
         <RokInput dense={true} value={filter.rok} onChange={handleRokChange}/>
       </Toolbar>

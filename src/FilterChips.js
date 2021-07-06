@@ -61,6 +61,7 @@ const FilterChips = ({filter, onDelete}) => {
       {chipData.map((data) => {
         return (
           <Chip
+            key={data.key}
             label={data.label}
             onDelete={handleDelete(data)}
             className={classes.chip}

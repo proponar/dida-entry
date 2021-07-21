@@ -19,6 +19,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { baseUrl } from './config';
 import chipContext from './chipContext';
 
+import { GoogleLogin } from 'react-google-login';
+
 const Copyright = () =>
   <Typography variant="body2" color="textSecondary" align="center">
     {'Copyright © '}
@@ -91,33 +93,52 @@ export default function SignIn() {
 		axios.get(baseUrl + 'auth?requester_type=ui',
 			{
 				headers: {
-					//'X-Auth-Token': undefined,
 					'Authorization': 'Basic ' + base64encode([login, password].join(':')),
 				}
 			}
-		).then(response => {
-      if (remember) {
-        lStore.setItem('auth', JSON.stringify({
-			    'auth-token': response.data.auth_token,
-			    'user-name': response.data.name,
-          date: Date.now(),
-        }));
-      } else {
-        lStore.removeItem('auth');
-      }
-			sStore.setItem('auth-token', response.data.auth_token);
-			sStore.setItem('user-name', response.data.name);
-			history.push('/exemps');
-		}).catch(err => {
-      if (err.isAxiosError && err.request.status === 401) {
-        chip.errorMsg('Neplatný login, nebo heslo.');
-      } else {
-        chip.errorMsg('Při přihlašovaní došlo k chybě.');
-      }
-    });
+		).then(loginSuccess).catch(loginError);
 
 	  event.preventDefault();
 	}
+
+  const responseGoogleFailure = (response) => {
+    chip.errorMsg('Neplatný login, nebo heslo.');
+    console.log(response);
+  }
+
+  const loginSuccess = response => {
+    if (remember) {
+      lStore.setItem('auth', JSON.stringify({
+		    'auth-token': response.data.auth_token,
+		    'user-name': response.data.name,
+        date: Date.now(),
+      }));
+    } else {
+      lStore.removeItem('auth');
+    }
+		sStore.setItem('auth-token', response.data.auth_token);
+		sStore.setItem('user-name', response.data.name);
+		history.push('/exemps');
+  }
+
+  const loginError = err => {
+    if (err.isAxiosError && err.request.status === 401) {
+      chip.errorMsg('Neplatný login, nebo heslo.');
+    } else {
+      chip.errorMsg('Při přihlašovaní došlo k chybě.');
+    }
+  }
+
+  const responseGoogleSuccess = (response) => {
+    var token = response.tokenId
+		axios.get(baseUrl + 'auth?requester_type=oauth',
+			{
+				headers: {
+					'Authorization': 'Basic ' + base64encode([token, ''].join(':')),
+				}
+			}
+		).then(loginSuccess).catch(loginError);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -177,6 +198,13 @@ export default function SignIn() {
           </Button>
         </form>
       </div>
+      <GoogleLogin
+        clientId="463940228204-8h8413o241etnc0q0ifvjq57st8vde49.apps.googleusercontent.com"
+        buttonText="Přihlásit Google Loginem"
+        onSuccess={responseGoogleSuccess}
+        onFailure={responseGoogleFailure}
+        cookiePolicy={'single_host_origin'}
+      />
       <Box mt={8}>
         <Copyright />
       </Box>

@@ -59,6 +59,7 @@ REACT_APP_ENV=production npm run build
  * [Material UI](https://material-ui.com/)
  * [Dropzone for Material UI](https://github.com/Yuvaleros/material-ui-dropzone)
  * [create-react-app configuration](https://github.com/facebook/create-react-app/blob/master/docusaurus/docs/advanced-configuration.md)
+ * [react-google-login](https://github.com/anthonyjgrove/react-google-login)
 
 
 ## TODO:

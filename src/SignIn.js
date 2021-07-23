@@ -200,7 +200,7 @@ export default function SignIn() {
       </div>
       <GoogleLogin
         clientId="463940228204-8h8413o241etnc0q0ifvjq57st8vde49.apps.googleusercontent.com"
-        buttonText="Přihlásit Google Loginem"
+        buttonText="Přihlásit účtem Google"
         onSuccess={responseGoogleSuccess}
         onFailure={responseGoogleFailure}
         cookiePolicy={'single_host_origin'}

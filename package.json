@@ -30,6 +30,11 @@
     "string.prototype.replaceall": "^1.0.4"
   },
   "browserslist": {
+    "public": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "production": [
       ">0.2%",
       "not dead",

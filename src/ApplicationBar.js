@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Divider from '@material-ui/core/Divider';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -10,6 +11,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import HelpIcon from '@material-ui/icons/Help';
+
+import { applicationTitle } from './config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,11 +25,19 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  divider: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+  },
 }));
 
 const ApplicationBar = ({title}) => {
   const history = useHistory();
   const classes = useStyles();
+
+  useEffect(() => {
+    document.title = applicationTitle;
+  });
 
   const goTo = (popupState, url) => {
     popupState.close();
@@ -64,11 +76,13 @@ const ApplicationBar = ({title}) => {
             )}
           </PopupState>
           <Typography variant="h6" className={classes.title}>
-            DIDA
+            {applicationTitle}
           </Typography>
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
+          <HelpIcon/>
+          <Divider orientation="vertical" flexItem  className={classes.divider}/>
           <Button color="inherit" onClick={logout}>Odhlásit</Button>
         </Toolbar>
       </AppBar>

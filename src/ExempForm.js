@@ -13,6 +13,7 @@ import TvarForm from "./TvarForm";
 import ZdrojInput from "./ZdrojInput";
 import useStyles from "./useStyles";
 import { rodMap, rodRE } from "./RodSelect";
+import { displayChars } from "./config";
 
 const addIndex = (h, i) => ({
   index: i,
@@ -248,7 +249,7 @@ const ExempForm = ({data, dataKey, setData}) => {
       <Grid item container xs={12}>
         <Grid item container xs={8}>
           <Grid item xs={8}>
-            <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace ł Ł e̬ E̬ o̬ O̬ u̯ U̯ ə ḁ́ ł́ ◘ ▲ ● ’ &#123;  &#125;</InputLabel>
+            {displayChars && <InputLabel htmlFor="exemplifikace-textbox">Exemplifikace ł Ł e̬ E̬ o̬ O̬ u̯ U̯ ə ḁ́ ł́ ◘ ▲ ● ’ &#123;  &#125;</InputLabel>}
             <div className={classes.autosizeWrap}>
               <TextareaAutosize
                 style={{width: '100%'}}

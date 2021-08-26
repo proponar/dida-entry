@@ -311,9 +311,6 @@ const ExempListing = () => {
     <Paper className={classes.paper}>
       <Toolbar>
         <EntryCombo reload={reloadEn} onChange={handleEntryChange} onReload={handleEntryReload} />
-        <Tooltip title="Filtrovat hesla">
-          <IconButton aria-label="Filtrovat hesla"><FilterListIcon /></IconButton>
-        </Tooltip>
         <IconButton color="secondary" onClick={handleClickHesloEdit} aria-label="Editovat heslo" >
           <Tooltip title="Editovat heslo"><Edit /></Tooltip>
         </IconButton>

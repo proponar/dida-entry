@@ -58,7 +58,7 @@ const EntryForm = props => {
       <Grid item xs={2}>
         <RodSelect rod={values.rod} onChange={handleValuesChange} />
       </Grid>
-      { values.druh == 'sloveso' && (
+      { values.druh === 'sloveso' && (
         <React.Fragment>
           <Grid item xs={3}>
             <CasSelect rod={values.cas} onChange={handleValuesChange} />

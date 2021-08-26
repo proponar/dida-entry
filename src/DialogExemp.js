@@ -7,9 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import HelpIcon from '@material-ui/icons/Help';
 
 import ExempForm from "./ExempForm";
+import HelpPopover from './HelpPopover';
 
 const ConfirmDialog = ({open, onYes, onNo}) => (
   <Dialog
@@ -56,7 +56,7 @@ const DialogExemp = ({open, onSave, onClose, onDelete, data}) => {
       maxWidth='xl'
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">{title}
-        <HelpIcon style={{float: 'right'}}/>
+        <HelpPopover help="exemplifikace" iconStyle={{float: 'right'}}/>
       </DialogTitle>
       <DialogContent>
         <ExempForm data={formData} setData={handleSetData} />

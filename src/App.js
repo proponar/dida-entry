@@ -53,7 +53,7 @@ const App = () => {
 
         <Route path="/exemps">
           <React.Fragment>
-            <ApplicationBar title="Exemplifikace" />
+            <ApplicationBar title="Exemplifikace" help="exemplifikace"/>
             <chipContext.Provider value={{successMsg, errorMsg}}>
               <ExempListing />
             </chipContext.Provider>
@@ -63,7 +63,7 @@ const App = () => {
 
         <Route path="/sources">
           <React.Fragment>
-            <ApplicationBar title="Zdroje" />
+            <ApplicationBar title="Zdroje" help="zdroje"/>
             <chipContext.Provider value={{successMsg, errorMsg}}>
               <SourcesListing />
             </chipContext.Provider>
@@ -73,7 +73,7 @@ const App = () => {
 
         <Route path="/text-loc">
           <React.Fragment>
-            <ApplicationBar title="Textové lokalizace" />
+            <ApplicationBar title="Textové lokalizace" help="textove_lokalizace"/>
             <chipContext.Provider value={{successMsg, errorMsg}}>
               <TextLocListing />
             </chipContext.Provider>
@@ -83,7 +83,7 @@ const App = () => {
 
         <Route path="/search">
           <React.Fragment>
-            <ApplicationBar title="Vyhledávání" />
+            <ApplicationBar title="Vyhledávání" help="vyhledavani"/>
             <chipContext.Provider value={{successMsg, errorMsg}}>
               <Searcher />
             </chipContext.Provider>

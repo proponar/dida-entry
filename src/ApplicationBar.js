@@ -11,9 +11,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import HelpIcon from '@material-ui/icons/Help';
 
 import { applicationTitle } from './config';
+import HelpPopover from './HelpPopover';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ApplicationBar = ({title}) => {
+const ApplicationBar = ({title, help}) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -81,7 +81,10 @@ const ApplicationBar = ({title}) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <HelpIcon/>
+          <HelpPopover
+            id="appBarHelpPopover"
+            help={help}
+          />
           <Divider orientation="vertical" flexItem  className={classes.divider}/>
           <Button color="inherit" onClick={logout}>Odhlásit</Button>
         </Toolbar>

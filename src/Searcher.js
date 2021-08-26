@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import FormControl from "@material-ui/core/FormControl";
 import IconButton from '@material-ui/core/IconButton';
-import InputLabel from "@material-ui/core/InputLabel";
 import Paper from '@material-ui/core/Paper';
 import GetApp from '@material-ui/icons/GetApp';
 import Subject from '@material-ui/icons/Subject';
@@ -66,14 +63,12 @@ const Searcher = () => {
   const handleChangeRowsPerPage = e => (
     setRowsPerPage(parseInt(e.target.value, 10)), setPage(0));
 
-  const [entry, setEntry] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleEntryChange = (_e, newEntry) => {
     if (! newEntry) {
       return
     }
-    setEntry(newEntry)
     setPage(0)
     setFilter({
       ...filter,

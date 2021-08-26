@@ -6,9 +6,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
-import HelpIcon from '@material-ui/icons/Help';
 
 import EntryForm from "./EntryForm";
+import HelpPopover from './HelpPopover';
 
 const DialogEntry = ({open, onClose, onSave, data}) => {
   const title = (data && data.id && "Editace hesla") || "Nové heslo";
@@ -40,7 +40,7 @@ const DialogEntry = ({open, onClose, onSave, data}) => {
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title" disableTypography>
         <Typography variant="h6">{title}
-          <HelpIcon style={{float: 'right'}}/>
+          <HelpPopover help="nove_heslo" iconStyle={{float: 'right'}}/>
         </Typography>
         <Typography variant="body1">
           Autor: {data.author_name}, Číslo: {formatId(data.id)}

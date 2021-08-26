@@ -20,7 +20,6 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Publish from '@material-ui/icons/Publish';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 

@@ -10,7 +10,7 @@ if (process.env.REACT_APP_ENV === 'development') {
   displayChars = true
 } else { // if (process.env.REACT_APP_ENV === 'public') {
   baseUrl = 'https://proponar.ujc.cas.cz/api/';
-  applicationTitle = 'PROPONAR'
+  applicationTitle = 'ProPONAR'
   displayChars = false
 }
 

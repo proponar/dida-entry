@@ -8,7 +8,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+
 import KvalifikatorInput from "./KvalifikatorInput";
+import HelpPopover from './HelpPopover';
 
 const DialogMeaning = ({meaning, open, onSave, onClose, onRemove}) => {
   const [value, setValue] = useState(meaning || {});
@@ -28,7 +30,9 @@ const DialogMeaning = ({meaning, open, onSave, onClose, onRemove}) => {
       fullWidth={false}
       maxWidth='xl'
       open={open} onClose={onClose} aria-labelledby="editm-dialog-title">
-      <DialogTitle id="editm-dialog-title">Editace významu</DialogTitle>
+      <DialogTitle id="editm-dialog-title">Editace významu
+        <HelpPopover help="editace_vyznamu" iconStyle={{float: 'right'}}/>
+      </DialogTitle>
       <DialogContent>
         <Grid container>
           <Grid item xs={4}>

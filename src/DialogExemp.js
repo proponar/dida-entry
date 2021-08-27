@@ -56,7 +56,7 @@ const DialogExemp = ({open, onSave, onClose, onDelete, data}) => {
       maxWidth='xl'
       open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">{title}
-        <HelpPopover help="exemplifikace" iconStyle={{float: 'right'}}/>
+        <HelpPopover help="editace_exemplifikace" iconStyle={{float: 'right'}}/>
       </DialogTitle>
       <DialogContent>
         <ExempForm data={formData} setData={handleSetData} />

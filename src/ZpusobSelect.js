@@ -13,6 +13,7 @@ const zpusoby = [
   ['oznamovaci',  'oznamovací'],
   ['rozkazovaci', 'rozkazovací'],
   ['tazaci',      'tázací'],
+  ['podminovaci', 'podmiňovací'],
 ];
 
 const ZpusobSelect = ({zpusob, onChange}) => {

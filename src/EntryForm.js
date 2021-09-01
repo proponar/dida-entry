@@ -50,8 +50,9 @@ const EntryForm = props => {
             <MenuItem value='subst'>Substantiva</MenuItem>
             <MenuItem value='adj'>Adjektiva</MenuItem>
             <MenuItem value='sloveso'>Slovesa</MenuItem>
-            <MenuItem value='zajmeno'>Zájména</MenuItem>
+            <MenuItem value='zajmeno'>Zájmena</MenuItem>
             <MenuItem value='cislovka'>Číslovky</MenuItem>
+            <MenuItem value='ostatni'>Ostatní</MenuItem>
           </Select>
         </FormControl>
       </Grid>

@@ -18,6 +18,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { baseUrl } from './config';
 import chipContext from './chipContext';
+import { applicationTitle } from './config';
 
 import { GoogleLogin } from 'react-google-login';
 
@@ -53,9 +54,13 @@ const useStyles = makeStyles(theme => ({
 
 const base64encode = str => base64js.fromByteArray(new window.TextEncoder('utf-8').encode(str));
 
-export default function SignIn() {
+const SignIn = () => {
   const classes = useStyles();
   const chip = useContext(chipContext);
+
+  useEffect(() => {
+    document.title = applicationTitle;
+  });
 
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -211,3 +216,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default SignIn;

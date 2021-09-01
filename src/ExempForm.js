@@ -256,7 +256,7 @@ const ExempForm = ({data, dataKey, setData}) => {
                 width={500}
                 rowsMin={3}
                 id="exemplifikace-textbox"
-                placeholder="..."
+                placeholder="Exemplifikace"
                 name="exemplifikace"
                 value={exemplifikaceNotNull}
                 onChange={handleValuesChange}

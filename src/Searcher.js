@@ -19,7 +19,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from "@material-ui/core/Grid";
 import Switch from "@material-ui/core/Switch";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { saveAs } from 'file-saver';
 
 import EntryCombo from "./EntryCombo";
@@ -164,7 +164,7 @@ const Searcher = () => {
         <RokInput dense={true} value={filter.rok} onChange={handleRokChange}/>
       </Toolbar>
       <FilterChips filter={filter} onDelete={deleteChip}/>
-      {loading ? (<CircularProgress/>) :
+      {loading ? (<LinearProgress />) :
       (
       <TableContainer component={Paper}>
         <Table className={classes.listingTable} aria-label="Seznam exemplifikací">

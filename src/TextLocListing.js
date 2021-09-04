@@ -13,9 +13,6 @@ const TextLocListing = () => {
     <React.Fragment>
       <TextLocTable onStart={e => setLoading(true)} onFinish={e => setLoading(false)}/>
       { loading && <LinearProgress /> }
-      <Button onClick={() => localStorage.removeItem('location_texts')} color="primary">
-        Obnovit textové lokalizace
-      </Button>
     </React.Fragment>
   );
 };

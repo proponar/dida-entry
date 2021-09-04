@@ -8,16 +8,24 @@ import SourcesTable from './SourcesTable.js';
 
 const SourcesListing = () => {
   const [loading, setLoading] = useState(false);
+  const [reloadCounter, setReloadCounter] = useState(null);
+
+  const uploadFinished = () => {
+    setLoading(false);
+    localStorage.removeItem('sources');
+    setReloadCounter(Math.random());
+  }
 
   return (
     <React.Fragment>
-      <SourcesTable onStart={e => setLoading(true)} onFinish={e => setLoading(false)}/>
+      <SourcesTable
+        reloadCounter={reloadCounter}
+        onStart={e => setLoading(true)}
+        onFinish={e => setLoading(false)}
+      />
       { loading && <LinearProgress /> }
-      <CsvUpload onStart={e => setLoading(true)} onFinish={e => setLoading(false)}/>
+      <CsvUpload onStart={e => setLoading(true)} onFinish={e => uploadFinished()}/>
       <CsvDownload />
-      <Button onClick={() => localStorage.removeItem('sources')} color="primary">
-        Obnovit Zdroje
-      </Button>
     </React.Fragment>
   );
 };

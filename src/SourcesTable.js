@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import useStyles from "./useStyles";
 import { baseUrl } from './config';
 
-const SourcesTable = ({onStart, onFinish}) => {
+const SourcesTable = ({reloadCounter, onStart, onFinish}) => {
   const [rows, setRows] = useState([]);
   const classes = useStyles();
 
@@ -30,7 +30,7 @@ const SourcesTable = ({onStart, onFinish}) => {
       setRows(sources);
       localStorage.setItem('sources', JSON.stringify(sources));
     });
-  }, []);
+  }, [reloadCounter]);
 
   return (
     <TableContainer component={Paper}>

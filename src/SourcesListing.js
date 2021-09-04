@@ -18,12 +18,12 @@ const SourcesListing = () => {
 
   return (
     <React.Fragment>
+      { loading && <LinearProgress /> }
       <SourcesTable
         reloadCounter={reloadCounter}
         onStart={e => setLoading(true)}
         onFinish={e => setLoading(false)}
       />
-      { loading && <LinearProgress /> }
       <CsvUpload onStart={e => setLoading(true)} onFinish={e => uploadFinished()}/>
       <CsvDownload />
     </React.Fragment>

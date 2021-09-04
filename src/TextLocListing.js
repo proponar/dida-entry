@@ -11,8 +11,8 @@ const TextLocListing = () => {
 
   return (
     <React.Fragment>
-      <TextLocTable onStart={e => setLoading(true)} onFinish={e => setLoading(false)}/>
       { loading && <LinearProgress /> }
+      <TextLocTable onStart={e => setLoading(true)} onFinish={e => setLoading(false)}/>
     </React.Fragment>
   );
 };

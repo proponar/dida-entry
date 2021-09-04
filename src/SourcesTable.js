@@ -33,8 +33,8 @@ const SourcesTable = ({reloadCounter, onStart, onFinish}) => {
   }, [reloadCounter]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
+    <TableContainer component={Paper} style={{height: "95vh"}}>
+      <Table stickyHeader className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
         <TableHead>
           <TableRow>
             <TableCell component="th">Číslo</TableCell>

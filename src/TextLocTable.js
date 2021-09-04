@@ -33,8 +33,8 @@ const TextLocTable = ({onStart, onFinish}) => {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.denseTable} size="small" aria-label="Seznam textových lokalizací">
+    <TableContainer component={Paper} style={{height: "95vh"}}>
+      <Table stickyHeader className={classes.denseTable} size="small" aria-label="Seznam textových lokalizací">
         <TableHead>
           <TableRow>
             <TableCell component="th">Číslo</TableCell>

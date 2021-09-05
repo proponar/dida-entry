@@ -69,7 +69,7 @@ const CachingAutocomplete = props  => {
       }
     }
     getOptions();
-  }, [valueIdIn]);
+  }, [valueIdIn, cacheKey, dataUrl]);
 
   // FIXME: zdroj ma mit rok a ted se bude predvyplnovat ze zdroje do exemplifikace
   //        ^^ nebude. Jen, pokud bude prazdny, v zobrazeni (v gridu?) se ukaze

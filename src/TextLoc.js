@@ -16,7 +16,7 @@ const TextLoc = ({options, value, onChange}) => {
       value2label={loc2label}
       validNullValue={true}
       onChange={onChange}
-      cacheKey="location_texts"
+      cacheKey="lokalizace_text"
       dataUrl={baseUrl + 'location_texts'}
     />
   );

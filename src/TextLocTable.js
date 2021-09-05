@@ -18,14 +18,12 @@ const TextLocTable = ({onStart, onFinish}) => {
 
   useEffect(() => {
     onStart && onStart();
-    console.log(1);
     axios.get(baseUrl + 'location_texts', {
       headers: {
         'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')
       }
     }).then(response => {
       const sources = response.data.data;
-      console.log(2);
       onFinish && onFinish();
       setRows(sources);
       localStorage.setItem('lokalizace_text', JSON.stringify(sources));

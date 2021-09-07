@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CachingAutocomplete from './CachingAutocomplete';
-import { baseUrl } from './config';
+import { baseUrl, locationNumbers } from './config';
 
 const TextLoc = ({options, value, onChange}) => {
   const loc2label = s => (s.cislo && (s.cislo + '. ' + s.identifikator)) || '' ;
@@ -13,7 +13,7 @@ const TextLoc = ({options, value, onChange}) => {
       value={value}
       options={options || []}
       valueIsSelected={(option, value) => option.cislo === value.cislo}
-      value2label={loc2label}
+      value2label={(locationNumbers && loc2label) || (s => s.identifikator || '')}
       validNullValue={true}
       onChange={onChange}
       cacheKey="lokalizace_text"

@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-import { applicationTitle } from './config';
+import { applicationTitle, locationNumbers } from './config';
 import HelpPopover from './HelpPopover';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +69,7 @@ const ApplicationBar = ({title, help}) => {
                 <Menu {...bindMenu(popupState)}>
                   <MenuItem onClick={() => {goTo(popupState, '/exemps/')}}>Exemplifikace</MenuItem>
                   <MenuItem onClick={() => {goTo(popupState, '/sources/')}}>Zdroje</MenuItem>
-                  <MenuItem onClick={() => {goTo(popupState, '/text-loc/')}}>Textové lokalizace</MenuItem>
+                  { locationNumbers && <MenuItem onClick={() => {goTo(popupState, '/text-loc/')}}>Textové lokalizace</MenuItem> }
                   <MenuItem onClick={() => {goTo(popupState, '/search/')}}>Vyhledávání</MenuItem>
                 </Menu>
               </React.Fragment>

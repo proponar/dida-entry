@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircle from '@material-ui/icons/AddCircle';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import ArrowDropDownCircleOutlined from '@material-ui/icons/ArrowDropDownCircleOutlined';
 import Edit from '@material-ui/icons/Edit';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Publish from '@material-ui/icons/Publish';
@@ -356,12 +357,13 @@ const ExempListing = () => {
           <TableHead>
             <TableRow>
               <TableCell component="th" style={{ paddingBottom: 0, paddingTop: 0, width: '20px' }}></TableCell>
-              <TableCell component="th">Exemplifikace</TableCell>
-              <TableCell component="th" align="right">Lokalizace</TableCell>
-              <TableCell component="th" align="right">Zdroj</TableCell>
-              <TableCell component="th" align="right">Kvalifikátor</TableCell>
-              <TableCell component="th" align="right">Význam</TableCell>
-              <TableCell component="th" align="right">Čas</TableCell>
+              <TableCell component="th" style={{ paddingBottom: 0, paddingTop: 0, width: '20px' }}></TableCell>
+              <Tooltip title="Tooltip zde..." placement="bottom-start"><TableCell component="th">Exemplifikace</TableCell></Tooltip>
+              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Lokalizace</TableCell></Tooltip>
+              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Zdroj</TableCell></Tooltip>
+              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Kvalifikátor</TableCell></Tooltip>
+              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Význam</TableCell></Tooltip>
+              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Čas</TableCell></Tooltip>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -370,7 +372,10 @@ const ExempListing = () => {
               : rows
             ).map(row => (
               <TableRow key={row.id}>
-                <TableCell align="center">
+                <TableCell align="center" onClick={e => handleCellClick(e, row)}>
+                  <ArrowDropDownCircleOutlined />
+                </TableCell>
+                <TableCell align="center" onClick={e => handleCellClick(e, row)}>
                   {(row.attachments && row.attachments.length > 0) && <AttachFileIcon size="small" />}
                 </TableCell>
                 <TableCell onClick={e => handleCellClick(e, row)}>
@@ -389,13 +394,13 @@ const ExempListing = () => {
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
+                <TableCell colSpan={8} />
               </TableRow>
             )}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={2}>
+              <TableCell colSpan={3}>
                 <IconButton color="secondary" onClick={handleClickExempOpen} aria-label="Přidat exemplifikaci" >
                   <Tooltip title="Přidat exemplifikaci">
                     <AddCircleOutline />

@@ -1,18 +1,25 @@
 import React from 'react'
 
-// import {DropzoneDialog} from 'material-ui-dropzone'
+import Typography from "@material-ui/core/Typography";
 
 // locally modified version of DropzoneDialog that supports passing of props.children
 import DropzDialog from './dropzone/DropzDialog';
 
 import AttachmentChips from "./AttachmentChips";
+import HelpPopover from './HelpPopover';
 
 const AttachDialog = ({open, onClose, onSave, data}) => (
   <DropzDialog
     open={open}
     onSave={onSave}
     onClose={onClose}
-    dialogTitle={"Připojené soubory"}
+    dialogTitle={
+      <React.Fragment>
+        <Typography variant="h6">Připojené soubory
+          <HelpPopover help="pripojene_soubory" iconStyle={{float: 'right'}}/>
+        </Typography>
+      </React.Fragment>
+    }
     previewText={'Náhled'}
     cancelButtonText={"Zavřít"}
     submitButtonText={"Uložit"}

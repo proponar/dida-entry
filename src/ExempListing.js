@@ -33,6 +33,7 @@ import DialogImport from "./DialogImport";
 import DialogMap from "./DialogMap";
 import AttachDialog from "./AttachDialog";
 import TablePaginationActions from "./TablePaginationActions";
+import Welcome from "./Welcome";
 
 import useStyles from "./useStyles";
 import chipContext from './chipContext';
@@ -95,6 +96,12 @@ const ExempListing = () => {
   const handleAttachCloseClick = () => (setAttachOpen(false), setReloadEx(Math.random()));
 
   const [loading, setLoading] = useState(false);
+
+  // Welcome popover
+  const divRef = React.useRef();
+  const [welcomeAnchorEl, setHelpAnchorEl] = useState(null);
+  useEffect(() => { setHelpAnchorEl(divRef.current); });
+  const [welcomeOpened, setWelcomeOpened] = useState(!Boolean(localStorage.getItem('noWelcome')));
 
   const handleAttachSaveClick = files => {
     setAttachOpen(false);
@@ -309,7 +316,8 @@ const ExempListing = () => {
 
   return (
     <Paper className={classes.paper}>
-      <Toolbar>
+      <Welcome open={Boolean(welcomeAnchorEl) && welcomeOpened} anchorEl={welcomeAnchorEl} onClose={() => { console.log('close'); setWelcomeOpened(false)}} />
+      <Toolbar ref={divRef}>
         <EntryCombo reload={reloadEn} onChange={handleEntryChange} onReload={handleEntryReload} />
         <IconButton color="secondary" onClick={handleClickHesloEdit} aria-label="Editovat heslo" >
           <Tooltip title="Editovat heslo"><Edit /></Tooltip>

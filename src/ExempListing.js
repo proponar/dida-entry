@@ -366,12 +366,12 @@ const ExempListing = () => {
             <TableRow>
               <TableCell component="th" style={{ paddingBottom: 0, paddingTop: 0, width: '20px' }}></TableCell>
               <TableCell component="th" style={{ paddingBottom: 0, paddingTop: 0, width: '20px' }}></TableCell>
-              <Tooltip title="Tooltip zde..." placement="bottom-start"><TableCell component="th">Exemplifikace</TableCell></Tooltip>
-              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Lokalizace</TableCell></Tooltip>
-              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Zdroj</TableCell></Tooltip>
-              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Kvalifikátor</TableCell></Tooltip>
-              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Význam</TableCell></Tooltip>
-              <Tooltip title="Tooltip zde..." placement="bottom-end"><TableCell component="th" align="right">Čas</TableCell></Tooltip>
+              <Tooltip title="Výčet příkladů" placement="bottom-start"><TableCell component="th">Exemplifikace</TableCell></Tooltip>
+              <Tooltip title="Místo původu příkladů" placement="bottom-end"><TableCell component="th" align="right">Lokalizace</TableCell></Tooltip>
+              <TableCell component="th" align="right">Zdroj</TableCell>
+              <Tooltip title="Stylistický nebo gramatický příznak" placement="bottom-end"><TableCell component="th" align="right">Kvalifikátor</TableCell></Tooltip>
+              <TableCell component="th" align="right">Význam</TableCell>
+              <Tooltip title="Čas vložení příkladů" placement="bottom-end"><TableCell component="th" align="right">Čas</TableCell></Tooltip>
             </TableRow>
           </TableHead>
           <TableBody>

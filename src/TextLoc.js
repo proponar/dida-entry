@@ -9,7 +9,7 @@ const TextLoc = ({options, value, onChange}) => {
   return (
     <CachingAutocomplete
       name="lokalizace_text"
-      label="Lokalizace text"
+      label="Oblast"
       value={value}
       options={options || []}
       valueIsSelected={(option, value) => option.cislo === value.cislo}

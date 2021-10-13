@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 
 import useStyles from "./useStyles";
@@ -35,15 +36,15 @@ const SourcesTable = ({reloadCounter, onStart, onFinish}) => {
       <Table stickyHeader className={classes.denseTable} size="small" aria-label="Seznam zdrojů">
         <TableHead>
           <TableRow>
-            <TableCell component="th">Číslo</TableCell>
-            <TableCell component="th">Autor</TableCell>
-            <TableCell component="th" align="right">Název</TableCell>
-            <TableCell component="th" align="right">Název 2</TableCell>
-            <TableCell component="th" align="right">Typ</TableCell>
-            <TableCell component="th" align="right">Rok</TableCell>
-            <TableCell component="th" align="right">Rok sběru</TableCell>
-            <TableCell component="th" align="right">Lokalizace</TableCell>
-            <TableCell component="th" align="right">Lok. textová</TableCell>
+            <Tooltip title="Pořadí zdroje" placement="bottom-start"><TableCell component="th">Číslo</TableCell></Tooltip>
+            <Tooltip title="Příjmení a jméno autora zdroje" placement="bottom-end"><TableCell component="th">Autor</TableCell></Tooltip>
+            <Tooltip title="Názvový údaj zdroje"><TableCell component="th" align="right">Název</TableCell></Tooltip>
+            <Tooltip title="Názvový údaj zdrojového dokumentu"><TableCell component="th" align="right">Název 2</TableCell></Tooltip>
+            <Tooltip title="Typ nosiče zdroje"><TableCell component="th" align="right">Typ</TableCell></Tooltip>
+            <Tooltip title="Rok vydání zdroje"><TableCell component="th" align="right">Rok</TableCell></Tooltip>
+            <Tooltip title="Rok získání dat zdroje"><TableCell component="th" align="right">Rok sběru</TableCell></Tooltip>
+            <Tooltip title="Místo původu dat ve zdroji"><TableCell component="th" align="right">Lokalizace</TableCell></Tooltip>
+            <Tooltip title="Oblast původu dat ve zdroji"><TableCell component="th" align="right">Oblast</TableCell></Tooltip>
           </TableRow>
         </TableHead>
         <TableBody>

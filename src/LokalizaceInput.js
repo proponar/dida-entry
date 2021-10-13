@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 import LokalizaceObec from "./LokalizaceObec";
 import LokalizaceCast from "./LokalizaceCast";
+import HelpPopover from './HelpPopover';
 import TextLoc from "./TextLoc";
 
 const LokalizaceInput = props => {
@@ -39,7 +40,7 @@ const LokalizaceInput = props => {
           <LokalizaceObec value={valueObec} onChange={handleObecChange} />
         </FormControl>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <FormControl fullWidth>
           <LokalizaceCast value={valueCast} onChange={handleCastChange} locationId={kodObce} />
         </FormControl>
@@ -48,6 +49,9 @@ const LokalizaceInput = props => {
         <FormControl fullWidth>
           <TextLoc value={valueText} onChange={onTextChange} />
         </FormControl>
+      </Grid>
+      <Grid item xs={1}>
+        <HelpPopover help="lokalizace" iconStyle={{marginTop: '15px', float: 'right'}}/>
       </Grid>
     </Grid>
   );

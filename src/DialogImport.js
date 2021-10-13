@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import ImportStepper from "./ImportStepper";
+import HelpPopover from './HelpPopover';
 
 const DialogImport = ({open, onClose, entryId, meanings}) => (
   <Dialog
@@ -14,7 +15,10 @@ const DialogImport = ({open, onClose, entryId, meanings}) => (
     open={open}
     onClose={onClose}
     aria-labelledby="Import Dialog">
-    <DialogTitle id="Import Dialog">Import exemplifikací</DialogTitle>
+    <DialogTitle id="Import Dialog">
+      Import exemplifikací
+      <HelpPopover help="import_exemplifikaci" iconStyle={{float: 'right'}}/>
+    </DialogTitle>
     <DialogContent>
       <ImportStepper onClose={onClose} entryId={entryId} meanings={meanings} />
     </DialogContent>

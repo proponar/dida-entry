@@ -149,6 +149,9 @@ const SignIn = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        <Typography component="h1" variant="h3">
+          {applicationTitle}
+        </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -203,13 +206,18 @@ const SignIn = () => {
           </Button>
         </form>
       </div>
-      <GoogleLogin
-        clientId="463940228204-8h8413o241etnc0q0ifvjq57st8vde49.apps.googleusercontent.com"
-        buttonText="Přihlásit účtem Google"
-        onSuccess={responseGoogleSuccess}
-        onFailure={responseGoogleFailure}
-        cookiePolicy={'single_host_origin'}
-      />
+      <div style={{textAlign: 'center'}}>
+        <GoogleLogin
+          clientId="463940228204-8h8413o241etnc0q0ifvjq57st8vde49.apps.googleusercontent.com"
+          buttonText="Přihlásit účtem Google"
+          onSuccess={responseGoogleSuccess}
+          onFailure={responseGoogleFailure}
+          cookiePolicy={'single_host_origin'}
+        />
+      </div>
+      <Box mt={8}>
+       V případě, že nejste členy dialektologického oddělení ÚJČ, přihlásíte se pomocí tlačítka <b>Přihlásit účtem Google</b>. Je možné zřídit si zvláštní e-mail jen pro tento účel, zvláště pokud jste větší skupina/tým a chcete společně vytvářet jedinou databázi. K Vašim datům nemá přístup nikdo jiný, než kdo má přihlašovací údaje.
+      </Box>
       <Box mt={8}>
         <Copyright />
       </Box>

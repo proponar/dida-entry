@@ -210,6 +210,21 @@ const ExempListing = () => {
   const handleClickHesloNew = () => { setEditEntry(false); setHesloOpen(true); };
   const handleHesloClose = () => setHesloOpen(false);
 
+  const handleHesloDelete = exemp => {
+    if (!entry.id) return;
+
+    axios.delete(`${baseUrl}entries/${entry.id}`,
+      {headers: {'Authorization': 'Token ' + window.sessionStorage.getItem('auth-token')}}
+    ).then(response => {
+      setReloadEn(Math.random());
+      setReloadEx(Math.random());
+      setHesloOpen(false);
+    }, error => {
+      console.log(error.response.data);
+      chip.errorMsg(error.response.data.message);
+    });
+  };
+
   const handleClickImport = () => setImportOpen(true);
 
   const storeNewHeslo = (entry, successFunc) => {
@@ -346,6 +361,7 @@ const ExempListing = () => {
         open={hesloOpen}
         onSave={handleHesloSave}
         onClose={handleHesloClose}
+        onDelete={handleHesloDelete}
         data={prepareEntryData(entry, editEntry)} />
       <DialogImport
         open={importOpen}

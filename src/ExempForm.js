@@ -76,7 +76,7 @@ const parseExemplifikaceValue = value => {
   // positive look-behind, then the group, then positive look-ahead
   // this does not work on Safari :-(
   // const matched = (value || '').match(/(?<=\{)[^{}]+(?=\})/gu) || [];
-  const matched = (value || '').match(/(\{)[^{}]+(\})/gu).map(x => x.substring(1).slice(0, -1)) || []
+  const matched = ((value || '').match(/(\{)[^{}]+(\})/gu) || []).map(x => x.substring(1).slice(0, -1)) || []
 
   return matched.map((t, i) => addIndex(string2urceni(t), i));
 };

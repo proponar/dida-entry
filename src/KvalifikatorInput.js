@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import FormControl from "@material-ui/core/FormControl";
 import CheckboxForm from "./CheckboxForm";
-import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 
 import Dialog from '@material-ui/core/Dialog';
@@ -73,9 +72,6 @@ const KvalifikatorInput = props => {
     onChange,
   } = props;
 
-  const classes = useStyles();
-
-  const [modalStyle] = useState(getModalStyle);
   const [kvModalOpen, setKvModalOpen] = useState(false);
 
   const [inputValue, setInputValue] = useState(value);

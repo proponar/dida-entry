@@ -214,7 +214,7 @@ const Searcher = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>
-                <IconButton color="secondary" onClick={handleCSVDownload} aria-label="Stáhnout výpis" >
+                <IconButton color="secondary" onClick={handleCSVDownload} aria-label="Export do CSV" >
                   <Tooltip title="Stáhnout výpis">
                     <GetApp />
                   </Tooltip>

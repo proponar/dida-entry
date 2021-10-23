@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui//core/Typography';
 import { withStyles } from '@material-ui/core/styles'
 
 const StyledPopover = withStyles({

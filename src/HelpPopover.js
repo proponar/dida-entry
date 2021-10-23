@@ -5,8 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Popover from '@material-ui/core/Popover';
 
 const StyledPopover = withStyles({
-  // root: { backgroundColor: "green" },
-  paper: { width: "50%", height: "50%" },
+  paper: { width: "70%", height: "70%" },
 })(Popover);
 
 const HelpPopover = ({id, help, iconStyle}) => {

@@ -6,7 +6,7 @@ import Popover from '@material-ui/core/Popover';
 import { withStyles } from '@material-ui/core/styles'
 
 const StyledPopover = withStyles({
-  paper: { width: "50%", height: "50%" },
+  paper: { width: "70%", height: "70%" },
 })(Popover);
 
 const Welcome = ({open, anchorEl, onClose}) => {

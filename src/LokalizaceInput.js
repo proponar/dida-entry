@@ -5,8 +5,10 @@ import Grid from "@material-ui/core/Grid";
 
 import LokalizaceObec from "./LokalizaceObec";
 import LokalizaceCast from "./LokalizaceCast";
-import HelpPopover from './HelpPopover';
 import TextLoc from "./TextLoc";
+
+import Tooltip from '@material-ui/core/Tooltip';
+import HelpIcon from '@material-ui/icons/Help';
 
 const LokalizaceInput = props => {
   const {
@@ -51,7 +53,7 @@ const LokalizaceInput = props => {
         </FormControl>
       </Grid>
       <Grid item xs={1}>
-        <HelpPopover help="lokalizace" iconStyle={{marginTop: '15px', float: 'right'}}/>
+        <Tooltip title="Toto pole můžete vyplnit pouze v případě, pokud nemáte současně vyplněno pole Obec."><HelpIcon style={{marginTop: '15px'}}/></Tooltip>
       </Grid>
     </Grid>
   );

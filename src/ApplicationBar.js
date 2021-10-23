@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 import { applicationTitle, locationNumbers } from './config';
@@ -84,6 +85,10 @@ const ApplicationBar = ({title, help}) => {
           <HelpPopover
             id="appBarHelpPopover"
             help={help}
+          />
+          <MenuBookIcon
+            style={{ marginLeft: 16 }}
+            onClick={()=> window.open("/help/manual.pdf", "_blank")}
           />
           <Divider orientation="vertical" flexItem  className={classes.divider}/>
           <Button color="inherit" onClick={logout}>Odhlásit</Button>

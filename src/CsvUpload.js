@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import IconButton from '@material-ui/core/IconButton';
 import Publish from '@material-ui/icons/Publish';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { baseUrl } from './config';
 import useStyles from "./useStyles";
@@ -47,9 +48,11 @@ const CsvUpload = ({onStart, onFinish}) => {
           type="file"
       />
       <label htmlFor="icon-button-photo">
+        <Tooltip title="Import zdrojů (CSV)">
           <IconButton color="primary" component="span">
               <Publish />
           </IconButton>
+        </Tooltip>
       </label>
     </React.Fragment>
   );

@@ -9,6 +9,7 @@ import { baseUrl } from './config';
 
 const LokalizaceObec = props => {
   const {
+    disabled,
     value,
     onChange
   } = props;
@@ -75,6 +76,7 @@ const LokalizaceObec = props => {
 
   return (
     <Autocomplete
+      disabled={disabled}
       id={elementId}
       open={open}
       onOpen={() => { setOpen(true); }}

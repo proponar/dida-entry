@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 
 const CachingAutocomplete = props  => {
   const {
+    disabled,
     validNullValue, // is null a valid value? will it propagete to onChange?
     textMargin,
     options: optionsIn,
@@ -77,6 +78,7 @@ const CachingAutocomplete = props  => {
 	// FIXME: inicialni hodnota!
   return (
     <Autocomplete
+      disabled={disabled}
       name={name}
       value={selection}
       options={options}

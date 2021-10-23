@@ -35,21 +35,24 @@ const LokalizaceInput = props => {
 
   const handleCastChange = ev => onCastChange(ev);
 
+  const oblastDisabled = !!valueObec;
+  const baseDisabled = !!valueText;
+
   return (
     <Grid item xs={12} container spacing={1}>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <LokalizaceObec value={valueObec} onChange={handleObecChange} />
+          <LokalizaceObec disabled={baseDisabled} value={valueObec} onChange={handleObecChange} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
         <FormControl fullWidth>
-          <LokalizaceCast value={valueCast} onChange={handleCastChange} locationId={kodObce} />
+          <LokalizaceCast disabled={baseDisabled} value={valueCast} onChange={handleCastChange} locationId={kodObce} />
         </FormControl>
       </Grid>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <TextLoc value={valueText} onChange={onTextChange} />
+          <TextLoc disabled={oblastDisabled} value={valueText} onChange={onTextChange} />
         </FormControl>
       </Grid>
       <Grid item xs={1}>

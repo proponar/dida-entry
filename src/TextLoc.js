@@ -3,13 +3,14 @@ import React from 'react';
 import CachingAutocomplete from './CachingAutocomplete';
 import { baseUrl, locationNumbers } from './config';
 
-const TextLoc = ({options, value, onChange}) => {
+const TextLoc = ({options, disabled, value, onChange}) => {
   const loc2label = s => (s.cislo && (s.cislo + '. ' + s.identifikator)) || '' ;
 
   return (
     <CachingAutocomplete
       name="lokalizace_text"
       label="Oblast"
+      disabled={disabled}
       value={value}
       options={options || []}
       valueIsSelected={(option, value) => option.cislo === value.cislo}

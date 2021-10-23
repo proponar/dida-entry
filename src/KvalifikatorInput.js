@@ -5,6 +5,12 @@ import CheckboxForm from "./CheckboxForm";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+
 import useStyles from "./useStyles";
 
 const rand = () => Math.round(Math.random() * 20) - 10;
@@ -39,6 +45,28 @@ const textToChecks = text => {
   );
 };
 
+const DialogKvalif = ({open, onClose, checkState, setCheckState}) => (
+  <Dialog
+    fullWidth={false}
+    open={open}
+    onClose={onClose}
+    aria-labelledby="edite-kvalif-title"
+  >
+    <DialogTitle id="edite-kvalif-title">Výběr kvalifikátorů</DialogTitle>
+    <DialogContent>
+      <p id="modal-description">
+        Vyberte relevantní kvalifikátory.
+      </p>
+      <CheckboxForm checks={checks} checkState={checkState} setCheckState={setCheckState} />
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onClose} color="primary" variant="outlined">
+        Uložit
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
+
 const KvalifikatorInput = props => {
   const {
     value = '',
@@ -70,15 +98,6 @@ const KvalifikatorInput = props => {
     onChange({target: {name: 'kvalifikator', value: newValue}});
   };
 
-  const modalBody = (
-    <div style={modalStyle} className={classes.modalPaper}>
-      <h2 id="modal-title">Výběr kvalifikátorů</h2>
-      <p id="modal-description">
-        Vyberte relevantní kvalifikátory.
-      </p>
-      <CheckboxForm checks={checks} checkState={checkState} setCheckState={setCheckState} />
-    </div>
-  );
 
   return (
     <FormControl>
@@ -92,9 +111,10 @@ const KvalifikatorInput = props => {
       <button type="button" onClick={handleKvalifikatorOpen}>
         Nastavit
       </button>
-      <Modal open={kvModalOpen} onClose={handleKvalifikatorClose}>
-        {modalBody}
-      </Modal>
+      <DialogKvalif
+        open={kvModalOpen} onClose={handleKvalifikatorClose}
+        checkState={checkState} setCheckState={setCheckState}
+      />
     </FormControl>
   );
 };

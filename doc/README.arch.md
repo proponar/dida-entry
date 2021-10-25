@@ -45,7 +45,7 @@ Databáze se skládá z tabulek, které zabespečují lokalizaci (okresy, obce, 
 obce,...), částu pro modelování hesel a exemplifikací (hesla, významy,
 exemplifikace,..) a dalších podpůrných částí (zdroje, uživatelé, ...).
 
-![ERD schema](DIDA-base-schema.png)
+![ERD schema](DIDA-base-schema-white.png)
 
 ## Zdrojové kody
 

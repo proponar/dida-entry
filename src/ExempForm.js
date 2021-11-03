@@ -65,7 +65,7 @@ const string2urceni = t => {
   }
 
   return {
-    invalid: true,
+    // invalid: true,
     tvar: filterTvar(t),
     rod: null, // 'm', // blbe
     pad: null  // '1s', // blbe

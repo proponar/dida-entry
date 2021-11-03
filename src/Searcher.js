@@ -26,6 +26,7 @@ import EntryCombo from "./EntryCombo";
 import FilterChips from "./FilterChips";
 import RokInput from "./RokInput";
 import TablePaginationActions from "./TablePaginationActions";
+import LokalizaceInput from "./LokalizaceInput";
 
 import useStyles from "./useStyles";
 import chipContext from './chipContext';
@@ -97,6 +98,42 @@ const Searcher = () => {
     })
   }
 
+  const handleObecChange = (v) => {
+    let newFilter = ({
+      ...filter,
+      obec: v
+    })
+
+    if (v.lokalizace_obec_id === undefined) {
+      delete(newFilter['obec']);
+    }
+
+    setFilter(newFilter)
+  };
+
+  const handleCastChange = (v) => {
+    let newFilter = ({
+      ...filter,
+      castObce: v
+    })
+
+    if ((v.lokalizace_cast_obce_id === undefined) ||
+        (v.lokalizace_cast_obce_id === null)) {
+      delete(newFilter['castObce']);
+    }
+
+    setFilter(newFilter)
+  };
+
+  const handleOblastChange = (v) => {
+    if (v !== null) {
+      setFilter({
+        ...filter,
+        oblast: v
+      })
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     axios.post(
@@ -147,6 +184,19 @@ const Searcher = () => {
     setFilter(newFilter);
   };
 
+  const valueObec = (filter.obec && filter.obec.lokalizace_obec_id && {
+    naz_obec: filter.obec.lokalizace_obec_text,
+    kod_obec: filter.obec.lokalizace_obec_id
+  }) || undefined;
+
+//  const valueCast = (filter.obec && filter.obect.lokalizace_cast_obce_id && {
+//    naz_cob: values.lokalizace_cast_obce_text,
+//    kod_cob: values.lokalizace_cast_obce_id
+//  }) || undefined;
+
+//  // pozor: jedna se o CISLO textove lokalizace
+//  const valueText = values && values.lokalizace_text_id;
+
   return (
     <Paper className={classes.paper}>
       <Toolbar>
@@ -162,6 +212,10 @@ const Searcher = () => {
         <VetneSmallSwitch checked={!! filter.vetne} onChange={handleVetneChange}/>
         &nbsp;
         <RokInput dense={true} value={filter.rok} onChange={handleRokChange}/>
+        <LokalizaceInput dense={true}
+          valueObec={valueObec} valueCast={filter.castObce} valueText={filter.oblast}
+          onObecChange={handleObecChange} onCastChange={handleCastChange} onTextChange={handleOblastChange}
+        />
       </Toolbar>
       <FilterChips filter={filter} onDelete={deleteChip}/>
       {loading ? (<LinearProgress />) :

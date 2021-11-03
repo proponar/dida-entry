@@ -11,6 +11,27 @@ const useStyles = makeStyles((theme) => ({
 
 const filter2chips = filter => {
   var chips = []
+  if (filter.oblast !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'oblast', label: `oblast: ${filter.oblast.identifikator}` }
+    ]
+  }
+
+  if (filter.obec !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'obec', label: `obec: ${filter.obec.lokalizace_obec_text}` }
+    ]
+  }
+
+  if (filter.castObce !== undefined) {
+    chips = [
+      ...chips,
+      { key: 'castObce', label: `část obce: ${filter.castObce.lokalizace_cast_obce_text}` }
+    ]
+  }
+
   if (filter.entry !== undefined) {
     chips = [
       ...chips,

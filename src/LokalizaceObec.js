@@ -11,7 +11,8 @@ const LokalizaceObec = props => {
   const {
     disabled,
     value,
-    onChange
+    onChange,
+    dense,
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -91,7 +92,8 @@ const LokalizaceObec = props => {
         <TextField
           {...params}
           label={(value && value.naz_obec) || 'Obec...'}
-          variant="outlined"
+          variant={(dense && "filled") || "outlined"}
+          margin={(dense && "dense") || "normal"}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

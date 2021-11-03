@@ -23,6 +23,7 @@ const NumberFormatCustom = ({name, inputRef, onChange, ...other}) => (
 
 const RokInput = ({value, onChange, dense}) => (
   <TextField
+    style={{marginRight: '8px'}}
     variant={(dense && "filled") || "outlined"}
     margin={(dense && "dense") || "normal"}
     label="Rok"

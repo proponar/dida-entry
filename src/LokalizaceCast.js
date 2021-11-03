@@ -12,7 +12,8 @@ const LokalizaceCast = props => {
     disabled,
     value,
     locationId,
-    onChange
+    onChange,
+    dense,
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -82,7 +83,8 @@ const LokalizaceCast = props => {
         <TextField
           {...params}
           label={(value && value.naz_cob) || 'Část obce...'}
-          variant="outlined"
+          variant={(dense && "filled") || "outlined"}
+          margin={(dense && "dense") || "normal"}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

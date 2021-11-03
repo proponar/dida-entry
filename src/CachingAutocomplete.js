@@ -18,6 +18,7 @@ const CachingAutocomplete = props  => {
     valueIsSelected,
     cacheKey, // localStorage key
     dataUrl, // API endpoint
+    dense,
   } = props;
 
   const [options, setOptions] = useState(optionsIn);
@@ -76,6 +77,7 @@ const CachingAutocomplete = props  => {
   //        ^^ nebude. Jen, pokud bude prazdny, v zobrazeni (v gridu?) se ukaze
   //        hodnota ze zdroje
 	// FIXME: inicialni hodnota!
+  //
   return (
     <Autocomplete
       disabled={disabled}
@@ -84,7 +86,11 @@ const CachingAutocomplete = props  => {
       options={options}
       getOptionSelected={valueIsSelected}
       getOptionLabel={value2label}
-      renderInput={(params) => <TextField margin={textMargin} {...params} label={label} variant="outlined" />}
+      renderInput={(params) => <TextField
+        margin={textMargin} {...params} label={label}
+        variant={(dense && "filled") || "outlined"}
+        margin={(dense && "dense") || "normal"}
+      />}
       onChange={handleChange}
     />
   );

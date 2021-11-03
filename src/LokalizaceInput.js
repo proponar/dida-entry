@@ -12,6 +12,7 @@ import HelpIcon from '@material-ui/icons/Help';
 
 const LokalizaceInput = props => {
   const {
+    dense,
     valueObec,
     valueCast,
     valueText,
@@ -42,17 +43,17 @@ const LokalizaceInput = props => {
     <Grid item xs={12} container spacing={1}>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <LokalizaceObec disabled={baseDisabled} value={valueObec} onChange={handleObecChange} />
+          <LokalizaceObec dense={dense} disabled={baseDisabled} value={valueObec} onChange={handleObecChange} />
         </FormControl>
       </Grid>
       <Grid item xs={3}>
         <FormControl fullWidth>
-          <LokalizaceCast disabled={baseDisabled} value={valueCast} onChange={handleCastChange} locationId={kodObce} />
+          <LokalizaceCast dense={dense} disabled={baseDisabled} value={valueCast} onChange={handleCastChange} locationId={kodObce} />
         </FormControl>
       </Grid>
       <Grid item xs={4}>
         <FormControl fullWidth>
-          <TextLoc disabled={oblastDisabled} value={valueText} onChange={onTextChange} />
+          <TextLoc dense={dense} disabled={oblastDisabled} value={valueText} onChange={onTextChange} />
         </FormControl>
       </Grid>
       <Grid item xs={1}>

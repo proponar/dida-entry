@@ -8,15 +8,20 @@
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
-<body class="stackedit" style="margin-bottom: -120px; margin-top: -40px;">
+<body class="stackedit">
   <div class="stackedit__html"><h1 id="import-exemplifikací">Import exemplifikací</h1>
 <p>Tato stránka slouží pro hromadné přidání exemplifikací.</p>
 <h2 id="vložení-dat">Vložení dat</h2>
 <p>Všechny exemplifikace vztahující se k jednomu významu vložíte jako text do pole <strong>Vložte exemplifikace…</strong> tak, aby každá z nich byla na samostatném řádku. Chcete-li exemplifikace doplnit o lokalitu a zdroj, vepište je (v tomto pořadí) za text exemplifikace a oddělte středníky. Lokalitu uvádějte ve formátu <code>název_obce zkratka_okresu (příp._část_obce)</code>, případně vepište název lokality oblasti. Zdroj uvádějte ve formátu <code>první_slovo_hodnoty_Autor, jakákoliv_část_hodnoty_Název</code> podle hodnot z předem naimportovaného seznamu zdrojů.</p>
 <p>Na začátku řádku může být v kulaté závorce uvedena informace o gramatických kategoriích pádu (označeného číslicí 1 až 7) a čísla (označeného zkratkami <em>sg.</em> nebo <em>pl.</em>) oddělených mezerou, příslušející tvaru heslového slova v exemplifikaci. Ta se pak automaticky přiřadí k danému slovu, je-li ve správě hesla vyplněn seznam <strong>Tvarů</strong> a <strong>Určení</strong>.</p>
-<p>Po vložení exemplifikací přistoupíte k dalšímu kroku (<strong>Vyplnění společných hodnot</strong>) kliknutím na tlačítko <strong>Dál</strong>, případně formulář zavřete bez uložení klinkutím na tlačítko <strong>Zrušit</strong>.</p>
+<p>příklad:  <code>(2 sg.) okolo stola; Brno BM; Novák, Výzkum na Brněnsku</code></p>
+<p>Druhým způsobem automatického přiřazení gramatických kategorií je vložení tvaru heslového slova do složené závorky s nutností kontroly správného přiřazení a jeho případné změny v <em>Editaci exemplifikace</em> po importu.</p>
+<p>příklad: <code>okolo {stola}; Brno BM; Novák, Výzkum na Brněnsku</code></p>
+<p>Gramatické informace lze také přímo vložit za tvar heslového slova do složené závorky stejně jako při ruční <em>Editaci exemplifikace</em>.</p>
+<p>příklad: <code>okolo {stola, 2 sg.}; Brno BM; Novák, Výzkum na Brněnsku</code></p>
+<p>Po vložení exemplifikací přistoupíte k dalšímu kroku (<strong>Vyplnění společných hodnot</strong>) kliknutím na tlačítko <strong>Dál</strong>, případně formulář zavřete bez uložení kliknutím na tlačítko <strong>Zrušit</strong>.</p>
 <h2 id="vyplnění-společných-hodnot">Vyplnění společných hodnot</h2>
-<p>V poli <strong>Význam</strong> vyberete význam, ke kterému vkládáte exemplifikace, a přepínač <strong>Nevětné – Větné</strong> nastavíte podle toho, zda exemplifikace tvoří celou větu, nebo ne.</p>
+<p>V poli <strong>Význam</strong> vyberete z nabídky význam, který jste si přednastavili při editaci hesla, a přepínač <strong>Nevětné – Větné</strong> nastavíte podle toho, zda exemplifikace tvoří celou větu, nebo ne.</p>
 <p>Po výběru významu a nastavení typu <strong>Nevětné – Větné</strong> přistoupíte k dalšímu kroku (<strong>Kontrola</strong>) kliknutím na tlačítko <strong>Dál</strong>, případně se vrátíte k předchozímu kroku klinkutím na tlačítko <strong>Zpět</strong> nebo formulář zavřete bez uložení klinkutím na tlačítko <strong>Zrušit</strong>.</p>
 <h2 id="kontrola">Kontrola</h2>
 <p>Zkontrolujete, zda došlo ke správné interpretaci vložených informací, tedy k převedení gramatických kategorií pádu a čísla do složené závorky u daného tvaru a k náležité detekci lokality a zdroje. V případě chybějícího nebo chybného zápisu lokality nebo zdroje se na příslušných místech objeví červená pole. Přítomnost červených polí nebrání ve vykonání následujícího kroku, pouze v takto označených polích nebudou automaticky zadány žádné informace. Chybná (červená) pole můžete manuálně opravit, pokud se vrátíte ke kroku <strong>Vložení dat</strong>.</p>

@@ -24,7 +24,6 @@ import { GoogleLogin } from 'react-google-login';
 
 const Copyright = () =>
   <Typography variant="body2" color="textSecondary" align="center">
-    {'Copyright © '}
     <Link color="inherit" href="https://cja.ujc.cas.cz/">
       Dialektologické oddělení Ústavu pro jazyk český AV ČR
     </Link>{' '}

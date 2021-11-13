@@ -64,8 +64,18 @@ const string2urceni = t => {
     };
   }
 
+  // 'huse'
+  const mt2 = t.match(/^([’'\p{L}\p{M}\s]+)$/u);
+  if (mt2) {
+    return {
+      tvar: filterTvar(mt2[1]),
+      rod: null,
+      pad: null,
+    };
+  }
+
   return {
-    // invalid: true,
+    invalid: true,
     tvar: filterTvar(t),
     rod: null, // 'm', // blbe
     pad: null  // '1s', // blbe
@@ -77,7 +87,6 @@ const parseExemplifikaceValue = value => {
   // this does not work on Safari :-(
   // const matched = (value || '').match(/(?<=\{)[^{}]+(?=\})/gu) || [];
   const matched = ((value || '').match(/(\{)[^{}]+(\})/gu) || []).map(x => x.substring(1).slice(0, -1)) || []
-
   return matched.map((t, i) => addIndex(string2urceni(t), i));
 };
 
